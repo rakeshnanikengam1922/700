@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (let i = 0; i < count; i++) {
 
-            const confetti = document.createElement("div");
+            const confetti =
+                document.createElement("div");
 
             confetti.textContent =
                 emojis[
@@ -69,7 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
             confetti.style.willChange =
                 "transform, opacity";
 
-            document.body.appendChild(confetti);
+            document.body.appendChild(
+                confetti
+            );
 
             const fallDistance =
                 window.innerHeight + 150;
@@ -89,7 +92,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const driftSpeed =
                 2 + Math.random() * 3;
 
-            function animateConfetti(currentTime) {
+
+            function animateConfetti(
+                currentTime
+            ) {
 
                 const elapsed =
                     currentTime - startTime;
@@ -101,10 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 const y =
-                    fallDistance * progress;
+                    fallDistance *
+                    progress;
 
                 const rotate =
-                    rotation * progress;
+                    rotation *
+                    progress;
 
                 const drift =
                     Math.sin(
@@ -123,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     rotate +
                     "deg)";
 
+
                 if (progress > 0.75) {
 
                     confetti.style.opacity =
@@ -135,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
 
                 }
+
 
                 if (progress < 1) {
 
@@ -150,10 +160,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
+
             requestAnimationFrame(
                 animateConfetti
             );
+
         }
+
     }
 
 
@@ -168,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const celebrateBtn =
         get("celebrateBtn");
 
+
     if (celebrateBtn) {
 
         celebrateBtn.addEventListener(
@@ -176,10 +190,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 createConfetti(120);
 
+
                 const cake =
                     document.querySelector(
                         ".birthday-cake"
                     );
+
 
                 if (cake) {
 
@@ -187,7 +203,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         "cake-pop"
                     );
 
+
                     void cake.offsetWidth;
+
 
                     cake.classList.add(
                         "cake-pop"
@@ -229,25 +247,33 @@ document.addEventListener("DOMContentLoaded", function () {
             ".gallery-item"
         );
 
+
     const galleryLightbox =
         get("galleryLightbox");
+
 
     const lightboxImage =
         get("lightboxImage");
 
+
     const lightboxCaption =
         get("lightboxCaption");
+
 
     const lightboxClose =
         get("lightboxClose");
 
+
     const lightboxPrev =
         get("lightboxPrev");
+
 
     const lightboxNext =
         get("lightboxNext");
 
-    let currentGalleryIndex = 0;
+
+    let currentGalleryIndex =
+        0;
 
 
     function openLightbox(index) {
@@ -256,20 +282,25 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+
         currentGalleryIndex =
             index;
+
 
         const item =
             galleryItems[
                 currentGalleryIndex
             ];
 
+
         const image =
             item.querySelector("img");
+
 
         if (!image) {
             return;
         }
+
 
         if (lightboxImage) {
 
@@ -282,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
         if (lightboxCaption) {
 
             lightboxCaption.textContent =
@@ -292,11 +324,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
         if (galleryLightbox) {
 
             galleryLightbox.classList.add(
                 "active"
             );
+
 
             galleryLightbox.setAttribute(
                 "aria-hidden",
@@ -314,9 +348,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+
         galleryLightbox.classList.remove(
             "active"
         );
+
 
         galleryLightbox.setAttribute(
             "aria-hidden",
@@ -332,7 +368,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+
         currentGalleryIndex--;
+
 
         if (currentGalleryIndex < 0) {
 
@@ -340,6 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 galleryItems.length - 1;
 
         }
+
 
         openLightbox(
             currentGalleryIndex
@@ -354,7 +393,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+
         currentGalleryIndex++;
+
 
         if (
             currentGalleryIndex >=
@@ -364,6 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
             currentGalleryIndex = 0;
 
         }
+
 
         openLightbox(
             currentGalleryIndex
@@ -454,17 +496,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
+
             if (event.key === "Escape") {
 
                 closeLightbox();
 
             }
 
+
             if (event.key === "ArrowLeft") {
 
                 showPreviousGalleryImage();
 
             }
+
 
             if (event.key === "ArrowRight") {
 
@@ -493,20 +538,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 "img"
             );
 
+
         const prev =
             slideshow.querySelector(
                 ".prev"
             );
+
 
         const next =
             slideshow.querySelector(
                 ".next"
             );
 
+
         const indicators =
             slideshow.querySelector(
                 ".slide-indicators"
             );
+
 
         let slideIndex = 0;
 
@@ -517,7 +566,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+
             slideIndex = index;
+
 
             if (slideIndex < 0) {
 
@@ -525,6 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     slides.length - 1;
 
             }
+
 
             if (
                 slideIndex >=
@@ -534,6 +586,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 slideIndex = 0;
 
             }
+
 
             slides.forEach(
                 function (slide, i) {
@@ -553,6 +606,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     indicators.querySelectorAll(
                         "button"
                     );
+
 
                 dots.forEach(
                     function (dot, i) {
@@ -606,6 +660,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             indicators.innerHTML = "";
 
+
             slides.forEach(
                 function (_, index) {
 
@@ -614,14 +669,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             "button"
                         );
 
+
                     dot.type =
                         "button";
+
 
                     dot.setAttribute(
                         "aria-label",
                         "Show image " +
                         (index + 1)
                     );
+
 
                     dot.addEventListener(
                         "click",
@@ -631,6 +689,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
                     );
+
 
                     indicators.appendChild(
                         dot
@@ -651,6 +710,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 slide.style.cursor =
                     "pointer";
 
+
                 slide.addEventListener(
                     "click",
                     function () {
@@ -666,6 +726,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
+
                         if (lightboxCaption) {
 
                             lightboxCaption.textContent =
@@ -674,11 +735,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
+
                         if (galleryLightbox) {
 
                             galleryLightbox.classList.add(
                                 "active"
                             );
+
 
                             galleryLightbox.setAttribute(
                                 "aria-hidden",
@@ -703,8 +766,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const surpriseBtn =
         get("surpriseBtn");
 
+
     const surpriseModal =
         get("surpriseModal");
+
 
     const surpriseClose =
         get("surpriseClose");
@@ -722,12 +787,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         "active"
                     );
 
+
                     surpriseModal.setAttribute(
                         "aria-hidden",
                         "false"
                     );
 
                 }
+
 
                 createConfetti(80);
 
@@ -748,6 +815,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     surpriseModal.classList.remove(
                         "active"
                     );
+
 
                     surpriseModal.setAttribute(
                         "aria-hidden",
@@ -776,6 +844,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     surpriseModal.classList.remove(
                         "active"
                     );
+
 
                     surpriseModal.setAttribute(
                         "aria-hidden",
@@ -813,54 +882,73 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
 
-    const puzzleSize = 3;
+    const puzzleSize =
+        3;
+
 
     const totalPuzzleTiles =
-        puzzleSize * puzzleSize;
+        puzzleSize *
+        puzzleSize;
 
 
     let puzzleImage =
         puzzleImages[0];
 
+
     /*
-       Example:
-
-       [ 0 ][ 1 ][ 2 ]
-       [ 3 ][ 4 ][ 5 ]
-       [ 6 ][ 7 ][ 8 ]
-
-       puzzleTiles contains the
-       current positions.
+       9 tiles only.
 
        No empty tile.
     */
 
     let puzzleTiles = [];
 
-    let selectedTileIndex = null;
 
-    let moves = 0;
+    /*
+       Stores first selected tile.
+    */
 
-    let timerSeconds = 0;
+    let selectedTileIndex =
+        null;
 
-    let timerInterval = null;
 
-    let puzzleStarted = false;
+    let moves =
+        0;
 
+
+    let timerSeconds =
+        0;
+
+
+    let timerInterval =
+        null;
+
+
+    let puzzleStarted =
+        false;
+
+
+    /* =====================================================
+       INITIALIZE PUZZLE
+    ===================================================== */
 
     function initializePuzzle() {
 
         const container =
             get("puzzleContainer");
 
+
         const newGame =
             get("newGameBtn");
+
 
         const solution =
             get("showSolutionBtn");
 
+
         const playAgain =
             get("playAgainBtn");
+
 
         const completionClose =
             get("completionClose");
@@ -928,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       START NEW PUZZLE
+       START NEW GAME
     ===================================================== */
 
     function startNewGame() {
@@ -936,13 +1024,20 @@ document.addEventListener("DOMContentLoaded", function () {
         stopPuzzleTimer();
 
 
-        moves = 0;
+        moves =
+            0;
 
-        timerSeconds = 0;
 
-        puzzleStarted = false;
+        timerSeconds =
+            0;
 
-        selectedTileIndex = null;
+
+        puzzleStarted =
+            false;
+
+
+        selectedTileIndex =
+            null;
 
 
         selectPuzzleImage();
@@ -957,7 +1052,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SELECT RANDOM IMAGE
+       RANDOM PUZZLE IMAGE
     ===================================================== */
 
     function selectPuzzleImage() {
@@ -1010,13 +1105,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const container =
             get("puzzleContainer");
 
+
         if (!container) {
             return;
         }
 
 
         /*
-           Start with:
+           Original order:
 
            0 1 2
            3 4 5
@@ -1038,52 +1134,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-           Fisher-Yates shuffle
-           Randomly mixes all 9 tiles.
+           Fisher-Yates shuffle.
+
+           All 9 pieces remain unique.
         */
 
-        do {
+        for (
+            let i =
+                puzzleTiles.length - 1;
+            i > 0;
+            i--
+        ) {
 
-            for (
-                let i =
-                    puzzleTiles.length - 1;
-                i > 0;
-                i--
-            ) {
-
-                const randomIndex =
-                    Math.floor(
-                        Math.random() *
-                        (i + 1)
-                    );
+            const randomIndex =
+                Math.floor(
+                    Math.random() *
+                    (i + 1)
+                );
 
 
-                const temp =
-                    puzzleTiles[i];
+            const temp =
+                puzzleTiles[i];
 
 
-                puzzleTiles[i] =
-                    puzzleTiles[randomIndex];
+            puzzleTiles[i] =
+                puzzleTiles[randomIndex];
 
 
-                puzzleTiles[randomIndex] =
-                    temp;
+            puzzleTiles[randomIndex] =
+                temp;
 
-            }
-
-        } while (
-            isPuzzleSolved()
-        );
+        }
 
 
-        selectedTileIndex = null;
+        /*
+           If accidentally solved,
+           shuffle again.
+        */
+
+        if (isPuzzleSolved()) {
+
+            const temp =
+                puzzleTiles[0];
+
+            puzzleTiles[0] =
+                puzzleTiles[1];
+
+            puzzleTiles[1] =
+                temp;
+
+        }
+
+
+        selectedTileIndex =
+            null;
 
 
         renderPuzzle();
 
 
         /*
-           Solution image
+           Show complete original image
+           when Show Solution is clicked.
         */
 
         const solutionImage =
@@ -1094,6 +1206,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             solutionImage.src =
                 "./" + puzzleImage;
+
 
             solutionImage.alt =
                 "Puzzle solution";
@@ -1116,13 +1229,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       RENDER 9 IMAGE TILES
+       RENDER 9 TILES
     ===================================================== */
 
     function renderPuzzle() {
 
         const container =
             get("puzzleContainer");
+
 
         if (!container) {
             return;
@@ -1158,8 +1272,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
-                   Find which part of original
-                   image this tile belongs to.
+                   Find original image position
+                   of this particular piece.
                 */
 
                 const row =
@@ -1175,8 +1289,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
-                   Use the SAME image for
-                   all 9 pieces.
+                   Every tile uses the SAME
+                   original image.
                 */
 
                 tile.style.backgroundImage =
@@ -1194,8 +1308,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
-                   Position the correct
-                   image portion.
+                   Correct image section.
                 */
 
                 tile.style.backgroundPosition =
@@ -1209,15 +1322,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     "%";
 
 
-                tile.setAttribute(
-                    "aria-label",
-                    "Puzzle tile " +
-                    (tileValue + 1)
-                );
-
-
                 /*
-                   Selected tile highlight
+                   Selected tile.
                 */
 
                 if (
@@ -1225,19 +1331,34 @@ document.addEventListener("DOMContentLoaded", function () {
                     index
                 ) {
 
+                    tile.classList.add(
+                        "selected"
+                    );
+
+
                     tile.style.outline =
-                        "4px solid #ffffff";
+                        "4px solid white";
+
 
                     tile.style.outlineOffset =
                         "-4px";
 
+
                     tile.style.transform =
                         "scale(0.94)";
 
+
                     tile.style.filter =
-                        "brightness(1.2)";
+                        "brightness(1.25)";
 
                 }
+
+
+                tile.setAttribute(
+                    "aria-label",
+                    "Puzzle tile " +
+                    (tileValue + 1)
+                );
 
 
                 tile.addEventListener(
@@ -1263,26 +1384,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SELECT / SWAP TILES
+       SELECT TILE / SWAP TWO TILES
     ===================================================== */
 
     function selectPuzzleTile(index) {
 
         /*
-           First click
+           FIRST CLICK
         */
 
         if (
-            selectedTileIndex === null
+            selectedTileIndex ===
+            null
         ) {
 
             selectedTileIndex =
                 index;
 
 
+            /*
+               Timer starts on first
+               tile selection.
+            */
+
             if (!puzzleStarted) {
 
-                puzzleStarted = true;
+                puzzleStarted =
+                    true;
+
 
                 startPuzzleTimer();
 
@@ -1297,8 +1426,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-           Clicking same tile again
-           cancels selection.
+           CLICK SAME TILE AGAIN
+           Cancels selection.
         */
 
         if (
@@ -1309,6 +1438,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedTileIndex =
                 null;
 
+
             renderPuzzle();
 
             return;
@@ -1317,8 +1447,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-           Second tile selected.
-           SWAP BOTH TILES.
+           SECOND CLICK
+
+           Swap first selected tile
+           with second selected tile.
         */
 
         const firstIndex =
@@ -1342,7 +1474,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-           One swap = one move
+           One swap = one move.
         */
 
         moves++;
@@ -1359,12 +1491,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /*
-           Check if image is complete.
+           Check completed image.
         */
 
         if (isPuzzleSolved()) {
 
             stopPuzzleTimer();
+
 
             showPuzzleCompletion();
 
@@ -1374,7 +1507,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       CHECK PUZZLE SOLVED
+       CHECK SOLUTION
     ===================================================== */
 
     function isPuzzleSolved() {
@@ -1416,6 +1549,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     timerSeconds++;
 
+
                     updatePuzzleStats();
 
                 },
@@ -1428,12 +1562,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function stopPuzzleTimer() {
 
         if (
-            timerInterval !== null
+            timerInterval !==
+            null
         ) {
 
             clearInterval(
                 timerInterval
             );
+
 
             timerInterval =
                 null;
@@ -1451,6 +1587,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const timer =
             get("timer");
+
 
         const movesDisplay =
             get("moves");
@@ -1522,7 +1659,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       PUZZLE COMPLETION
+       PUZZLE COMPLETION MODAL
     ===================================================== */
 
     function showPuzzleCompletion() {
@@ -1603,30 +1740,49 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
 
-    let currentQuestionIndex = 0;
+    let currentQuestionIndex =
+        0;
 
 
     const journalQuestion =
         get("journalQuestion");
 
+
     const journalAnswer =
         get("journalAnswer");
+
 
     const addAnswerBtn =
         get("addAnswerBtn");
 
+
     const savedAnswers =
         get("savedAnswers");
+
 
     const freeJournal =
         get("freeJournal");
 
+
     const sendJournalBtn =
         get("sendJournalBtn");
+
 
     const journalStatus =
         get("journalStatus");
 
+
+    /*
+       All answers stored here.
+    */
+
+    let allJournalAnswers =
+        [];
+
+
+    /* =====================================================
+       SHOW RANDOM QUESTION
+    ===================================================== */
 
     function showRandomQuestion() {
 
@@ -1657,6 +1813,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+
+    /* =====================================================
+       DISPLAY SAVED ANSWER
+    ===================================================== */
 
     function addSavedAnswer(
         question,
@@ -1715,106 +1875,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    async function sendSingleJournalAnswer(
-        question,
-        answer
-    ) {
-
-        try {
-
-            const formData =
-                new FormData();
-
-
-            formData.append(
-                "_subject",
-                "Birthday Journal Answer 💖"
-            );
-
-
-            formData.append(
-                "Question",
-                question
-            );
-
-
-            formData.append(
-                "Answer",
-                answer
-            );
-
-
-            formData.append(
-                "Website",
-                "Birthday Website"
-            );
-
-
-            const response =
-                await fetch(
-                    "https://formsubmit.co/ajax/rakeshnanikengam1922@gmail.com",
-                    {
-                        method: "POST",
-                        body: formData,
-                        headers: {
-                            Accept:
-                                "application/json"
-                        }
-                    }
-                );
-
-
-            if (
-                response.ok
-            ) {
-
-                console.log(
-                    "Journal answer sent successfully"
-                );
-
-
-                if (journalStatus) {
-
-                    journalStatus.textContent =
-                        "Answer sent successfully 💖";
-
-                }
-
-            } else {
-
-                console.error(
-                    "Could not send journal answer"
-                );
-
-
-                if (journalStatus) {
-
-                    journalStatus.textContent =
-                        "Answer saved, but email could not be sent.";
-
-                }
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "Journal email error:",
-                error
-            );
-
-
-            if (journalStatus) {
-
-                journalStatus.textContent =
-                    "Answer saved locally. Email could not be sent.";
-
-            }
-
-        }
-
-    }
-
+    /* =====================================================
+       ADD CURRENT ANSWER
+    ===================================================== */
 
     function addCurrentAnswer() {
 
@@ -1848,13 +1911,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 : "Birthday Journal";
 
 
+        /*
+           Store answer.
+        */
+
+        allJournalAnswers.push({
+
+            question:
+                question,
+
+            answer:
+                answer
+
+        });
+
+
+        /*
+           Display answer.
+        */
+
         addSavedAnswer(
-            question,
-            answer
-        );
-
-
-        sendSingleJournalAnswer(
             question,
             answer
         );
@@ -1863,10 +1939,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (journalStatus) {
 
             journalStatus.textContent =
-                "Sending your answer... 💌";
+                "Answer saved 💖";
 
         }
 
+
+        /*
+           Show next question.
+        */
 
         setTimeout(
             function () {
@@ -1880,38 +1960,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    if (addAnswerBtn) {
+    /* =====================================================
+       SEND ALL ANSWERS
+    ===================================================== */
 
-        addAnswerBtn.addEventListener(
-            "click",
-            addCurrentAnswer
-        );
+    async function sendAllJournalAnswers() {
 
-    }
+        /*
+           Need at least one saved answer
+           OR free journal text.
+        */
 
-
-    async function sendFreeJournal() {
-
-        if (!freeJournal) {
-            return;
-        }
-
-
-        const text =
-            freeJournal.value.trim();
-
-
-        if (!text) {
+        if (
+            allJournalAnswers.length === 0 &&
+            (
+                !freeJournal ||
+                !freeJournal.value.trim()
+            )
+        ) {
 
             if (journalStatus) {
 
                 journalStatus.textContent =
-                    "Please write something first ✨";
+                    "Please add at least one answer first ✨";
 
             }
 
 
             return;
+
+        }
+
+
+        if (journalStatus) {
+
+            journalStatus.textContent =
+                "Sending your answers... 💌";
 
         }
 
@@ -1924,13 +2008,74 @@ document.addEventListener("DOMContentLoaded", function () {
 
             formData.append(
                 "_subject",
-                "Birthday Free Journal 💖"
+                "Birthday Journal Answers 💖"
+            );
+
+
+            /*
+               Create one complete message
+               containing all saved answers.
+            */
+
+            let completeAnswers =
+                "";
+
+
+            allJournalAnswers.forEach(
+                function (
+                    item,
+                    index
+                ) {
+
+                    completeAnswers +=
+                        "Answer " +
+                        (index + 1) +
+                        ":\n";
+
+
+                    completeAnswers +=
+                        "Question: " +
+                        item.question +
+                        "\n";
+
+
+                    completeAnswers +=
+                        "Answer: " +
+                        item.answer +
+                        "\n\n";
+
+                }
+            );
+
+
+            /*
+               Add free journal text.
+            */
+
+            if (
+                freeJournal &&
+                freeJournal.value.trim()
+            ) {
+
+                completeAnswers +=
+                    "FREE JOURNAL:\n\n" +
+                    freeJournal.value.trim() +
+                    "\n";
+
+            }
+
+
+            formData.append(
+                "Birthday Journal",
+                completeAnswers
             );
 
 
             formData.append(
-                "Journal",
-                text
+                "Total Answers",
+                String(
+                    allJournalAnswers.length
+                )
             );
 
 
@@ -1940,16 +2085,26 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
+            /*
+               SEND EMAIL
+            */
+
             const response =
                 await fetch(
                     "https://formsubmit.co/ajax/rakeshnanikengam1922@gmail.com",
                     {
                         method: "POST",
-                        body: formData,
+
+                        body:
+                            formData,
+
                         headers: {
+
                             Accept:
                                 "application/json"
+
                         }
+
                     }
                 );
 
@@ -1959,7 +2114,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (journalStatus) {
 
                     journalStatus.textContent =
-                        "Your journal was sent successfully 💖";
+                        "All your answers were sent successfully 💖📩";
+
+                }
+
+
+                /*
+                   Clear stored answers
+                   after successful email.
+                */
+
+                allJournalAnswers =
+                    [];
+
+
+                if (freeJournal) {
+
+                    freeJournal.value =
+                        "";
 
                 }
 
@@ -1968,7 +2140,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (journalStatus) {
 
                     journalStatus.textContent =
-                        "Could not send the journal.";
+                        "Could not send the answers. Please try again.";
 
                 }
 
@@ -1977,7 +2149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
 
             console.error(
-                "Free journal error:",
+                "Journal email error:",
                 error
             );
 
@@ -1985,7 +2157,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (journalStatus) {
 
                 journalStatus.textContent =
-                    "Could not send the journal.";
+                    "Email could not be sent. Please try again.";
 
             }
 
@@ -1994,22 +2166,40 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    if (sendJournalBtn) {
+    /* =====================================================
+       JOURNAL BUTTON EVENTS
+    ===================================================== */
 
-        sendJournalBtn.addEventListener(
+    if (addAnswerBtn) {
+
+        addAnswerBtn.addEventListener(
             "click",
-            sendFreeJournal
+            addCurrentAnswer
         );
 
     }
 
+
+    if (sendJournalBtn) {
+
+        sendJournalBtn.addEventListener(
+            "click",
+            sendAllJournalAnswers
+        );
+
+    }
+
+
+    /* =====================================================
+       START JOURNAL
+    ===================================================== */
 
     showRandomQuestion();
 
 
     /* =====================================================
        REMOVE DIFFICULTY OPTION
-       PUZZLE IS ALWAYS 3 × 3
+       PUZZLE ALWAYS 3 × 3
     ===================================================== */
 
     const difficulty =
