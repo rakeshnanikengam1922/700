@@ -1,372 +1,373 @@
+/* =====================================================
+   BIRTHDAY WEBSITE - COMPLETE SCRIPT
+===================================================== */
+
 alert("SCRIPT STARTED ✅");
+
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log("DOM LOADED");
-
-    initializeNavigation();
-    initializeCelebration();
-    initializeGallery();
-    initializeFullscreenGallery();
-    initializeSurprise();
-    initializePuzzle();
-    initializeJournal();
-
-    console.log("ALL FEATURES INITIALIZED ✅");
-
-});
+    console.log("Birthday website script loaded successfully");
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+    /* =====================================================
+       GENERAL HELPERS
+    ===================================================== */
 
-function initializeNavigation() {
+    function get(id) {
+        return document.getElementById(id);
+    }
 
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
 
-    if (menuToggle && navLinks) {
+    /* =====================================================
+       CELEBRATION / CONFETTI
+    ===================================================== */
 
-        menuToggle.addEventListener("click", function () {
-            navLinks.classList.toggle("active");
-        });
+    function createConfetti(amount = 80) {
+
+        for (let i = 0; i < amount; i++) {
+
+            const confetti =
+                document.createElement("div");
+
+            confetti.className =
+                "confetti-piece";
+
+            confetti.textContent =
+                ["🎉", "✨", "💖", "🎊", "🌸", "🥳"][
+                    Math.floor(
+                        Math.random() * 6
+                    )
+                ];
+
+            confetti.style.position =
+                "fixed";
+
+            confetti.style.left =
+                Math.random() * 100 + "%";
+
+            confetti.style.top =
+                "-30px";
+
+            confetti.style.fontSize =
+                (14 + Math.random() * 18) + "px";
+
+            confetti.style.zIndex =
+                "99999";
+
+            confetti.style.pointerEvents =
+                "none";
+
+            confetti.style.transition =
+                "transform 3s linear, opacity 3s linear";
+
+            document.body.appendChild(
+                confetti
+            );
+
+
+            const fallDistance =
+                window.innerHeight +
+                100;
+
+
+            const rotation =
+                Math.random() * 1000 -
+                500;
+
+
+            requestAnimationFrame(
+                function () {
+
+                    confetti.style.transform =
+                        "translateY(" +
+                        fallDistance +
+                        "px) rotate(" +
+                        rotation +
+                        "deg)";
+
+                    confetti.style.opacity =
+                        "0";
+
+                }
+            );
+
+
+            setTimeout(
+                function () {
+
+                    confetti.remove();
+
+                },
+                3200
+            );
+
+        }
 
     }
 
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 
-        anchor.addEventListener("click", function (e) {
+    window.createConfetti =
+        createConfetti;
 
-            const targetId = this.getAttribute("href");
 
-            if (!targetId || targetId === "#") {
-                return;
-            }
+    /* =====================================================
+       CELEBRATE BUTTON
+    ===================================================== */
 
-            const target = document.querySelector(targetId);
+    const celebrateBtn =
+        get("celebrateBtn");
 
-            if (target) {
 
-                e.preventDefault();
+    if (celebrateBtn) {
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
+        celebrateBtn.addEventListener(
+            "click",
+            function () {
 
-                if (navLinks) {
-                    navLinks.classList.remove("active");
+                createConfetti(120);
+
+
+                const cake =
+                    document.querySelector(
+                        ".birthday-cake"
+                    );
+
+
+                if (cake) {
+
+                    cake.classList.remove(
+                        "cake-pop"
+                    );
+
+
+                    void cake.offsetWidth;
+
+
+                    cake.classList.add(
+                        "cake-pop"
+                    );
+
                 }
 
             }
+        );
 
-        });
-
-    });
-
-}
-
-
-/* =====================================================
-   CELEBRATE
-===================================================== */
-
-function initializeCelebration() {
-
-    const button = document.getElementById("celebrateBtn");
-
-    if (!button) {
-        console.error("Celebrate button NOT FOUND");
-        return;
     }
 
-    console.log("Celebrate initialized");
 
-    button.addEventListener("click", function () {
+    /* =====================================================
+       GALLERY
+    ===================================================== */
 
-        console.log("CELEBRATE CLICKED 🎉");
+    const galleryCaptions = [
 
-        createConfetti(120);
+        "A beautiful birthday memory ✨",
 
-        const cake = document.getElementById("cakeEmoji");
+        "A special moment to remember 💖",
 
-        if (cake) {
+        "Sweet memories 🥰",
 
-            cake.classList.add("cake-pop");
+        "A precious moment 🌸",
 
-            setTimeout(function () {
-                cake.classList.remove("cake-pop");
-            }, 700);
+        "An amazing memory 💫",
 
-        }
+        "A fun memory 📸",
 
-        button.textContent = "🎉 Celebration Started! 🎉";
+        "A memory to keep forever ❤️"
 
-        setTimeout(function () {
-            button.textContent = "🎉 Celebrate";
-        }, 2000);
-
-    });
-
-}
-
-
-/* =====================================================
-   CONFETTI
-===================================================== */
-
-function createConfetti(amount) {
-
-    amount = amount || 60;
-
-    const container = document.createElement("div");
-
-    container.className = "confetti-container";
-
-    document.body.appendChild(container);
-
-    const symbols = [
-        "🎉",
-        "🎊",
-        "✨",
-        "💖",
-        "🌸",
-        "🥳",
-        "❤️"
     ];
 
-    for (let i = 0; i < amount; i++) {
 
-        const piece = document.createElement("span");
-
-        piece.className = "confetti-piece";
-
-        piece.textContent =
-            symbols[Math.floor(Math.random() * symbols.length)];
-
-        piece.style.left = Math.random() * 100 + "vw";
-
-        piece.style.animationDelay =
-            Math.random() * 0.6 + "s";
-
-        piece.style.fontSize =
-            (16 + Math.random() * 18) + "px";
-
-        container.appendChild(piece);
-
-    }
-
-    setTimeout(function () {
-
-        if (container) {
-            container.remove();
-        }
-
-    }, 4500);
-
-}
+    const galleryItems =
+        document.querySelectorAll(
+            ".gallery-item"
+        );
 
 
-/* =====================================================
-   GALLERY
-===================================================== */
-
-const galleryImages = [
-    "IMG-20240822-WA0003.jpg",
-    "IMG-20240904-WA0003.jpg",
-    "IMG_2647.jpg",
-    "NPTL3186.JPG",
-    "OLSB4991.JPG",
-    "Snapchat-1779683539.jpg",
-    "Snapchat-2018150645.jpg"
-];
-
-const galleryCaptions = [
-    "A beautiful birthday memory ✨",
-    "A special moment to remember 💖",
-    "Sweet memories 🥰",
-    "A precious moment 🌸",
-    "An amazing memory 💫",
-    "A fun memory 📸",
-    "A memory to keep forever ❤️"
-];
+    const galleryLightbox =
+        get("galleryLightbox");
 
 
-function initializeGallery() {
-
-    const gridButton =
-        document.getElementById("gridViewBtn");
-
-    const slideshowButton =
-        document.getElementById("slideshowViewBtn");
-
-    const grid =
-        document.getElementById("galleryGrid");
-
-    const slideshow =
-        document.getElementById("gallerySlideshow");
-
-    if (!gridButton || !slideshowButton) {
-        return;
-    }
+    const lightboxImage =
+        get("lightboxImage");
 
 
-    gridButton.addEventListener("click", function () {
-
-        if (grid) {
-            grid.style.display = "grid";
-        }
-
-        if (slideshow) {
-            slideshow.style.display = "none";
-        }
-
-        gridButton.classList.add("active");
-        slideshowButton.classList.remove("active");
-
-    });
+    const lightboxCaption =
+        get("lightboxCaption");
 
 
-    slideshowButton.addEventListener("click", function () {
-
-        if (grid) {
-            grid.style.display = "none";
-        }
-
-        if (slideshow) {
-            slideshow.style.display = "block";
-        }
-
-        slideshowButton.classList.add("active");
-        gridButton.classList.remove("active");
-
-    });
+    const lightboxClose =
+        get("lightboxClose");
 
 
-    initializeSlideshow();
-
-}
-
-
-/* =====================================================
-   SLIDESHOW
-===================================================== */
-
-let currentSlide = 0;
+    const lightboxPrev =
+        get("lightboxPrev");
 
 
-function initializeSlideshow() {
-
-    const slides =
-        document.querySelectorAll(".slide");
-
-    const indicators =
-        document.querySelectorAll(".indicator");
-
-    const previous =
-        document.getElementById("prevSlide");
-
-    const next =
-        document.getElementById("nextSlide");
+    const lightboxNext =
+        get("lightboxNext");
 
 
-    function showSlide(index) {
+    let currentGalleryIndex =
+        0;
 
-        if (!slides.length) {
+
+    function openLightbox(index) {
+
+        if (!galleryItems.length) {
             return;
         }
 
-        currentSlide =
-            (index + slides.length) % slides.length;
+
+        currentGalleryIndex =
+            index;
 
 
-        slides.forEach(function (slide, i) {
+        const item =
+            galleryItems[
+                currentGalleryIndex
+            ];
 
-            slide.classList.toggle(
-                "active",
-                i === currentSlide
+
+        const image =
+            item.querySelector("img");
+
+
+        if (!image) {
+            return;
+        }
+
+
+        if (lightboxImage) {
+
+            lightboxImage.src =
+                image.src;
+
+            lightboxImage.alt =
+                image.alt ||
+                "Birthday memory";
+
+        }
+
+
+        if (lightboxCaption) {
+
+            lightboxCaption.textContent =
+                galleryCaptions[
+                    currentGalleryIndex
+                ] ||
+                "A beautiful memory ✨";
+
+        }
+
+
+        if (galleryLightbox) {
+
+            galleryLightbox.classList.add(
+                "active"
             );
 
-        });
 
-
-        indicators.forEach(function (indicator, i) {
-
-            indicator.classList.toggle(
-                "active",
-                i === currentSlide
+            galleryLightbox.setAttribute(
+                "aria-hidden",
+                "false"
             );
 
-        });
+        }
 
     }
 
 
-    if (previous) {
+    function closeLightbox() {
 
-        previous.addEventListener("click", function () {
-            showSlide(currentSlide - 1);
-        });
+        if (!galleryLightbox) {
+            return;
+        }
+
+
+        galleryLightbox.classList.remove(
+            "active"
+        );
+
+
+        galleryLightbox.setAttribute(
+            "aria-hidden",
+            "true"
+        );
 
     }
 
 
-    if (next) {
+    function showPreviousGalleryImage() {
 
-        next.addEventListener("click", function () {
-            showSlide(currentSlide + 1);
-        });
+        if (!galleryItems.length) {
+            return;
+        }
+
+
+        currentGalleryIndex--;
+
+        if (currentGalleryIndex < 0) {
+
+            currentGalleryIndex =
+                galleryItems.length - 1;
+
+        }
+
+
+        openLightbox(
+            currentGalleryIndex
+        );
 
     }
 
 
-    indicators.forEach(function (indicator, index) {
+    function showNextGalleryImage() {
 
-        indicator.addEventListener("click", function () {
-            showSlide(index);
-        });
-
-    });
-
-}
+        if (!galleryItems.length) {
+            return;
+        }
 
 
-/* =====================================================
-   FULLSCREEN GALLERY
-===================================================== */
+        currentGalleryIndex++;
 
-let lightboxIndex = 0;
+        if (
+            currentGalleryIndex >=
+            galleryItems.length
+        ) {
 
+            currentGalleryIndex = 0;
 
-function initializeFullscreenGallery() {
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-    const close =
-        document.getElementById("lightboxClose");
-
-    const previous =
-        document.getElementById("lightboxPrev");
-
-    const next =
-        document.getElementById("lightboxNext");
+        }
 
 
-    document.querySelectorAll(".gallery-item")
-        .forEach(function (item, index) {
+        openLightbox(
+            currentGalleryIndex
+        );
 
-            item.addEventListener("click", function () {
-                openLightbox(index);
-            });
-
-        });
+    }
 
 
-    if (close) {
+    galleryItems.forEach(
+        function (item, index) {
 
-        close.addEventListener(
+            item.addEventListener(
+                "click",
+                function () {
+
+                    openLightbox(index);
+
+                }
+            );
+
+        }
+    );
+
+
+    if (lightboxClose) {
+
+        lightboxClose.addEventListener(
             "click",
             closeLightbox
         );
@@ -374,335 +375,390 @@ function initializeFullscreenGallery() {
     }
 
 
-    if (previous) {
+    if (lightboxPrev) {
 
-        previous.addEventListener("click", function () {
-            changeLightboxImage(-1);
-        });
-
-    }
-
-
-    if (next) {
-
-        next.addEventListener("click", function () {
-            changeLightboxImage(1);
-        });
+        lightboxPrev.addEventListener(
+            "click",
+            showPreviousGalleryImage
+        );
 
     }
 
 
-    if (lightbox) {
+    if (lightboxNext) {
 
-        lightbox.addEventListener("click", function (e) {
+        lightboxNext.addEventListener(
+            "click",
+            showNextGalleryImage
+        );
 
-            if (e.target === lightbox) {
-                closeLightbox();
+    }
+
+
+    if (galleryLightbox) {
+
+        galleryLightbox.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    galleryLightbox
+                ) {
+
+                    closeLightbox();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                !galleryLightbox ||
+                !galleryLightbox.classList.contains(
+                    "active"
+                )
+            ) {
+
+                return;
+
             }
 
-        });
 
-    }
+            if (event.key === "Escape") {
+
+                closeLightbox();
+
+            }
 
 
-    document.addEventListener("keydown", function (e) {
+            if (event.key === "ArrowLeft") {
 
-        if (!lightbox) {
-            return;
+                showPreviousGalleryImage();
+
+            }
+
+
+            if (event.key === "ArrowRight") {
+
+                showNextGalleryImage();
+
+            }
+
         }
-
-        if (lightbox.getAttribute("aria-hidden") === "true") {
-            return;
-        }
-
-        if (e.key === "Escape") {
-            closeLightbox();
-        }
-
-        if (e.key === "ArrowLeft") {
-            changeLightboxImage(-1);
-        }
-
-        if (e.key === "ArrowRight") {
-            changeLightboxImage(1);
-        }
-
-    });
-
-}
-
-
-function openLightbox(index) {
-
-    lightboxIndex = index;
-
-    updateLightbox();
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-    if (!lightbox) {
-        return;
-    }
-
-    lightbox.classList.add("active");
-
-    lightbox.setAttribute(
-        "aria-hidden",
-        "false"
     );
 
-    document.body.style.overflow = "hidden";
 
-}
+    /* =====================================================
+       GALLERY SLIDESHOW
+    ===================================================== */
 
-
-function updateLightbox() {
-
-    const image =
-        document.getElementById("lightboxImage");
-
-    const caption =
-        document.getElementById("lightboxCaption");
-
-    const counter =
-        document.getElementById("lightboxCounter");
-
-
-    if (image) {
-
-        image.src =
-            "./" + galleryImages[lightboxIndex];
-
-        image.alt =
-            "Memory " + (lightboxIndex + 1);
-
-    }
-
-
-    if (caption) {
-
-        caption.textContent =
-            galleryCaptions[lightboxIndex];
-
-    }
-
-
-    if (counter) {
-
-        counter.textContent =
-            (lightboxIndex + 1) +
-            " / " +
-            galleryImages.length;
-
-    }
-
-}
-
-
-function changeLightboxImage(direction) {
-
-    lightboxIndex =
-        (
-            lightboxIndex +
-            direction +
-            galleryImages.length
-        ) %
-        galleryImages.length;
-
-    updateLightbox();
-
-}
-
-
-function closeLightbox() {
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-    if (!lightbox) {
-        return;
-    }
-
-    lightbox.classList.remove("active");
-
-    lightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* =====================================================
-   SURPRISE / SECRET MESSAGE
-===================================================== */
-
-function initializeSurprise() {
-
-    const button =
-        document.getElementById("surpriseBtn");
-
-    const modal =
-        document.getElementById("surpriseModal");
-
-    const close =
-        document.getElementById("surpriseClose");
-
-    const celebrate =
-        document.getElementById("surpriseCelebrate");
-
-
-    if (!button || !modal) {
-        console.error("Surprise elements NOT FOUND");
-        return;
-    }
-
-
-    console.log("Surprise initialized");
-
-
-    button.addEventListener("click", function () {
-
-        modal.classList.add("active");
-
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
+    const slideshow =
+        document.querySelector(
+            ".gallery-slideshow"
         );
 
-        document.body.style.overflow = "hidden";
 
-        createConfetti(80);
+    if (slideshow) {
 
-    });
+        const slides =
+            slideshow.querySelectorAll(
+                "img"
+            );
 
 
-    if (close) {
+        const prev =
+            slideshow.querySelector(
+                ".prev"
+            );
 
-        close.addEventListener(
+
+        const next =
+            slideshow.querySelector(
+                ".next"
+            );
+
+
+        const indicators =
+            slideshow.querySelector(
+                ".slide-indicators"
+            );
+
+
+        let slideIndex = 0;
+
+
+        function showSlide(index) {
+
+            if (!slides.length) {
+                return;
+            }
+
+
+            slideIndex = index;
+
+
+            if (slideIndex < 0) {
+
+                slideIndex =
+                    slides.length - 1;
+
+            }
+
+
+            if (
+                slideIndex >=
+                slides.length
+            ) {
+
+                slideIndex = 0;
+
+            }
+
+
+            slides.forEach(
+                function (slide, i) {
+
+                    slide.style.display =
+                        i === slideIndex
+                            ? "block"
+                            : "none";
+
+                }
+            );
+
+
+            if (indicators) {
+
+                const dots =
+                    indicators.querySelectorAll(
+                        "button"
+                    );
+
+
+                dots.forEach(
+                    function (dot, i) {
+
+                        dot.classList.toggle(
+                            "active",
+                            i === slideIndex
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        if (prev) {
+
+            prev.addEventListener(
+                "click",
+                function () {
+
+                    showSlide(
+                        slideIndex - 1
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (next) {
+
+            next.addEventListener(
+                "click",
+                function () {
+
+                    showSlide(
+                        slideIndex + 1
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (indicators) {
+
+            indicators.innerHTML = "";
+
+
+            slides.forEach(
+                function (_, index) {
+
+                    const dot =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    dot.type =
+                        "button";
+
+
+                    dot.setAttribute(
+                        "aria-label",
+                        "Show image " +
+                        (index + 1)
+                    );
+
+
+                    dot.addEventListener(
+                        "click",
+                        function () {
+
+                            showSlide(index);
+
+                        }
+                    );
+
+
+                    indicators.appendChild(
+                        dot
+                    );
+
+                }
+            );
+
+        }
+
+
+        showSlide(0);
+
+
+        /* Slideshow image opens lightbox */
+
+        slides.forEach(
+            function (slide, index) {
+
+                slide.style.cursor =
+                    "pointer";
+
+
+                slide.addEventListener(
+                    "click",
+                    function () {
+
+                        if (lightboxImage) {
+
+                            lightboxImage.src =
+                                slide.src;
+
+                            lightboxImage.alt =
+                                slide.alt ||
+                                "Birthday memory";
+
+                        }
+
+
+                        if (lightboxCaption) {
+
+                            lightboxCaption.textContent =
+                                galleryCaptions[index] ||
+                                "A beautiful memory ✨";
+
+                        }
+
+
+                        if (galleryLightbox) {
+
+                            galleryLightbox.classList.add(
+                                "active"
+                            );
+
+                            galleryLightbox.setAttribute(
+                                "aria-hidden",
+                                "false"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SURPRISE MODAL
+    ===================================================== */
+
+    const surpriseBtn =
+        get("surpriseBtn");
+
+
+    const surpriseModal =
+        get("surpriseModal");
+
+
+    const surpriseClose =
+        get("surpriseClose");
+
+
+    if (surpriseBtn) {
+
+        surpriseBtn.addEventListener(
             "click",
-            closeSurprise
-        );
-
-    }
-
-
-    if (celebrate) {
-
-        celebrate.addEventListener("click", function () {
-
-            closeSurprise();
-
-            createConfetti(120);
-
-        });
-
-    }
-
-
-    modal.addEventListener("click", function (e) {
-
-        if (e.target === modal) {
-            closeSurprise();
-        }
-
-    });
-
-}
-
-
-function closeSurprise() {
-
-    const modal =
-        document.getElementById("surpriseModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove("active");
-
-    modal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* =====================================================
-   PUZZLE
-===================================================== */
-
-const puzzleImages = [
-    "IMG-20240822-WA0003.jpg",
-    "IMG-20240904-WA0003.jpg",
-    "IMG_2647.jpg",
-    "NPTL3186.JPG",
-    "OLSB4991.JPG",
-    "Snapchat-1779683539.jpg",
-    "Snapchat-2018150645.jpg"
-];
-
-
-let puzzleImage = puzzleImages[0];
-let puzzleSize = 4;
-let puzzleTiles = [];
-let emptyIndex = 0;
-let moves = 0;
-let timerSeconds = 0;
-let timerInterval = null;
-let puzzleStarted = false;
-
-
-function initializePuzzle() {
-
-    const container =
-        document.getElementById("puzzleContainer");
-
-    const difficulty =
-        document.getElementById("difficulty");
-
-    const newGame =
-        document.getElementById("newGameBtn");
-
-    const solution =
-        document.getElementById("showSolutionBtn");
-
-    const playAgain =
-        document.getElementById("playAgainBtn");
-
-    const completionClose =
-        document.getElementById("completionClose");
-
-
-    if (!container) {
-        console.error("Puzzle container NOT FOUND");
-        return;
-    }
-
-
-    console.log("Puzzle initialized");
-
-
-    if (difficulty) {
-
-        puzzleSize =
-            parseInt(difficulty.value, 10) || 4;
-
-        difficulty.addEventListener(
-            "change",
             function () {
 
-                puzzleSize =
-                    parseInt(difficulty.value, 10) || 4;
+                if (surpriseModal) {
 
-                startNewGame();
+                    surpriseModal.classList.add(
+                        "active"
+                    );
+
+
+                    surpriseModal.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+                }
+
+
+                createConfetti(80);
+
+            }
+        );
+
+    }
+
+
+    if (surpriseClose) {
+
+        surpriseClose.addEventListener(
+            "click",
+            function () {
+
+                if (surpriseModal) {
+
+                    surpriseModal.classList.remove(
+                        "active"
+                    );
+
+
+                    surpriseModal.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                }
 
             }
         );
@@ -710,193 +766,300 @@ function initializePuzzle() {
     }
 
 
-    if (newGame) {
-        newGame.addEventListener(
+    if (surpriseModal) {
+
+        surpriseModal.addEventListener(
             "click",
-            startNewGame
-        );
-    }
+            function (event) {
+
+                if (
+                    event.target ===
+                    surpriseModal
+                ) {
+
+                    surpriseModal.classList.remove(
+                        "active"
+                    );
 
 
-    if (playAgain) {
-        playAgain.addEventListener(
-            "click",
-            startNewGame
-        );
-    }
+                    surpriseModal.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
 
+                }
 
-    if (solution) {
-        solution.addEventListener(
-            "click",
-            showSolution
-        );
-    }
-
-
-    if (completionClose) {
-        completionClose.addEventListener(
-            "click",
-            closeCompletion
-        );
-    }
-
-
-    startNewGame();
-
-}
-
-
-function startNewGame() {
-
-    stopPuzzleTimer();
-
-    moves = 0;
-    timerSeconds = 0;
-    puzzleStarted = false;
-
-    selectPuzzleImage();
-
-    createPuzzle();
-
-    updatePuzzleStats();
-
-}
-
-
-function selectPuzzleImage() {
-
-    if (puzzleImages.length === 0) {
-        return;
-    }
-
-    if (puzzleImages.length === 1) {
-        puzzleImage = puzzleImages[0];
-        return;
-    }
-
-    let selected;
-
-    do {
-
-        selected =
-            puzzleImages[
-                Math.floor(
-                    Math.random() *
-                    puzzleImages.length
-                )
-            ];
-
-    } while (
-        selected === puzzleImage
-    );
-
-    puzzleImage = selected;
-
-}
-
-
-function createPuzzle() {
-
-    const container =
-        document.getElementById("puzzleContainer");
-
-    if (!container) {
-        return;
-    }
-
-
-    const total =
-        puzzleSize * puzzleSize;
-
-
-    puzzleTiles =
-        Array.from(
-            { length: total },
-            function (_, index) {
-                return index;
             }
         );
 
-
-    puzzleTiles[total - 1] = null;
-
-    emptyIndex = total - 1;
+    }
 
 
-    /*
-       Shuffle by making legal moves.
-       This guarantees the puzzle is solvable.
-    */
+    /* =====================================================
+       PUZZLE — ONLY 3 × 3
+    ===================================================== */
 
-    for (let i = 0; i < 250; i++) {
+    const puzzleImages = [
 
-        const possibleMoves = [];
+        "IMG-20240822-WA0003.jpg",
+
+        "IMG-20240904-WA0003.jpg",
+
+        "IMG_2647.jpg",
+
+        "NPTL3186.JPG",
+
+        "OLSB4991.JPG",
+
+        "Snapchat-1779683539.jpg",
+
+        "Snapchat-2018150645.jpg"
+
+    ];
 
 
-        for (let j = 0; j < total; j++) {
+    let puzzleImage =
+        puzzleImages[0];
 
-            if (
-                puzzleTiles[j] !== null &&
-                isAdjacent(j, emptyIndex)
-            ) {
 
-                possibleMoves.push(j);
+    const puzzleSize = 3;
 
-            }
+
+    let puzzleTiles = [];
+
+    let emptyIndex = 8;
+
+    let moves = 0;
+
+    let timerSeconds = 0;
+
+    let timerInterval = null;
+
+    let puzzleStarted = false;
+
+
+    function initializePuzzle() {
+
+        const container =
+            get("puzzleContainer");
+
+
+        const newGame =
+            get("newGameBtn");
+
+
+        const solution =
+            get("showSolutionBtn");
+
+
+        const playAgain =
+            get("playAgainBtn");
+
+
+        const completionClose =
+            get("completionClose");
+
+
+        if (!container) {
+
+            console.error(
+                "Puzzle container NOT FOUND"
+            );
+
+            return;
 
         }
 
 
-        if (!possibleMoves.length) {
-            break;
+        console.log(
+            "Puzzle initialized — 3x3"
+        );
+
+
+        if (newGame) {
+
+            newGame.addEventListener(
+                "click",
+                startNewGame
+            );
+
         }
 
 
-        const randomIndex =
-            possibleMoves[
-                Math.floor(
-                    Math.random() *
-                    possibleMoves.length
-                )
-            ];
+        if (playAgain) {
+
+            playAgain.addEventListener(
+                "click",
+                startNewGame
+            );
+
+        }
 
 
-        puzzleTiles[emptyIndex] =
-            puzzleTiles[randomIndex];
+        if (solution) {
 
-        puzzleTiles[randomIndex] =
-            null;
+            solution.addEventListener(
+                "click",
+                showSolution
+            );
+
+        }
+
+
+        if (completionClose) {
+
+            completionClose.addEventListener(
+                "click",
+                closeCompletion
+            );
+
+        }
+
+
+        startNewGame();
+
+    }
+
+
+    function startNewGame() {
+
+        stopPuzzleTimer();
+
+
+        moves = 0;
+
+        timerSeconds = 0;
+
+        puzzleStarted = false;
+
+
+        selectPuzzleImage();
+
+        createPuzzle();
+
+        updatePuzzleStats();
+
+    }
+
+
+    function selectPuzzleImage() {
+
+        if (!puzzleImages.length) {
+            return;
+        }
+
+
+        if (puzzleImages.length === 1) {
+
+            puzzleImage =
+                puzzleImages[0];
+
+            return;
+
+        }
+
+
+        let selected;
+
+
+        do {
+
+            selected =
+                puzzleImages[
+                    Math.floor(
+                        Math.random() *
+                        puzzleImages.length
+                    )
+                ];
+
+        } while (
+            selected === puzzleImage
+        );
+
+
+        puzzleImage =
+            selected;
+
+    }
+
+
+    function createPuzzle() {
+
+        const container =
+            get("puzzleContainer");
+
+
+        if (!container) {
+            return;
+        }
+
+
+        const total =
+            puzzleSize *
+            puzzleSize;
+
+
+        puzzleTiles =
+            Array.from(
+                {
+                    length: total
+                },
+                function (_, index) {
+
+                    return index;
+
+                }
+            );
+
+
+        puzzleTiles[
+            total - 1
+        ] = null;
+
 
         emptyIndex =
-            randomIndex;
-
-    }
+            total - 1;
 
 
-    /*
-       Make sure it isn't already solved.
-    */
+        /*
+           Shuffle with legal moves.
+           Puzzle always remains solvable.
+        */
 
-    if (isPuzzleSolved()) {
+        for (
+            let i = 0;
+            i < 150;
+            i++
+        ) {
 
-        const possibleMoves = [];
+            const possibleMoves = [];
 
-        for (let j = 0; j < total; j++) {
 
-            if (
-                puzzleTiles[j] !== null &&
-                isAdjacent(j, emptyIndex)
+            for (
+                let j = 0;
+                j < total;
+                j++
             ) {
 
-                possibleMoves.push(j);
+                if (
+                    puzzleTiles[j] !== null &&
+                    isAdjacent(
+                        j,
+                        emptyIndex
+                    )
+                ) {
+
+                    possibleMoves.push(j);
+
+                }
 
             }
 
-        }
 
+            if (!possibleMoves.length) {
+                break;
+            }
 
-        if (possibleMoves.length) {
 
             const randomIndex =
                 possibleMoves[
@@ -910,105 +1073,246 @@ function createPuzzle() {
             puzzleTiles[emptyIndex] =
                 puzzleTiles[randomIndex];
 
+
             puzzleTiles[randomIndex] =
                 null;
+
 
             emptyIndex =
                 randomIndex;
 
         }
 
+
+        /*
+           Make sure puzzle isn't already solved.
+        */
+
+        if (isPuzzleSolved()) {
+
+            const possibleMoves = [];
+
+
+            for (
+                let j = 0;
+                j < total;
+                j++
+            ) {
+
+                if (
+                    puzzleTiles[j] !== null &&
+                    isAdjacent(
+                        j,
+                        emptyIndex
+                    )
+                ) {
+
+                    possibleMoves.push(j);
+
+                }
+
+            }
+
+
+            if (possibleMoves.length) {
+
+                const randomIndex =
+                    possibleMoves[
+                        Math.floor(
+                            Math.random() *
+                            possibleMoves.length
+                        )
+                    ];
+
+
+                puzzleTiles[emptyIndex] =
+                    puzzleTiles[randomIndex];
+
+
+                puzzleTiles[randomIndex] =
+                    null;
+
+
+                emptyIndex =
+                    randomIndex;
+
+            }
+
+        }
+
+
+        renderPuzzle();
+
+
+        const solutionImage =
+            get("solutionImage");
+
+
+        if (solutionImage) {
+
+            solutionImage.src =
+                "./" + puzzleImage;
+
+
+            solutionImage.alt =
+                "Puzzle solution";
+
+        }
+
+
+        const preview =
+            get("solutionPreview");
+
+
+        if (preview) {
+
+            preview.style.display =
+                "none";
+
+        }
+
     }
 
 
-    renderPuzzle();
+    function renderPuzzle() {
+
+        const container =
+            get("puzzleContainer");
 
 
-    const solutionImage =
-        document.getElementById("solutionImage");
-
-    if (solutionImage) {
-
-        solutionImage.src =
-            "./" + puzzleImage;
-
-        solutionImage.alt =
-            "Puzzle solution";
-
-    }
+        if (!container) {
+            return;
+        }
 
 
-    const preview =
-        document.getElementById("solutionPreview");
-
-    if (preview) {
-        preview.style.display = "none";
-    }
-
-}
+        container.innerHTML =
+            "";
 
 
-function renderPuzzle() {
-
-    const container =
-        document.getElementById("puzzleContainer");
-
-    if (!container) {
-        return;
-    }
+        container.style.gridTemplateColumns =
+            "repeat(3, 1fr)";
 
 
-    container.innerHTML = "";
+        puzzleTiles.forEach(
+            function (
+                tileValue,
+                index
+            ) {
 
-    container.style.gridTemplateColumns =
-        "repeat(" + puzzleSize + ", 1fr)";
-
-
-    puzzleTiles.forEach(
-        function (tileValue, index) {
-
-            const tile =
-                document.createElement("button");
-
-            tile.type = "button";
-
-            tile.className = "puzzle-tile";
-
-
-            if (tileValue === null) {
-
-                tile.classList.add("empty");
-
-            } else {
-
-                const row =
-                    Math.floor(
-                        tileValue / puzzleSize
+                const tile =
+                    document.createElement(
+                        "button"
                     );
 
-                const col =
-                    tileValue % puzzleSize;
+
+                tile.type =
+                    "button";
+
+
+                tile.className =
+                    "puzzle-tile";
 
 
                 /*
-                   IMPORTANT:
-                   Images are in the repository root.
+                   EMPTY TILE
+
+                   It displays the matching
+                   portion of the same image.
                 */
 
-                tile.style.backgroundImage =
-                    'url("./' + puzzleImage + '")';
+                if (
+                    tileValue === null
+                ) {
 
-                tile.style.backgroundRepeat =
-                    "no-repeat";
-
-                tile.style.backgroundSize =
-                    (puzzleSize * 100) +
-                    "% " +
-                    (puzzleSize * 100) +
-                    "%";
+                    tile.classList.add(
+                        "empty"
+                    );
 
 
-                if (puzzleSize > 1) {
+                    const emptyRow =
+                        Math.floor(
+                            emptyIndex /
+                            puzzleSize
+                        );
+
+
+                    const emptyCol =
+                        emptyIndex %
+                        puzzleSize;
+
+
+                    tile.style.backgroundImage =
+                        'url("./' +
+                        puzzleImage +
+                        '")';
+
+
+                    tile.style.backgroundRepeat =
+                        "no-repeat";
+
+
+                    tile.style.backgroundSize =
+                        (puzzleSize * 100) +
+                        "% " +
+                        (puzzleSize * 100) +
+                        "%";
+
+
+                    tile.style.backgroundPosition =
+                        (
+                            (emptyCol * 100) /
+                            (puzzleSize - 1)
+                        ) +
+                        "% " +
+                        (
+                            (emptyRow * 100) /
+                            (puzzleSize - 1)
+                        ) +
+                        "%";
+
+
+                    tile.setAttribute(
+                        "aria-label",
+                        "Empty puzzle space"
+                    );
+
+                }
+
+
+                /*
+                   NORMAL TILE
+                */
+
+                else {
+
+                    const row =
+                        Math.floor(
+                            tileValue /
+                            puzzleSize
+                        );
+
+
+                    const col =
+                        tileValue %
+                        puzzleSize;
+
+
+                    tile.style.backgroundImage =
+                        'url("./' +
+                        puzzleImage +
+                        '")';
+
+
+                    tile.style.backgroundRepeat =
+                        "no-repeat";
+
+
+                    tile.style.backgroundSize =
+                        (puzzleSize * 100) +
+                        "% " +
+                        (puzzleSize * 100) +
+                        "%";
+
 
                     tile.style.backgroundPosition =
                         (
@@ -1022,860 +1326,797 @@ function renderPuzzle() {
                         ) +
                         "%";
 
+
+                    tile.setAttribute(
+                        "aria-label",
+                        "Puzzle piece " +
+                        (tileValue + 1)
+                    );
+
+
+                    tile.addEventListener(
+                        "click",
+                        function () {
+
+                            movePuzzleTile(
+                                index
+                            );
+
+                        }
+                    );
+
                 }
 
 
-                tile.setAttribute(
-                    "aria-label",
-                    "Puzzle piece " +
-                    (tileValue + 1)
-                );
-
-
-                tile.addEventListener(
-                    "click",
-                    function () {
-                        movePuzzleTile(index);
-                    }
+                container.appendChild(
+                    tile
                 );
 
             }
+        );
+
+    }
 
 
-            container.appendChild(tile);
+    function movePuzzleTile(index) {
+
+        if (
+            !isAdjacent(
+                index,
+                emptyIndex
+            )
+        ) {
+
+            return;
 
         }
-    );
-
-}
 
 
-function movePuzzleTile(index) {
+        if (!puzzleStarted) {
 
-    if (!isAdjacent(index, emptyIndex)) {
-        return;
+            puzzleStarted = true;
+
+            startPuzzleTimer();
+
+        }
+
+
+        puzzleTiles[emptyIndex] =
+            puzzleTiles[index];
+
+
+        puzzleTiles[index] =
+            null;
+
+
+        emptyIndex =
+            index;
+
+
+        moves++;
+
+
+        updatePuzzleStats();
+
+
+        renderPuzzle();
+
+
+        if (isPuzzleSolved()) {
+
+            stopPuzzleTimer();
+
+            showPuzzleCompletion();
+
+        }
+
     }
 
 
-    if (!puzzleStarted) {
+    function isAdjacent(
+        index1,
+        index2
+    ) {
 
-        puzzleStarted = true;
+        const row1 =
+            Math.floor(
+                index1 /
+                puzzleSize
+            );
 
-        startPuzzleTimer();
+
+        const col1 =
+            index1 %
+            puzzleSize;
+
+
+        const row2 =
+            Math.floor(
+                index2 /
+                puzzleSize
+            );
+
+
+        const col2 =
+            index2 %
+            puzzleSize;
+
+
+        return (
+            Math.abs(row1 - row2) +
+            Math.abs(col1 - col2)
+        ) === 1;
 
     }
 
 
-    puzzleTiles[emptyIndex] =
-        puzzleTiles[index];
+    function isPuzzleSolved() {
 
-    puzzleTiles[index] =
-        null;
-
-    emptyIndex =
-        index;
-
-    moves++;
-
-    updatePuzzleStats();
-
-    renderPuzzle();
+        const last =
+            puzzleTiles.length - 1;
 
 
-    if (isPuzzleSolved()) {
+        for (
+            let i = 0;
+            i < last;
+            i++
+        ) {
+
+            if (
+                puzzleTiles[i] !== i
+            ) {
+
+                return false;
+
+            }
+
+        }
+
+
+        return (
+            puzzleTiles[last] === null
+        );
+
+    }
+
+
+    function startPuzzleTimer() {
 
         stopPuzzleTimer();
 
-        showPuzzleCompletion();
+
+        timerInterval =
+            setInterval(
+                function () {
+
+                    timerSeconds++;
+
+
+                    updatePuzzleStats();
+
+                },
+                1000
+            );
 
     }
 
-}
+
+    function stopPuzzleTimer() {
+
+        if (
+            timerInterval !== null
+        ) {
+
+            clearInterval(
+                timerInterval
+            );
 
 
-function isAdjacent(index1, index2) {
+            timerInterval =
+                null;
 
-    const row1 =
-        Math.floor(index1 / puzzleSize);
-
-    const col1 =
-        index1 % puzzleSize;
-
-    const row2 =
-        Math.floor(index2 / puzzleSize);
-
-    const col2 =
-        index2 % puzzleSize;
-
-
-    return (
-        Math.abs(row1 - row2) +
-        Math.abs(col1 - col2)
-    ) === 1;
-
-}
-
-
-function isPuzzleSolved() {
-
-    const last =
-        puzzleTiles.length - 1;
-
-
-    for (let i = 0; i < last; i++) {
-
-        if (puzzleTiles[i] !== i) {
-            return false;
         }
 
     }
 
 
-    return puzzleTiles[last] === null;
+    function updatePuzzleStats() {
 
-}
-
-
-function startPuzzleTimer() {
-
-    stopPuzzleTimer();
-
-    timerInterval =
-        setInterval(function () {
-
-            timerSeconds++;
-
-            updatePuzzleStats();
-
-        }, 1000);
-
-}
+        const timer =
+            get("timer");
 
 
-function stopPuzzleTimer() {
-
-    if (timerInterval !== null) {
-
-        clearInterval(timerInterval);
-
-        timerInterval = null;
-
-    }
-
-}
+        const movesDisplay =
+            get("moves");
 
 
-function updatePuzzleStats() {
+        if (movesDisplay) {
 
-    const timer =
-        document.getElementById("timer");
+            movesDisplay.textContent =
+                moves;
 
-    const movesDisplay =
-        document.getElementById("moves");
-
-
-    if (movesDisplay) {
-        movesDisplay.textContent = moves;
-    }
+        }
 
 
-    if (timer) {
+        if (timer) {
 
-        const minutes =
-            Math.floor(timerSeconds / 60);
+            const minutes =
+                Math.floor(
+                    timerSeconds / 60
+                );
 
-        const seconds =
-            timerSeconds % 60;
+
+            const seconds =
+                timerSeconds % 60;
 
 
-        timer.textContent =
-            String(minutes).padStart(2, "0") +
-            ":" +
-            String(seconds).padStart(2, "0");
+            timer.textContent =
+                String(minutes)
+                    .padStart(2, "0") +
+                ":" +
+                String(seconds)
+                    .padStart(2, "0");
+
+        }
 
     }
 
-}
+
+    function showSolution() {
+
+        const preview =
+            get("solutionPreview");
 
 
-function showSolution() {
-
-    const preview =
-        document.getElementById("solutionPreview");
-
-    if (!preview) {
-        return;
-    }
+        if (!preview) {
+            return;
+        }
 
 
-    if (preview.style.display === "block") {
-        preview.style.display = "none";
-    } else {
-        preview.style.display = "block";
-    }
+        if (
+            preview.style.display ===
+            "block"
+        ) {
 
-}
+            preview.style.display =
+                "none";
 
+        } else {
 
-function showPuzzleCompletion() {
+            preview.style.display =
+                "block";
 
-    createConfetti(100);
-
-    const modal =
-        document.getElementById("completionModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.add("active");
-
-    modal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-}
-
-
-function closeCompletion() {
-
-    const modal =
-        document.getElementById("completionModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove("active");
-
-    modal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-}
-
-
-/* =====================================================
-   JOURNAL
-===================================================== */
-
-const journalQuestions = [
-
-    "What is one memory you never want to forget? 💭",
-
-    "What is one thing that always makes you smile? 😊",
-
-    "What is one place you would love to visit someday? ✈️",
-
-    "What is one thing you want to achieve this year? 🎯",
-
-    "What would make this birthday really special for you? 🎂",
-
-    "What is something you are looking forward to? ✨",
-
-    "If you could make one wish for the coming year, what would it be? 🌟",
-
-    "What is one thing you are grateful for today? 🌸",
-
-    "Write a small message to your future self. 💌",
-
-    "What is one moment from this year that made you really happy? 🥰",
-
-    "What is something new you would like to try? 🎉",
-
-    "Describe your perfect happy day. ☀️"
-
-];
-
-
-let currentQuestionIndex = 0;
-let journalAnswers = [];
-
-
-function initializeJournal() {
-
-    const nextButton =
-        document.getElementById("nextQuestionBtn");
-
-    const addButton =
-        document.getElementById("addAnswerBtn");
-
-    const sendButton =
-        document.getElementById("sendJournalBtn");
-
-
-    if (!nextButton || !addButton || !sendButton) {
-        return;
-    }
-
-
-    showInitialQuestion();
-
-
-    nextButton.addEventListener(
-        "click",
-        showRandomQuestion
-    );
-
-
-    addButton.addEventListener(
-        "click",
-        addCurrentAnswer
-    );
-
-
-    sendButton.addEventListener(
-        "click",
-        sendJournalAnswers
-    );
-
-}
-
-
-function showInitialQuestion() {
-
-    const questionText =
-        document.getElementById("questionText");
-
-    const questionNumber =
-        document.getElementById("questionNumber");
-
-
-    if (questionText) {
-
-        questionText.textContent =
-            journalQuestions[currentQuestionIndex];
+        }
 
     }
 
 
-    if (questionNumber) {
+    function showPuzzleCompletion() {
 
-        questionNumber.textContent =
-            "Question " +
-            (currentQuestionIndex + 1);
+        createConfetti(100);
+
+
+        const modal =
+            get("completionModal");
+
+
+        if (!modal) {
+            return;
+        }
+
+
+        modal.classList.add(
+            "active"
+        );
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
 
     }
 
-}
+
+    function closeCompletion() {
+
+        const modal =
+            get("completionModal");
 
 
-function showRandomQuestion() {
+        if (!modal) {
+            return;
+        }
 
-    let newIndex;
+
+        modal.classList.remove(
+            "active"
+        );
 
 
-    do {
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
 
-        newIndex =
+    }
+
+
+    window.initializePuzzle =
+        initializePuzzle;
+
+
+    /* =====================================================
+       BIRTHDAY JOURNAL
+    ===================================================== */
+
+    const journalQuestions = [
+
+        "What is one happy memory you will always remember? 💖",
+
+        "What is something that always makes you smile? 😊",
+
+        "What is one thing you are grateful for today? 🌸",
+
+        "What is a dream you would love to achieve someday? ✨",
+
+        "What is one special moment from this year? 🎂",
+
+        "What makes a day feel special to you? 💫",
+
+        "What is something you would like to remember forever? ❤️"
+
+    ];
+
+
+    let currentQuestionIndex = 0;
+
+
+    const journalQuestion =
+        get("journalQuestion");
+
+
+    const journalAnswer =
+        get("journalAnswer");
+
+
+    const addAnswerBtn =
+        get("addAnswerBtn");
+
+
+    const savedAnswers =
+        get("savedAnswers");
+
+
+    const freeJournal =
+        get("freeJournal");
+
+
+    const sendJournalBtn =
+        get("sendJournalBtn");
+
+
+    const journalStatus =
+        get("journalStatus");
+
+
+    function showRandomQuestion() {
+
+        if (!journalQuestion) {
+            return;
+        }
+
+
+        currentQuestionIndex =
             Math.floor(
                 Math.random() *
                 journalQuestions.length
             );
 
-    } while (
-        journalQuestions.length > 1 &&
-        newIndex === currentQuestionIndex
-    );
+
+        journalQuestion.textContent =
+            journalQuestions[
+                currentQuestionIndex
+            ];
 
 
-    currentQuestionIndex =
-        newIndex;
+        if (journalAnswer) {
+
+            journalAnswer.value =
+                "";
+
+        }
+
+    }
 
 
-    const questionText =
-        document.getElementById("questionText");
+    function addSavedAnswer(
+        question,
+        answer
+    ) {
 
-    const questionNumber =
-        document.getElementById("questionNumber");
-
-    const answerBox =
-        document.getElementById("questionAnswer");
+        if (!savedAnswers) {
+            return;
+        }
 
 
-    if (questionText) {
+        const answerBox =
+            document.createElement(
+                "div"
+            );
+
+
+        answerBox.className =
+            "saved-answer";
+
+
+        const questionText =
+            document.createElement(
+                "strong"
+            );
+
 
         questionText.textContent =
-            journalQuestions[currentQuestionIndex];
-
-    }
+            question;
 
 
-    if (questionNumber) {
-
-        questionNumber.textContent =
-            "Question " +
-            (currentQuestionIndex + 1);
-
-    }
+        const answerText =
+            document.createElement(
+                "p"
+            );
 
 
-    if (answerBox) {
-
-        answerBox.value = "";
-
-        answerBox.focus();
-
-    }
-
-}
+        answerText.textContent =
+            answer;
 
 
-/* =====================================================
-   ADD ANSWER + EMAIL
-===================================================== */
-
-async function addCurrentAnswer() {
-
-    const answerBox =
-        document.getElementById("questionAnswer");
-
-    const button =
-        document.getElementById("addAnswerBtn");
-
-
-    if (!answerBox) {
-        return;
-    }
-
-
-    const answer =
-        answerBox.value.trim();
-
-
-    if (!answer) {
-
-        showJournalStatus(
-            "Please write an answer first ✍️",
-            "error"
+        answerBox.appendChild(
+            questionText
         );
 
-        answerBox.focus();
 
-        return;
-
-    }
-
-
-    const question =
-        journalQuestions[currentQuestionIndex];
+        answerBox.appendChild(
+            answerText
+        );
 
 
-    if (button) {
-
-        button.disabled = true;
-
-        button.textContent =
-            "📨 Sending...";
+        savedAnswers.appendChild(
+            answerBox
+        );
 
     }
 
 
-    const sent =
-        await sendSingleJournalAnswer(
+    async function sendSingleJournalAnswer(
+        question,
+        answer
+    ) {
+
+        try {
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "_subject",
+                "Birthday Journal Answer 💖"
+            );
+
+
+            formData.append(
+                "Question",
+                question
+            );
+
+
+            formData.append(
+                "Answer",
+                answer
+            );
+
+
+            formData.append(
+                "Website",
+                "Birthday Website"
+            );
+
+
+            const response =
+                await fetch(
+                    "https://formsubmit.co/ajax/rakeshnanikengam1922@gmail.com",
+                    {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            Accept:
+                                "application/json"
+                        }
+                    }
+                );
+
+
+            if (
+                response.ok
+            ) {
+
+                console.log(
+                    "Journal answer sent successfully"
+                );
+
+
+                if (journalStatus) {
+
+                    journalStatus.textContent =
+                        "Answer sent successfully 💖";
+
+                }
+
+            } else {
+
+                console.error(
+                    "Could not send journal answer"
+                );
+
+
+                if (journalStatus) {
+
+                    journalStatus.textContent =
+                        "Answer saved, but email could not be sent.";
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Journal email error:",
+                error
+            );
+
+
+            if (journalStatus) {
+
+                journalStatus.textContent =
+                    "Answer saved locally. Email could not be sent.";
+
+            }
+
+        }
+
+    }
+
+
+    function addCurrentAnswer() {
+
+        if (!journalAnswer) {
+            return;
+        }
+
+
+        const answer =
+            journalAnswer.value.trim();
+
+
+        if (!answer) {
+
+            if (journalStatus) {
+
+                journalStatus.textContent =
+                    "Please write an answer first ✨";
+
+            }
+
+
+            return;
+
+        }
+
+
+        const question =
+            journalQuestion
+                ? journalQuestion.textContent
+                : "Birthday Journal";
+
+
+        /*
+           Show answer immediately
+        */
+
+        addSavedAnswer(
             question,
             answer
         );
 
 
-    if (sent) {
+        /*
+           Send email immediately
+        */
 
-        journalAnswers.push({
-            question: question,
-            answer: answer
-        });
-
-
-        renderJournalAnswers();
-
-        answerBox.value = "";
-
-
-        showJournalStatus(
-            "💖 Answer added and sent successfully!",
-            "success"
+        sendSingleJournalAnswer(
+            question,
+            answer
         );
 
 
-        createConfetti(20);
+        if (journalStatus) {
 
-        showRandomQuestion();
-
-    } else {
-
-        showJournalStatus(
-            "⚠️ Email sending failed. Please try again.",
-            "error"
-        );
-
-    }
-
-
-    if (button) {
-
-        button.disabled = false;
-
-        button.textContent =
-            "➕ Add This Answer";
-
-    }
-
-}
-
-
-function renderJournalAnswers() {
-
-    const list =
-        document.getElementById("answerList");
-
-    if (!list) {
-        return;
-    }
-
-
-    list.innerHTML = "";
-
-
-    if (journalAnswers.length === 0) {
-
-        const empty =
-            document.createElement("p");
-
-        empty.className =
-            "empty-answer";
-
-        empty.textContent =
-            "Your answers will appear here...";
-
-        list.appendChild(empty);
-
-        return;
-
-    }
-
-
-    journalAnswers.forEach(
-        function (item, index) {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "answer-card";
-
-
-            const question =
-                document.createElement("div");
-
-            question.className =
-                "answer-question";
-
-            question.textContent =
-                item.question;
-
-
-            const answer =
-                document.createElement("div");
-
-            answer.className =
-                "answer-value";
-
-            answer.textContent =
-                item.answer;
-
-
-            const remove =
-                document.createElement("button");
-
-            remove.type = "button";
-
-            remove.className =
-                "remove-answer";
-
-            remove.textContent =
-                "✕ Remove";
-
-
-            remove.addEventListener(
-                "click",
-                function () {
-
-                    journalAnswers.splice(index, 1);
-
-                    renderJournalAnswers();
-
-                }
-            );
-
-
-            card.appendChild(question);
-            card.appendChild(answer);
-            card.appendChild(remove);
-
-            list.appendChild(card);
+            journalStatus.textContent =
+                "Sending your answer... 💌";
 
         }
-    );
-
-}
 
 
-/* =====================================================
-   FORM SUBMIT
-===================================================== */
+        /*
+           Show another question
+        */
 
-async function sendSingleJournalAnswer(
-    question,
-    answer
-) {
+        setTimeout(
+            function () {
 
-    const receiverEmail =
-        "rakeshnanikengam1922@gmail.com";
+                showRandomQuestion();
 
-
-    const formData =
-        new FormData();
-
-
-    formData.append(
-        "_subject",
-        "💖 BUJJI Birthday Journal - New Answer"
-    );
-
-    formData.append(
-        "_captcha",
-        "false"
-    );
-
-    formData.append(
-        "_template",
-        "table"
-    );
-
-    formData.append(
-        "Question",
-        question
-    );
-
-    formData.append(
-        "Answer",
-        answer
-    );
-
-
-    try {
-
-        const response =
-            await fetch(
-                "https://formsubmit.co/ajax/" +
-                receiverEmail,
-                {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }
-            );
-
-
-        return response.ok;
-
-    } catch (error) {
-
-        console.error(
-            "Email error:",
-            error
+            },
+            300
         );
 
-        return false;
-
     }
 
-}
 
+    if (addAnswerBtn) {
 
-async function sendJournalAnswers() {
-
-    const button =
-        document.getElementById("sendJournalBtn");
-
-    const messageBox =
-        document.getElementById("journalMessage");
-
-
-    const receiverEmail =
-        "rakeshnanikengam1922@gmail.com";
-
-
-    const personalMessage =
-        messageBox
-            ? messageBox.value.trim()
-            : "";
-
-
-    if (
-        journalAnswers.length === 0 &&
-        !personalMessage
-    ) {
-
-        showJournalStatus(
-            "Please write something first ✍️",
-            "error"
+        addAnswerBtn.addEventListener(
+            "click",
+            addCurrentAnswer
         );
 
-        return;
-
     }
 
 
-    if (button) {
+    async function sendFreeJournal() {
 
-        button.disabled = true;
-
-        button.textContent =
-            "📨 Sending...";
-
-    }
+        if (!freeJournal) {
+            return;
+        }
 
 
-    const formData =
-        new FormData();
+        const text =
+            freeJournal.value.trim();
 
 
-    formData.append(
-        "_subject",
-        "🎂 BUJJI Birthday Journal - Complete Journal"
-    );
+        if (!text) {
 
-    formData.append(
-        "_captcha",
-        "false"
-    );
+            if (journalStatus) {
 
-    formData.append(
-        "_template",
-        "table"
-    );
+                journalStatus.textContent =
+                    "Please write something first ✨";
+
+            }
 
 
-    journalAnswers.forEach(
-        function (item, index) {
+            return;
+
+        }
+
+
+        try {
+
+            const formData =
+                new FormData();
+
 
             formData.append(
-                "Question " + (index + 1),
-                item.question
+                "_subject",
+                "Birthday Free Journal 💖"
             );
+
 
             formData.append(
-                "Answer " + (index + 1),
-                item.answer
+                "Journal",
+                text
             );
 
-        }
-    );
+
+            formData.append(
+                "Website",
+                "Birthday Website"
+            );
 
 
-    if (personalMessage) {
-
-        formData.append(
-            "Personal Journal Message",
-            personalMessage
-        );
-
-    }
-
-
-    try {
-
-        const response =
-            await fetch(
-                "https://formsubmit.co/ajax/" +
-                receiverEmail,
-                {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "Accept": "application/json"
+            const response =
+                await fetch(
+                    "https://formsubmit.co/ajax/rakeshnanikengam1922@gmail.com",
+                    {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            Accept:
+                                "application/json"
+                        }
                     }
+                );
+
+
+            if (response.ok) {
+
+                if (journalStatus) {
+
+                    journalStatus.textContent =
+                        "Your journal was sent successfully 💖";
+
                 }
+
+            } else {
+
+                if (journalStatus) {
+
+                    journalStatus.textContent =
+                        "Could not send the journal.";
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Free journal error:",
+                error
             );
 
 
-        if (!response.ok) {
-            throw new Error("Sending failed");
+            if (journalStatus) {
+
+                journalStatus.textContent =
+                    "Could not send the journal.";
+
+            }
+
         }
 
-
-        showJournalStatus(
-            "💌 Your journal was sent successfully!",
-            "success"
-        );
-
-        createConfetti(50);
+    }
 
 
-    } catch (error) {
+    if (sendJournalBtn) {
 
-        console.error(
-            "Journal error:",
-            error
-        );
-
-        showJournalStatus(
-            "⚠️ Unable to send journal. Please try again.",
-            "error"
+        sendJournalBtn.addEventListener(
+            "click",
+            sendFreeJournal
         );
 
     }
 
 
-    if (button) {
+    showRandomQuestion();
 
-        button.disabled = false;
 
-        button.textContent =
-            "💌 Send My Answers";
+    /* =====================================================
+       REMOVE DIFFICULTY OPTION IF IT EXISTS
+       Puzzle is always 3 × 3
+    ===================================================== */
+
+    const difficulty =
+        get("difficulty");
+
+
+    if (difficulty) {
+
+        difficulty.style.display =
+            "none";
 
     }
 
-}
+
+    /* =====================================================
+       START PUZZLE
+    ===================================================== */
+
+    initializePuzzle();
 
 
-function showJournalStatus(
-    message,
-    type
-) {
-
-    const status =
-        document.getElementById("journalStatus");
-
-    if (!status) {
-        return;
-    }
-
-
-    status.textContent = message;
-
-    status.className =
-        "journal-status " + type;
-
-
-    clearTimeout(
-        showJournalStatus.timer
+    console.log(
+        "All birthday website features initialized ✅"
     );
 
-
-    showJournalStatus.timer =
-        setTimeout(function () {
-
-            status.textContent = "";
-
-            status.className =
-                "journal-status";
-
-        }, 5000);
-
-}
+});
