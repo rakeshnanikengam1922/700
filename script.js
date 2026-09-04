@@ -1,37 +1,21 @@
-```javascript
 // =====================================================
-// BUJJI BIRTHDAY WEBSITE - script.js
+// BUJJI BIRTHDAY WEBSITE - FINAL script.js
 // =====================================================
 
 let currentSlide = 0;
+
 let puzzleSize = 3;
 let puzzleTiles = [];
 let puzzleImage = "IMG-20240822-WA0003.jpg";
+
+let selectedPosition = null;
 
 let gameTimerInterval = null;
 let gameStartTime = null;
 let gameSeconds = 0;
 let moves = 0;
 
-const galleryImages = [
-    "IMG-20240822-WA0003.jpg",
-    "IMG-20240904-WA0003.jpg",
-    "IMG_2647.jpg",
-    "NPTL3186.JPG",
-    "OLSB4991.JPG",
-    "Snapchat-1779683539.jpg",
-    "Snapchat-2018150645.jpg"
-];
-
-const galleryCaptions = [
-    "Happy Birthday, my love ❤️ You make every day brighter!",
-    "Wishing you a day filled with smiles, happiness and beautiful memories 🎂",
-    "Happy Birthday to a very special person ✨",
-    "May your year ahead be full of happiness and beautiful moments 🌸",
-    "Keep smiling and keep shining ✨",
-    "Another beautiful memory to remember forever 💖",
-    "Wishing you endless happiness and smiles 🥰"
-];
+let birthdayDate = new Date(2027, 8, 5, 0, 0, 0);
 
 
 // =====================================================
@@ -70,7 +54,7 @@ function initializeNavigation() {
 
         });
 
-        document.querySelectorAll(".nav-link").forEach(link => {
+        navMenu.querySelectorAll("a").forEach(link => {
 
             link.addEventListener("click", () => {
 
@@ -80,22 +64,29 @@ function initializeNavigation() {
             });
 
         });
+
     }
+
 
     document.querySelectorAll("a[href^='#']").forEach(link => {
 
-        link.addEventListener("click", function (e) {
+        link.addEventListener("click", function (event) {
 
-            const target = document.querySelector(
-                this.getAttribute("href")
-            );
+            const targetId = this.getAttribute("href");
+
+            if (!targetId || targetId === "#") {
+                return;
+            }
+
+            const target = document.querySelector(targetId);
 
             if (target) {
 
-                e.preventDefault();
+                event.preventDefault();
 
                 target.scrollIntoView({
-                    behavior: "smooth"
+                    behavior: "smooth",
+                    block: "start"
                 });
 
             }
@@ -108,12 +99,13 @@ function initializeNavigation() {
 
 
 // =====================================================
-// BACKGROUND
+// BACKGROUND ANIMATIONS
 // =====================================================
 
 function initializeBackgroundAnimations() {
 
-    const particles = document.getElementById("particles");
+    const particles =
+        document.getElementById("particles");
 
     if (!particles) return;
 
@@ -121,7 +113,8 @@ function initializeBackgroundAnimations() {
 
     for (let i = 0; i < 35; i++) {
 
-        const particle = document.createElement("span");
+        const particle =
+            document.createElement("span");
 
         particle.className = "particle";
 
@@ -133,6 +126,9 @@ function initializeBackgroundAnimations() {
 
         particle.style.animationDelay =
             Math.random() * 5 + "s";
+
+        particle.style.animationDuration =
+            3 + Math.random() * 5 + "s";
 
         particles.appendChild(particle);
 
@@ -151,6 +147,7 @@ function celebrate() {
 
 }
 
+
 function createConfetti() {
 
     const container =
@@ -167,17 +164,23 @@ function createConfetti() {
         "💖",
         "⭐",
         "🎈",
-        "❤️"
+        "❤️",
+        "🥳"
     ];
 
     for (let i = 0; i < 80; i++) {
 
-        const item = document.createElement("span");
+        const item =
+            document.createElement("span");
 
         item.className = "confetti";
 
         item.textContent =
-            symbols[Math.floor(Math.random() * symbols.length)];
+            symbols[
+                Math.floor(
+                    Math.random() * symbols.length
+                )
+            ];
 
         item.style.left =
             Math.random() * 100 + "%";
@@ -193,7 +196,9 @@ function createConfetti() {
     }
 
     setTimeout(() => {
+
         container.innerHTML = "";
+
     }, 6000);
 
 }
@@ -203,6 +208,28 @@ function createConfetti() {
 // GALLERY
 // =====================================================
 
+const galleryImages = [
+    "IMG-20240822-WA0003.jpg",
+    "IMG-20240904-WA0003.jpg",
+    "IMG_2647.jpg",
+    "NPTL3186.JPG",
+    "OLSB4991.JPG",
+    "Snapchat-1779683539.jpg",
+    "Snapchat-2018150645.jpg"
+];
+
+
+const galleryCaptions = [
+    "Happy Birthday, my love ❤️ You make every day brighter!",
+    "Wishing you a day filled with smiles, happiness and beautiful memories 🎂",
+    "Happy Birthday to a very special person ✨",
+    "May your year ahead be full of happiness and beautiful moments 🌸",
+    "Keep smiling and keep shining ✨",
+    "Another beautiful memory to remember forever 💖",
+    "Wishing you endless happiness and smiles 🥰"
+];
+
+
 function initializeGallery() {
 
     const gallery =
@@ -210,29 +237,33 @@ function initializeGallery() {
 
     if (!gallery) return;
 
-    // Keep the HTML captions.
-    // Do NOT overwrite the gallery here.
-
     const items =
         gallery.querySelectorAll(".gallery-item");
 
     items.forEach((item, index) => {
 
-        const img = item.querySelector("img");
-
-        if (img && galleryImages[index]) {
-            img.src = galleryImages[index];
-        }
+        const image =
+            item.querySelector("img");
 
         const caption =
             item.querySelector(".gallery-overlay p");
 
+        if (image && galleryImages[index]) {
+
+            image.src =
+                galleryImages[index];
+
+        }
+
         if (caption && galleryCaptions[index]) {
+
             caption.textContent =
                 galleryCaptions[index];
+
         }
 
     });
+
 
     const gridButton =
         document.getElementById("gridViewBtn");
@@ -240,29 +271,46 @@ function initializeGallery() {
     const slideshowButton =
         document.getElementById("slideshowViewBtn");
 
-    const grid =
-        document.getElementById("galleryGrid");
-
     const slideshow =
         document.getElementById("gallerySlideshow");
+
 
     if (gridButton) {
 
         gridButton.addEventListener("click", () => {
 
-            grid.style.display = "grid";
-            slideshow.style.display = "none";
+            gallery.style.display = "grid";
+
+            if (slideshow) {
+                slideshow.style.display = "none";
+            }
+
+            gridButton.classList.add("active");
+
+            if (slideshowButton) {
+                slideshowButton.classList.remove("active");
+            }
 
         });
 
     }
 
+
     if (slideshowButton) {
 
         slideshowButton.addEventListener("click", () => {
 
-            grid.style.display = "none";
-            slideshow.style.display = "block";
+            gallery.style.display = "none";
+
+            if (slideshow) {
+                slideshow.style.display = "block";
+            }
+
+            slideshowButton.classList.add("active");
+
+            if (gridButton) {
+                gridButton.classList.remove("active");
+            }
 
             showSlide(currentSlide);
 
@@ -289,6 +337,7 @@ function initializeSlideshow() {
 
     showSlide(0);
 
+
     indicators.forEach((indicator, index) => {
 
         indicator.addEventListener("click", () => {
@@ -312,6 +361,7 @@ function showSlide(index) {
 
     if (!slides.length) return;
 
+
     if (index >= slides.length) {
         index = 0;
     }
@@ -320,7 +370,9 @@ function showSlide(index) {
         index = slides.length - 1;
     }
 
+
     currentSlide = index;
+
 
     slides.forEach((slide, i) => {
 
@@ -330,6 +382,7 @@ function showSlide(index) {
         );
 
     });
+
 
     indicators.forEach((indicator, i) => {
 
@@ -375,21 +428,16 @@ function initializePuzzleGame() {
     const playAgain =
         document.getElementById("playAgainBtn");
 
+
     if (difficulty) {
 
         difficulty.addEventListener("change", () => {
 
-            if (difficulty.value === "easy") {
-                puzzleSize = 3;
-            }
-
-            if (difficulty.value === "medium") {
-                puzzleSize = 4;
-            }
-
-            if (difficulty.value === "hard") {
-                puzzleSize = 5;
-            }
+            puzzleSize =
+                parseInt(
+                    difficulty.value,
+                    10
+                ) || 3;
 
             startNewGame();
 
@@ -397,12 +445,16 @@ function initializePuzzleGame() {
 
     }
 
+
     if (newGame) {
+
         newGame.addEventListener(
             "click",
             startNewGame
         );
+
     }
+
 
     if (solution) {
 
@@ -413,6 +465,7 @@ function initializePuzzleGame() {
 
     }
 
+
     if (playAgain) {
 
         playAgain.addEventListener(
@@ -421,6 +474,7 @@ function initializePuzzleGame() {
         );
 
     }
+
 
     startNewGame();
 
@@ -436,23 +490,23 @@ function startNewGame() {
     stopGameTimer();
 
     moves = 0;
+
     gameSeconds = 0;
 
+    selectedPosition = null;
+
     updateGameStats();
+
 
     const completion =
         document.getElementById("gameCompletion");
 
     if (completion) {
+
         completion.style.display = "none";
+
     }
 
-    const solution =
-        document.getElementById("solutionPreview");
-
-    if (solution) {
-        solution.style.display = "block";
-    }
 
     const solutionImage =
         document.getElementById("solutionImage");
@@ -464,13 +518,14 @@ function startNewGame() {
 
     }
 
+
     createPuzzle();
 
 }
 
 
 // =====================================================
-// CREATE IMAGE PUZZLE
+// CREATE PUZZLE
 // =====================================================
 
 function createPuzzle() {
@@ -480,59 +535,39 @@ function createPuzzle() {
 
     if (!board) return;
 
+
     board.innerHTML = "";
 
     board.style.gridTemplateColumns =
         `repeat(${puzzleSize}, 1fr)`;
 
-    puzzleTiles = [];
+    board.style.gridTemplateRows =
+        `repeat(${puzzleSize}, 1fr)`;
+
 
     const total =
         puzzleSize * puzzleSize;
 
-    for (let i = 0; i < total; i++) {
-        puzzleTiles.push(i);
-    }
 
-    // Shuffle until not solved
-    do {
-        shuffleArray(puzzleTiles);
-    } while (isSolved());
-
-    puzzleTiles.forEach((tileNumber, position) => {
-
-        const tile =
-            document.createElement("div");
-
-        tile.className = "puzzle-piece";
-
-        tile.dataset.position = position;
-        tile.dataset.tile = tileNumber;
-
-        const row =
-            Math.floor(tileNumber / puzzleSize);
-
-        const col =
-            tileNumber % puzzleSize;
-
-        tile.style.backgroundImage =
-            `url("${puzzleImage}")`;
-
-        tile.style.backgroundSize =
-            `${puzzleSize * 100}% ${puzzleSize * 100}%`;
-
-        tile.style.backgroundPosition =
-            `${(col * 100) / (puzzleSize - 1)}% ` +
-            `${(row * 100) / (puzzleSize - 1)}%`;
-
-        tile.addEventListener(
-            "click",
-            () => moveTile(position)
+    puzzleTiles =
+        Array.from(
+            { length: total },
+            (_, index) => index
         );
 
-        board.appendChild(tile);
 
-    });
+    // Shuffle
+    do {
+
+        shuffleArray(puzzleTiles);
+
+    } while (
+        isSolved() ||
+        puzzleTiles[0] === 0
+    );
+
+
+    renderPuzzle();
 
     startGameTimer();
 
@@ -540,98 +575,154 @@ function createPuzzle() {
 
 
 // =====================================================
-// MOVE PUZZLE TILE
+// RENDER PUZZLE
 // =====================================================
 
-function moveTile(position) {
+function renderPuzzle() {
 
-    if (!puzzleTiles.length) return;
+    const board =
+        document.getElementById("puzzleBoard");
 
-    // Simple swap puzzle
-    const targetPosition =
-        findBestSwap(position);
+    if (!board) return;
 
-    if (targetPosition === -1) return;
 
+    board.innerHTML = "";
+
+
+    puzzleTiles.forEach(
+        (tileNumber, position) => {
+
+            const tile =
+                document.createElement("div");
+
+            tile.className =
+                "puzzle-tile";
+
+
+            tile.dataset.position =
+                position;
+
+            tile.dataset.tile =
+                tileNumber;
+
+
+            const row =
+                Math.floor(
+                    tileNumber / puzzleSize
+                );
+
+            const col =
+                tileNumber % puzzleSize;
+
+
+            tile.style.backgroundImage =
+                `url("${puzzleImage}")`;
+
+
+            tile.style.backgroundSize =
+                `${puzzleSize * 100}% ${puzzleSize * 100}%`;
+
+
+            const x =
+                puzzleSize === 1
+                    ? 0
+                    : (col * 100) /
+                      (puzzleSize - 1);
+
+
+            const y =
+                puzzleSize === 1
+                    ? 0
+                    : (row * 100) /
+                      (puzzleSize - 1);
+
+
+            tile.style.backgroundPosition =
+                `${x}% ${y}%`;
+
+
+            tile.addEventListener(
+                "click",
+                () => selectPuzzleTile(position)
+            );
+
+
+            board.appendChild(tile);
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// SELECT / SWAP PUZZLE TILES
+// =====================================================
+
+function selectPuzzleTile(position) {
+
+    const tiles =
+        document.querySelectorAll(".puzzle-tile");
+
+
+    if (selectedPosition === null) {
+
+        selectedPosition = position;
+
+        if (tiles[position]) {
+
+            tiles[position]
+                .classList.add("selected");
+
+        }
+
+        return;
+
+    }
+
+
+    if (selectedPosition === position) {
+
+        if (tiles[position]) {
+
+            tiles[position]
+                .classList.remove("selected");
+
+        }
+
+        selectedPosition = null;
+
+        return;
+
+    }
+
+
+    // Swap
     [
-        puzzleTiles[position],
-        puzzleTiles[targetPosition]
-    ] = [
-        puzzleTiles[targetPosition],
+        puzzleTiles[selectedPosition],
         puzzleTiles[position]
+    ] = [
+        puzzleTiles[position],
+        puzzleTiles[selectedPosition]
     ];
+
 
     moves++;
 
-    updatePuzzle();
+
+    selectedPosition = null;
+
+
+    renderPuzzle();
 
     updateGameStats();
 
+
     if (isSolved()) {
+
         completeGame();
-    }
-
-}
-
-
-function findBestSwap(position) {
-
-    const current =
-        puzzleTiles[position];
-
-    // Move tile toward its correct position.
-    const correctPosition =
-        current;
-
-    if (
-        correctPosition >= 0 &&
-        correctPosition < puzzleTiles.length &&
-        correctPosition !== position
-    ) {
-
-        return correctPosition;
 
     }
-
-    return -1;
-
-}
-
-
-// =====================================================
-// UPDATE PUZZLE
-// =====================================================
-
-function updatePuzzle() {
-
-    const tiles =
-        document.querySelectorAll(".puzzle-piece");
-
-    tiles.forEach((tile, position) => {
-
-        const tileNumber =
-            puzzleTiles[position];
-
-        const row =
-            Math.floor(tileNumber / puzzleSize);
-
-        const col =
-            tileNumber % puzzleSize;
-
-        tile.dataset.position = position;
-        tile.dataset.tile = tileNumber;
-
-        tile.style.backgroundImage =
-            `url("${puzzleImage}")`;
-
-        tile.style.backgroundSize =
-            `${puzzleSize * 100}% ${puzzleSize * 100}%`;
-
-        tile.style.backgroundPosition =
-            `${(col * 100) / (puzzleSize - 1)}% ` +
-            `${(row * 100) / (puzzleSize - 1)}%`;
-
-    });
 
 }
 
@@ -658,6 +749,7 @@ function completeGame() {
 
     stopGameTimer();
 
+
     const completion =
         document.getElementById("gameCompletion");
 
@@ -667,19 +759,30 @@ function completeGame() {
     const finalMoves =
         document.getElementById("finalMoves");
 
+
     if (finalTime) {
+
         finalTime.textContent =
             formatGameTime(gameSeconds);
+
     }
+
 
     if (finalMoves) {
+
         finalMoves.textContent =
             moves;
+
     }
 
+
     if (completion) {
-        completion.style.display = "flex";
+
+        completion.style.display =
+            "flex";
+
     }
+
 
     createConfetti();
 
@@ -687,22 +790,27 @@ function completeGame() {
 
 
 // =====================================================
-// SOLUTION
+// SHOW SOLUTION
 // =====================================================
 
 function showSolution() {
 
-    const preview =
-        document.getElementById("solutionPreview");
-
     const image =
         document.getElementById("solutionImage");
 
-    if (!preview || !image) return;
+    const preview =
+        document.querySelector(".solution-preview");
 
-    image.src = puzzleImage;
 
-    preview.style.display = "block";
+    if (!image || !preview) return;
+
+
+    image.src =
+        puzzleImage;
+
+
+    preview.style.display =
+        "block";
 
 }
 
@@ -715,15 +823,21 @@ function startGameTimer() {
 
     stopGameTimer();
 
-    gameStartTime = Date.now();
+
+    gameStartTime =
+        Date.now();
+
 
     gameTimerInterval =
         setInterval(() => {
 
             gameSeconds =
                 Math.floor(
-                    (Date.now() - gameStartTime) / 1000
+                    (Date.now() -
+                        gameStartTime) /
+                    1000
                 );
+
 
             updateGameStats();
 
@@ -736,7 +850,9 @@ function stopGameTimer() {
 
     if (gameTimerInterval) {
 
-        clearInterval(gameTimerInterval);
+        clearInterval(
+            gameTimerInterval
+        );
 
         gameTimerInterval = null;
 
@@ -752,6 +868,7 @@ function formatGameTime(seconds) {
 
     const secs =
         seconds % 60;
+
 
     return (
         String(minutes).padStart(2, "0") +
@@ -770,14 +887,20 @@ function updateGameStats() {
     const moveCounter =
         document.getElementById("moveCounter");
 
+
     if (timer) {
+
         timer.textContent =
             formatGameTime(gameSeconds);
+
     }
 
+
     if (moveCounter) {
+
         moveCounter.textContent =
             moves;
+
     }
 
 }
@@ -796,7 +919,10 @@ function shuffleArray(array) {
     ) {
 
         const j =
-            Math.floor(Math.random() * (i + 1));
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
 
         [
             array[i],
@@ -815,41 +941,54 @@ function shuffleArray(array) {
 // COUNTDOWN
 // =====================================================
 
-// 🎂 BUJJI Birthday
-// 05 September 2027 - 12:00 AM
-
-let birthdayDate =
-    new Date("2027-09-05T00:00:00");
-
-
 function initializeCountdown() {
 
     const input =
         document.getElementById("birthdayDate");
 
-    // Show the selected birthday in the input
+
     if (input) {
 
         input.value =
-            "2027-09-05T00:00";
+            formatDateForInput(
+                birthdayDate
+            );
+
 
         input.addEventListener(
             "change",
             () => {
 
-                if (!input.value) return;
+                if (!input.value) {
+                    return;
+                }
 
-                birthdayDate =
+
+                const selected =
                     new Date(input.value);
 
-                updateCountdown();
+
+                if (
+                    !isNaN(
+                        selected.getTime()
+                    )
+                ) {
+
+                    birthdayDate =
+                        selected;
+
+                    updateCountdown();
+
+                }
 
             }
         );
 
     }
 
+
     updateCountdown();
+
 
     setInterval(
         updateCountdown,
@@ -859,27 +998,91 @@ function initializeCountdown() {
 }
 
 
+// =====================================================
+// FORMAT DATE FOR INPUT
+// =====================================================
+
+function formatDateForInput(date) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+    const hours =
+        String(
+            date.getHours()
+        ).padStart(2, "0");
+
+    const minutes =
+        String(
+            date.getMinutes()
+        ).padStart(2, "0");
+
+
+    return (
+        `${year}-${month}-${day}` +
+        `T${hours}:${minutes}`
+    );
+
+}
+
+
+// =====================================================
+// UPDATE COUNTDOWN
+// =====================================================
+
 function updateCountdown() {
 
     const now =
         new Date();
 
-    let difference =
-        birthdayDate.getTime() -
-        now.getTime();
 
-    if (difference <= 0) {
+    // If selected date has passed,
+    // automatically move to next year.
+    if (birthdayDate <= now) {
 
         birthdayDate =
             new Date(
-                `${birthdayDate.getFullYear() + 1}-09-05T00:00:00`
+                birthdayDate.getFullYear() + 1,
+                8,
+                5,
+                0,
+                0,
+                0
             );
 
-        difference =
-            birthdayDate.getTime() -
-            now.getTime();
+
+        const input =
+            document.getElementById(
+                "birthdayDate"
+            );
+
+
+        if (input) {
+
+            input.value =
+                formatDateForInput(
+                    birthdayDate
+                );
+
+        }
 
     }
+
+
+    const difference =
+        birthdayDate.getTime() -
+        now.getTime();
+
 
     const days =
         Math.floor(
@@ -887,22 +1090,33 @@ function updateCountdown() {
             (1000 * 60 * 60 * 24)
         );
 
+
     const hours =
         Math.floor(
-            (difference /
-                (1000 * 60 * 60)) % 24
+            (
+                difference /
+                (1000 * 60 * 60)
+            ) % 24
         );
+
 
     const minutes =
         Math.floor(
-            (difference /
-                (1000 * 60)) % 60
+            (
+                difference /
+                (1000 * 60)
+            ) % 60
         );
+
 
     const seconds =
         Math.floor(
-            (difference / 1000) % 60
+            (
+                difference /
+                1000
+            ) % 60
         );
+
 
     setCountdownValue(
         "days",
@@ -924,8 +1138,87 @@ function updateCountdown() {
         seconds
     );
 
+
+    updateCountdownMessage();
+
 }
 
+
+// =====================================================
+// COUNTDOWN MESSAGE
+// =====================================================
+
+function updateCountdownMessage() {
+
+    const message =
+        document.getElementById(
+            "countdownMessage"
+        );
+
+
+    if (!message) return;
+
+
+    const day =
+        String(
+            birthdayDate.getDate()
+        ).padStart(2, "0");
+
+
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+
+    const month =
+        monthNames[
+            birthdayDate.getMonth()
+        ];
+
+
+    const year =
+        birthdayDate.getFullYear();
+
+
+    let hours =
+        birthdayDate.getHours();
+
+    const minutes =
+        String(
+            birthdayDate.getMinutes()
+        ).padStart(2, "0");
+
+
+    const ampm =
+        hours >= 12
+            ? "PM"
+            : "AM";
+
+
+    hours =
+        hours % 12 || 12;
+
+
+    message.textContent =
+        `🎂 Next Birthday: ${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
+
+}
+
+
+// =====================================================
+// COUNTDOWN VALUE
+// =====================================================
 
 function setCountdownValue(
     id,
@@ -935,10 +1228,14 @@ function setCountdownValue(
     const element =
         document.getElementById(id);
 
+
     if (!element) return;
 
+
     element.textContent =
-        String(value).padStart(2, "0");
+        String(
+            Math.max(0, value)
+        ).padStart(2, "0");
 
 }
 
@@ -950,7 +1247,10 @@ function setCountdownValue(
 function initializeEventListeners() {
 
     const celebrateButton =
-        document.getElementById("celebrateBtn");
+        document.getElementById(
+            "celebrateBtn"
+        );
+
 
     if (celebrateButton) {
 
@@ -961,11 +1261,17 @@ function initializeEventListeners() {
 
     }
 
+
     const nextButton =
-        document.getElementById("nextSlideBtn");
+        document.getElementById(
+            "nextSlideBtn"
+        );
 
     const previousButton =
-        document.getElementById("prevSlideBtn");
+        document.getElementById(
+            "prevSlideBtn"
+        );
+
 
     if (nextButton) {
 
@@ -976,6 +1282,7 @@ function initializeEventListeners() {
 
     }
 
+
     if (previousButton) {
 
         previousButton.addEventListener(
@@ -985,20 +1292,106 @@ function initializeEventListeners() {
 
     }
 
+
     document.addEventListener(
         "keydown",
         event => {
 
-            if (event.key === "ArrowRight") {
-                nextSlide();
-            }
+            const slideshow =
+                document.getElementById(
+                    "gallerySlideshow"
+                );
 
-            if (event.key === "ArrowLeft") {
-                previousSlide();
+
+            if (
+                slideshow &&
+                slideshow.style.display !== "none"
+            ) {
+
+                if (
+                    event.key === "ArrowRight"
+                ) {
+
+                    nextSlide();
+
+                }
+
+
+                if (
+                    event.key === "ArrowLeft"
+                ) {
+
+                    previousSlide();
+
+                }
+
             }
 
         }
     );
+
+
+    // Swipe only inside slideshow
+    const slideshowContainer =
+        document.querySelector(
+            ".slideshow-container"
+        );
+
+
+    if (slideshowContainer) {
+
+        let touchStartX = 0;
+
+
+        slideshowContainer.addEventListener(
+            "touchstart",
+            event => {
+
+                touchStartX =
+                    event.changedTouches[0]
+                        .screenX;
+
+            },
+            { passive: true }
+        );
+
+
+        slideshowContainer.addEventListener(
+            "touchend",
+            event => {
+
+                const touchEndX =
+                    event.changedTouches[0]
+                        .screenX;
+
+
+                const difference =
+                    touchStartX -
+                    touchEndX;
+
+
+                if (
+                    Math.abs(difference) < 50
+                ) {
+                    return;
+                }
+
+
+                if (difference > 0) {
+
+                    nextSlide();
+
+                } else {
+
+                    previousSlide();
+
+                }
+
+            },
+            { passive: true }
+        );
+
+    }
 
 }
 
@@ -1018,8 +1411,8 @@ function initializeImageErrors() {
                 event.target.tagName === "IMG"
             ) {
 
-                console.log(
-                    "Image failed:",
+                console.warn(
+                    "Image failed to load:",
                     event.target.src
                 );
 
@@ -1030,47 +1423,3 @@ function initializeImageErrors() {
     );
 
 }
-
-
-// =====================================================
-// MOBILE SWIPE
-// =====================================================
-
-let touchStartX = 0;
-
-document.addEventListener(
-    "touchstart",
-    event => {
-
-        touchStartX =
-            event.changedTouches[0].screenX;
-
-    },
-    { passive: true }
-);
-
-
-document.addEventListener(
-    "touchend",
-    event => {
-
-        const touchEndX =
-            event.changedTouches[0].screenX;
-
-        const difference =
-            touchStartX - touchEndX;
-
-        if (Math.abs(difference) < 50) {
-            return;
-        }
-
-        if (difference > 0) {
-            nextSlide();
-        } else {
-            previousSlide();
-        }
-
-    },
-    { passive: true }
-);
-```
