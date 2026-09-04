@@ -4,7 +4,6 @@
 
 alert("SCRIPT STARTED ✅");
 
-
 document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Birthday website script loaded successfully");
@@ -23,34 +22,51 @@ document.addEventListener("DOMContentLoaded", function () {
        CELEBRATION / CONFETTI
     ===================================================== */
 
-    function createConfetti(amount = 80) {
+    function createConfetti(count = 120) {
 
-        for (let i = 0; i < amount; i++) {
+        const emojis = [
+            "🎉",
+            "🎂",
+            "🥳",
+            "❤️",
+            "✨",
+            "🎈",
+            "💖",
+            "🌸",
+            "⭐",
+            "🎁"
+        ];
+
+        for (let i = 0; i < count; i++) {
 
             const confetti =
                 document.createElement("div");
 
-            confetti.className =
-                "confetti-piece";
-
             confetti.textContent =
-                ["🎉", "✨", "💖", "🎊", "🌸", "🥳"][
+                emojis[
                     Math.floor(
-                        Math.random() * 6
+                        Math.random() *
+                        emojis.length
                     )
                 ];
 
-            confetti.style.position =
-                "fixed";
+            confetti.style.position = "fixed";
 
+            /*
+               Random horizontal position
+            */
             confetti.style.left =
-                Math.random() * 100 + "%";
+                Math.random() * 100 + "vw";
 
+            /*
+               Different starting heights
+               so emojis don't appear in one line
+            */
             confetti.style.top =
-                "-30px";
+                (-10 - Math.random() * 80) + "vh";
 
             confetti.style.fontSize =
-                (14 + Math.random() * 18) + "px";
+                (18 + Math.random() * 22) + "px";
 
             confetti.style.zIndex =
                 "99999";
@@ -58,48 +74,108 @@ document.addEventListener("DOMContentLoaded", function () {
             confetti.style.pointerEvents =
                 "none";
 
-            confetti.style.transition =
-                "transform 3s linear, opacity 3s linear";
+            confetti.style.opacity =
+                "1";
+
+            confetti.style.willChange =
+                "transform, opacity";
 
             document.body.appendChild(
                 confetti
             );
 
-
             const fallDistance =
-                window.innerHeight +
-                100;
-
+                window.innerHeight + 150;
 
             const rotation =
-                Math.random() * 1000 -
-                500;
+                (Math.random() - 0.5) * 720;
 
+            const duration =
+                2200 + Math.random() * 1800;
 
-            requestAnimationFrame(
-                function () {
+            const startTime =
+                performance.now();
 
-                    confetti.style.transform =
-                        "translateY(" +
-                        fallDistance +
-                        "px) rotate(" +
-                        rotation +
-                        "deg)";
+            /*
+               Give every emoji a slightly
+               different side-to-side movement
+            */
+            const driftAmount =
+                20 + Math.random() * 40;
+
+            const driftSpeed =
+                2 + Math.random() * 3;
+
+            function animateConfetti(
+                currentTime
+            ) {
+
+                const elapsed =
+                    currentTime - startTime;
+
+                const progress =
+                    Math.min(
+                        elapsed / duration,
+                        1
+                    );
+
+                const y =
+                    fallDistance *
+                    progress;
+
+                const rotate =
+                    rotation *
+                    progress;
+
+                const drift =
+                    Math.sin(
+                        progress *
+                        Math.PI *
+                        driftSpeed
+                    ) *
+                    driftAmount;
+
+                confetti.style.transform =
+                    "translate(" +
+                    drift +
+                    "px, " +
+                    y +
+                    "px) rotate(" +
+                    rotate +
+                    "deg)";
+
+                /*
+                   Fade out near the end
+                */
+                if (progress > 0.75) {
 
                     confetti.style.opacity =
-                        "0";
+                        String(
+                            1 -
+                            (
+                                (progress - 0.75) /
+                                0.25
+                            )
+                        );
 
                 }
-            );
 
+                if (progress < 1) {
 
-            setTimeout(
-                function () {
+                    requestAnimationFrame(
+                        animateConfetti
+                    );
+
+                } else {
 
                     confetti.remove();
 
-                },
-                3200
+                }
+
+            }
+
+            requestAnimationFrame(
+                animateConfetti
             );
 
         }
@@ -308,6 +384,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         currentGalleryIndex--;
 
+
         if (currentGalleryIndex < 0) {
 
             currentGalleryIndex =
@@ -331,6 +408,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         currentGalleryIndex++;
+
 
         if (
             currentGalleryIndex >=
@@ -639,7 +717,9 @@ document.addEventListener("DOMContentLoaded", function () {
         showSlide(0);
 
 
-        /* Slideshow image opens lightbox */
+        /*
+           Slideshow image opens lightbox
+        */
 
         slides.forEach(
             function (slide, index) {
@@ -678,6 +758,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             galleryLightbox.classList.add(
                                 "active"
                             );
+
 
                             galleryLightbox.setAttribute(
                                 "aria-hidden",
@@ -1215,9 +1296,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 /*
                    EMPTY TILE
-
-                   It displays the matching
-                   portion of the same image.
+                   Shows matching part of same image.
                 */
 
                 if (
