@@ -1,819 +1,1076 @@
-<!DOCTYPE html>
-<html lang="en">
+```javascript
+// =====================================================
+// BUJJI BIRTHDAY WEBSITE - script.js
+// =====================================================
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+let currentSlide = 0;
+let puzzleSize = 3;
+let puzzleTiles = [];
+let puzzleImage = "IMG-20240822-WA0003.jpg";
 
-    <title>🎉 Happy Birthday BUJJI 🎂</title>
+let gameTimerInterval = null;
+let gameStartTime = null;
+let gameSeconds = 0;
+let moves = 0;
 
-    <link rel="stylesheet" href="style.css">
+const galleryImages = [
+    "IMG-20240822-WA0003.jpg",
+    "IMG-20240904-WA0003.jpg",
+    "IMG_2647.jpg",
+    "NPTL3186.JPG",
+    "OLSB4991.JPG",
+    "Snapchat-1779683539.jpg",
+    "Snapchat-2018150645.jpg"
+];
 
-    <!-- GitHub repository root lo unna image -->
-    <link rel="icon" type="image/jpeg" href="IMG-20240822-WA0003.jpg">
+const galleryCaptions = [
+    "Happy Birthday, my love ❤️ You make every day brighter!",
+    "Wishing you a day filled with smiles, happiness and beautiful memories 🎂",
+    "Happy Birthday to a very special person ✨",
+    "May your year ahead be full of happiness and beautiful moments 🌸",
+    "Keep smiling and keep shining ✨",
+    "Another beautiful memory to remember forever 💖",
+    "Wishing you endless happiness and smiles 🥰"
+];
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
-</head>
 
-<body>
+// =====================================================
+// PAGE LOAD
+// =====================================================
 
-    <!-- =====================================================
-         BACKGROUND ANIMATION
-    ====================================================== -->
+document.addEventListener("DOMContentLoaded", () => {
 
-    <div class="background-animation">
+    initializeNavigation();
+    initializeBackgroundAnimations();
+    initializeGallery();
+    initializeSlideshow();
+    initializePuzzleGame();
+    initializeCountdown();
+    initializeEventListeners();
+    initializeImageErrors();
 
-        <div class="floating-balloons">
-            <div class="balloon balloon-1">🎈</div>
-            <div class="balloon balloon-2">🎈</div>
-            <div class="balloon balloon-3">🎈</div>
-            <div class="balloon balloon-4">🎈</div>
-            <div class="balloon balloon-5">🎈</div>
-        </div>
+});
 
-        <div class="confetti-container" id="confettiContainer"></div>
 
-        <div class="particles" id="particles"></div>
+// =====================================================
+// NAVIGATION
+// =====================================================
 
-    </div>
+function initializeNavigation() {
 
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
 
-    <!-- =====================================================
-         NAVIGATION
-    ====================================================== -->
+    if (navToggle && navMenu) {
 
-    <nav class="navbar" id="navbar">
+        navToggle.addEventListener("click", () => {
 
-        <div class="nav-container">
+            navToggle.classList.toggle("active");
+            navMenu.classList.toggle("active");
 
-            <div class="nav-logo">
-                BUJJI🎂
-            </div>
+        });
 
-            <div class="nav-toggle" id="navToggle">
+        document.querySelectorAll(".nav-link").forEach(link => {
 
-                <span></span>
-                <span></span>
-                <span></span>
+            link.addEventListener("click", () => {
 
-            </div>
+                navToggle.classList.remove("active");
+                navMenu.classList.remove("active");
 
-            <ul class="nav-menu" id="navMenu">
+            });
 
-                <li>
-                    <a href="#home" class="nav-link">
-                        Home
-                    </a>
-                </li>
+        });
+    }
 
-                <li>
-                    <a href="#gallery" class="nav-link">
-                        Gallery
-                    </a>
-                </li>
+    document.querySelectorAll("a[href^='#']").forEach(link => {
 
-                <li>
-                    <a href="#game" class="nav-link">
-                        Game
-                    </a>
-                </li>
+        link.addEventListener("click", function (e) {
 
-                <li>
-                    <a href="#countdown" class="nav-link">
-                        Countdown
-                    </a>
-                </li>
+            const target = document.querySelector(
+                this.getAttribute("href")
+            );
 
-            </ul>
+            if (target) {
 
-        </div>
+                e.preventDefault();
 
-    </nav>
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
 
+            }
 
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
+        });
 
-    <section id="home" class="hero">
+    });
 
-        <div class="hero-content">
+}
 
-            <h1 class="hero-title animate-bounce">
-                Happy Birthday BUJJI🎉
-            </h1>
 
-            <p class="hero-subtitle">
-                Let's celebrate this special day together!
-            </p>
+// =====================================================
+// BACKGROUND
+// =====================================================
 
-            <div class="birthday-candles">
+function initializeBackgroundAnimations() {
 
-                <div class="candle">
-                    <div class="flame"></div>
-                    <div class="wick"></div>
-                    <div class="wax"></div>
-                </div>
+    const particles = document.getElementById("particles");
 
-                <div class="candle">
-                    <div class="flame"></div>
-                    <div class="wick"></div>
-                    <div class="wax"></div>
-                </div>
+    if (!particles) return;
 
-                <div class="candle">
-                    <div class="flame"></div>
-                    <div class="wick"></div>
-                    <div class="wax"></div>
-                </div>
+    particles.innerHTML = "";
 
-            </div>
+    for (let i = 0; i < 35; i++) {
 
-            <button class="cta-button" id="celebrateBtn">
-                Start the Celebration! 🎊
-            </button>
+        const particle = document.createElement("span");
 
-        </div>
+        particle.className = "particle";
 
-    </section>
+        particle.style.left =
+            Math.random() * 100 + "%";
 
+        particle.style.top =
+            Math.random() * 100 + "%";
 
-    <!-- =====================================================
-         PHOTO GALLERY
-    ====================================================== -->
+        particle.style.animationDelay =
+            Math.random() * 5 + "s";
 
-    <section id="gallery" class="gallery-section">
+        particles.appendChild(particle);
 
-        <div class="container">
+    }
 
-            <h2 class="section-title">
-                📸 Memory Gallery
-            </h2>
+}
 
 
-            <div class="gallery-controls">
+// =====================================================
+// CELEBRATION
+// =====================================================
 
-                <button class="gallery-btn" id="gridViewBtn">
-                    Grid View
-                </button>
+function celebrate() {
 
-                <button class="gallery-btn" id="slideshowViewBtn">
-                    Slideshow
-                </button>
+    createConfetti();
 
-            </div>
+}
 
+function createConfetti() {
 
-            <!-- =================================================
-                 GRID VIEW
-            ================================================== -->
+    const container =
+        document.getElementById("confettiContainer");
 
-            <div class="gallery-grid" id="galleryGrid">
+    if (!container) return;
 
+    container.innerHTML = "";
 
-                <!-- PHOTO 1 -->
+    const symbols = [
+        "🎉",
+        "🎊",
+        "✨",
+        "💖",
+        "⭐",
+        "🎈",
+        "❤️"
+    ];
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
+    for (let i = 0; i < 80; i++) {
 
-                    <img
-                        src="IMG-20240822-WA0003.jpg"
-                        alt="BUJJI Memory 1">
+        const item = document.createElement("span");
 
-                    <div class="gallery-overlay">
+        item.className = "confetti";
 
-                        <p>
-                            Happy Birthday, my love ❤️
-                            You make every day brighter!
-                        </p>
+        item.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
 
-                    </div>
+        item.style.left =
+            Math.random() * 100 + "%";
 
-                </div>
+        item.style.animationDelay =
+            Math.random() * 2 + "s";
 
+        item.style.animationDuration =
+            2 + Math.random() * 3 + "s";
 
-                <!-- PHOTO 2 -->
+        container.appendChild(item);
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
+    }
 
-                    <img
-                        src="IMG-20240904-WA0003.jpg"
-                        alt="BUJJI Memory 2">
+    setTimeout(() => {
+        container.innerHTML = "";
+    }, 6000);
 
-                    <div class="gallery-overlay">
+}
 
-                        <p>
-                            Wishing you a day filled with
-                            smiles, happiness and beautiful memories 🎂
-                        </p>
 
-                    </div>
+// =====================================================
+// GALLERY
+// =====================================================
 
-                </div>
+function initializeGallery() {
 
+    const gallery =
+        document.getElementById("galleryGrid");
 
-                <!-- PHOTO 3 -->
+    if (!gallery) return;
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
+    // Keep the HTML captions.
+    // Do NOT overwrite the gallery here.
 
-                    <img
-                        src="IMG_2647.jpg"
-                        alt="BUJJI Memory 3">
+    const items =
+        gallery.querySelectorAll(".gallery-item");
 
-                    <div class="gallery-overlay">
+    items.forEach((item, index) => {
 
-                        <p>
-                            Happy Birthday to a very special person ✨
-                        </p>
+        const img = item.querySelector("img");
 
-                    </div>
+        if (img && galleryImages[index]) {
+            img.src = galleryImages[index];
+        }
 
-                </div>
+        const caption =
+            item.querySelector(".gallery-overlay p");
 
+        if (caption && galleryCaptions[index]) {
+            caption.textContent =
+                galleryCaptions[index];
+        }
 
-                <!-- PHOTO 4 -->
+    });
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
+    const gridButton =
+        document.getElementById("gridViewBtn");
 
-                    <img
-                        src="NPTL3186.JPG"
-                        alt="BUJJI Memory 4">
+    const slideshowButton =
+        document.getElementById("slideshowViewBtn");
 
-                    <div class="gallery-overlay">
+    const grid =
+        document.getElementById("galleryGrid");
 
-                        <p>
-                            May your year ahead be full of
-                            happiness and beautiful moments 🌸
-                        </p>
+    const slideshow =
+        document.getElementById("gallerySlideshow");
 
-                    </div>
+    if (gridButton) {
 
-                </div>
+        gridButton.addEventListener("click", () => {
 
+            grid.style.display = "grid";
+            slideshow.style.display = "none";
 
-                <!-- PHOTO 5 -->
+        });
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
+    }
 
-                    <img
-                        src="OLSB4991.JPG"
-                        alt="BUJJI Memory 5">
+    if (slideshowButton) {
 
-                    <div class="gallery-overlay">
+        slideshowButton.addEventListener("click", () => {
 
-                        <p>
-                            Keep smiling and keep shining ✨
-                        </p>
+            grid.style.display = "none";
+            slideshow.style.display = "block";
 
-                    </div>
+            showSlide(currentSlide);
 
-                </div>
+        });
 
+    }
 
-                <!-- PHOTO 6 -->
+}
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
 
-                    <img
-                        src="Snapchat-1779683539.jpg"
-                        alt="BUJJI Memory 6">
+// =====================================================
+// SLIDESHOW
+// =====================================================
 
-                    <div class="gallery-overlay">
+function initializeSlideshow() {
 
-                        <p>
-                            Another beautiful memory to remember forever 💖
-                        </p>
+    const slides =
+        document.querySelectorAll(".slide");
 
-                    </div>
+    const indicators =
+        document.querySelectorAll(".indicator");
 
-                </div>
+    if (!slides.length) return;
 
+    showSlide(0);
 
-                <!-- PHOTO 7 -->
+    indicators.forEach((indicator, index) => {
 
-                <div class="gallery-item"
-                    data-caption="Beautiful Memory">
+        indicator.addEventListener("click", () => {
 
-                    <img
-                        src="Snapchat-2018150645.jpg"
-                        alt="BUJJI Memory 7">
+            showSlide(index);
 
-                    <div class="gallery-overlay">
+        });
 
-                        <p>
-                            Wishing you endless happiness and smiles 🥰
-                        </p>
+    });
 
-                    </div>
+}
 
-                </div>
 
-            </div>
+function showSlide(index) {
 
+    const slides =
+        document.querySelectorAll(".slide");
 
-            <!-- =================================================
-                 SLIDESHOW
-            ================================================== -->
+    const indicators =
+        document.querySelectorAll(".indicator");
 
-            <div
-                class="gallery-slideshow"
-                id="gallerySlideshow"
-                style="display:none;"
-            >
+    if (!slides.length) return;
 
-                <div class="slideshow-container">
+    if (index >= slides.length) {
+        index = 0;
+    }
 
+    if (index < 0) {
+        index = slides.length - 1;
+    }
 
-                    <!-- SLIDE 1 -->
+    currentSlide = index;
 
-                    <div class="slide active">
+    slides.forEach((slide, i) => {
 
-                        <img
-                            src="IMG-20240822-WA0003.jpg"
-                            alt="BUJJI Memory 1">
+        slide.classList.toggle(
+            "active",
+            i === currentSlide
+        );
 
-                        <div class="slide-caption">
-                            Every memory becomes special when
-                            it is shared with someone special 💖
-                        </div>
+    });
 
-                    </div>
+    indicators.forEach((indicator, i) => {
 
+        indicator.classList.toggle(
+            "active",
+            i === currentSlide
+        );
 
-                    <!-- SLIDE 2 -->
+    });
 
-                    <div class="slide">
+}
 
-                        <img
-                            src="IMG-20240904-WA0003.jpg"
-                            alt="BUJJI Memory 2">
 
-                        <div class="slide-caption">
-                            Wishing you a birthday filled with
-                            happiness, smiles and beautiful moments 🎂
-                        </div>
+function nextSlide() {
 
-                    </div>
+    showSlide(currentSlide + 1);
 
+}
 
-                    <!-- SLIDE 3 -->
 
-                    <div class="slide">
+function previousSlide() {
 
-                        <img
-                            src="IMG_2647.jpg"
-                            alt="BUJJI Memory 3">
+    showSlide(currentSlide - 1);
 
-                        <div class="slide-caption">
-                            Keep smiling and make every moment memorable ✨
-                        </div>
+}
 
-                    </div>
 
+// =====================================================
+// PUZZLE GAME
+// =====================================================
 
-                    <!-- SLIDE 4 -->
+function initializePuzzleGame() {
 
-                    <div class="slide">
+    const difficulty =
+        document.getElementById("difficultySelect");
 
-                        <img
-                            src="NPTL3186.JPG"
-                            alt="BUJJI Memory 4">
+    const newGame =
+        document.getElementById("newGameBtn");
 
-                        <div class="slide-caption">
-                            May all your dreams come true 🌸
-                        </div>
+    const solution =
+        document.getElementById("showSolutionBtn");
 
-                    </div>
+    const playAgain =
+        document.getElementById("playAgainBtn");
 
+    if (difficulty) {
 
-                    <!-- SLIDE 5 -->
+        difficulty.addEventListener("change", () => {
 
-                    <div class="slide">
+            if (difficulty.value === "easy") {
+                puzzleSize = 3;
+            }
 
-                        <img
-                            src="OLSB4991.JPG"
-                            alt="BUJJI Memory 5">
+            if (difficulty.value === "medium") {
+                puzzleSize = 4;
+            }
 
-                        <div class="slide-caption">
-                            Here's to another year of wonderful memories 💝
-                        </div>
+            if (difficulty.value === "hard") {
+                puzzleSize = 5;
+            }
 
-                    </div>
+            startNewGame();
 
+        });
 
-                    <!-- SLIDE 6 -->
+    }
 
-                    <div class="slide">
+    if (newGame) {
+        newGame.addEventListener(
+            "click",
+            startNewGame
+        );
+    }
 
-                        <img
-                            src="Snapchat-1779683539.jpg"
-                            alt="BUJJI Memory 6">
+    if (solution) {
 
-                        <div class="slide-caption">
-                            Stay happy, stay amazing and keep smiling ❤️
-                        </div>
+        solution.addEventListener(
+            "click",
+            showSolution
+        );
 
-                    </div>
+    }
 
+    if (playAgain) {
 
-                    <!-- SLIDE 7 -->
+        playAgain.addEventListener(
+            "click",
+            startNewGame
+        );
 
-                    <div class="slide">
+    }
 
-                        <img
-                            src="Snapchat-2018150645.jpg"
-                            alt="BUJJI Memory 7">
+    startNewGame();
 
-                        <div class="slide-caption">
-                            Happy Birthday BUJJI! 🎉🎂
-                        </div>
+}
 
-                    </div>
 
-                </div>
+// =====================================================
+// START NEW GAME
+// =====================================================
 
+function startNewGame() {
 
-                <!-- PREVIOUS -->
+    stopGameTimer();
 
-                <button
-                    class="slide-btn prev"
-                    id="prevSlideBtn">
-                    ❮
-                </button>
+    moves = 0;
+    gameSeconds = 0;
 
+    updateGameStats();
 
-                <!-- NEXT -->
+    const completion =
+        document.getElementById("gameCompletion");
 
-                <button
-                    class="slide-btn next"
-                    id="nextSlideBtn">
-                    ❯
-                </button>
+    if (completion) {
+        completion.style.display = "none";
+    }
 
+    const solution =
+        document.getElementById("solutionPreview");
 
-                <!-- INDICATORS -->
+    if (solution) {
+        solution.style.display = "block";
+    }
 
-                <div class="slide-indicators">
+    const solutionImage =
+        document.getElementById("solutionImage");
 
-                    <span
-                        class="indicator active"
-                        data-slide="0">
-                    </span>
+    if (solutionImage) {
 
-                    <span
-                        class="indicator"
-                        data-slide="1">
-                    </span>
+        solutionImage.src =
+            puzzleImage;
 
-                    <span
-                        class="indicator"
-                        data-slide="2">
-                    </span>
+    }
 
-                    <span
-                        class="indicator"
-                        data-slide="3">
-                    </span>
+    createPuzzle();
 
-                    <span
-                        class="indicator"
-                        data-slide="4">
-                    </span>
+}
 
-                    <span
-                        class="indicator"
-                        data-slide="5">
-                    </span>
 
-                    <span
-                        class="indicator"
-                        data-slide="6">
-                    </span>
+// =====================================================
+// CREATE IMAGE PUZZLE
+// =====================================================
 
-                </div>
+function createPuzzle() {
 
-            </div>
+    const board =
+        document.getElementById("puzzleBoard");
 
-        </div>
+    if (!board) return;
 
-    </section>
+    board.innerHTML = "";
 
+    board.style.gridTemplateColumns =
+        `repeat(${puzzleSize}, 1fr)`;
 
-    <!-- =====================================================
-         PUZZLE GAME
-    ====================================================== -->
+    puzzleTiles = [];
 
-    <section id="game" class="game-section">
+    const total =
+        puzzleSize * puzzleSize;
 
-        <div class="container">
+    for (let i = 0; i < total; i++) {
+        puzzleTiles.push(i);
+    }
 
-            <h2 class="section-title">
-                🧩 Birthday Puzzle Challenge
-            </h2>
+    // Shuffle until not solved
+    do {
+        shuffleArray(puzzleTiles);
+    } while (isSolved());
 
+    puzzleTiles.forEach((tileNumber, position) => {
 
-            <div class="game-controls">
+        const tile =
+            document.createElement("div");
 
-                <div class="difficulty-selector">
+        tile.className = "puzzle-piece";
 
-                    <label for="difficultySelect">
-                        Difficulty:
-                    </label>
+        tile.dataset.position = position;
+        tile.dataset.tile = tileNumber;
 
-                    <select id="difficultySelect">
+        const row =
+            Math.floor(tileNumber / puzzleSize);
 
-                        <option value="easy">
-                            Easy (3x3)
-                        </option>
+        const col =
+            tileNumber % puzzleSize;
 
-                        <option value="medium">
-                            Medium (4x4)
-                        </option>
+        tile.style.backgroundImage =
+            `url("${puzzleImage}")`;
 
-                        <option value="hard">
-                            Hard (5x5)
-                        </option>
+        tile.style.backgroundSize =
+            `${puzzleSize * 100}% ${puzzleSize * 100}%`;
 
-                    </select>
+        tile.style.backgroundPosition =
+            `${(col * 100) / (puzzleSize - 1)}% ` +
+            `${(row * 100) / (puzzleSize - 1)}%`;
 
-                </div>
+        tile.addEventListener(
+            "click",
+            () => moveTile(position)
+        );
 
+        board.appendChild(tile);
 
-                <div class="game-stats">
+    });
 
-                    <div class="stat">
+    startGameTimer();
 
-                        <span>Time:</span>
+}
 
-                        <span id="gameTimer">
-                            00:00
-                        </span>
 
-                    </div>
+// =====================================================
+// MOVE PUZZLE TILE
+// =====================================================
 
+function moveTile(position) {
 
-                    <div class="stat">
+    if (!puzzleTiles.length) return;
 
-                        <span>Moves:</span>
+    // Simple swap puzzle
+    const targetPosition =
+        findBestSwap(position);
 
-                        <span id="moveCounter">
-                            0
-                        </span>
+    if (targetPosition === -1) return;
 
-                    </div>
+    [
+        puzzleTiles[position],
+        puzzleTiles[targetPosition]
+    ] = [
+        puzzleTiles[targetPosition],
+        puzzleTiles[position]
+    ];
 
-                </div>
+    moves++;
 
+    updatePuzzle();
 
-                <button
-                    class="game-btn"
-                    id="newGameBtn">
-                    New Game
-                </button>
+    updateGameStats();
 
+    if (isSolved()) {
+        completeGame();
+    }
 
-                <button
-                    class="game-btn"
-                    id="showSolutionBtn">
-                    Show Solution
-                </button>
+}
 
-            </div>
 
+function findBestSwap(position) {
 
-            <div class="puzzle-container">
+    const current =
+        puzzleTiles[position];
 
-                <div
-                    class="puzzle-board"
-                    id="puzzleBoard">
-                </div>
+    // Move tile toward its correct position.
+    const correctPosition =
+        current;
 
+    if (
+        correctPosition >= 0 &&
+        correctPosition < puzzleTiles.length &&
+        correctPosition !== position
+    ) {
 
-                <div
-                    class="solution-preview"
-                    id="solutionPreview">
+        return correctPosition;
 
-                    <h4>
-                        Solution Preview:
-                    </h4>
+    }
 
-                    <img
-                        src=""
-                        alt="Solution"
-                        id="solutionImage"
-                    >
+    return -1;
 
-                </div>
+}
 
-            </div>
 
+// =====================================================
+// UPDATE PUZZLE
+// =====================================================
 
-            <div
-                class="game-completion"
-                id="gameCompletion"
-                style="display:none;"
-            >
+function updatePuzzle() {
 
-                <div class="completion-message">
+    const tiles =
+        document.querySelectorAll(".puzzle-piece");
 
-                    <h3>
-                        🎉 Congratulations! 🎉
-                    </h3>
+    tiles.forEach((tile, position) => {
 
-                    <p>
-                        You solved the puzzle!
-                    </p>
+        const tileNumber =
+            puzzleTiles[position];
 
-                    <p>
-                        Time:
-                        <span id="finalTime"></span>
-                    </p>
+        const row =
+            Math.floor(tileNumber / puzzleSize);
 
-                    <p>
-                        Moves:
-                        <span id="finalMoves"></span>
-                    </p>
+        const col =
+            tileNumber % puzzleSize;
 
-                    <button
-                        class="game-btn"
-                        id="playAgainBtn">
-                        Play Again
-                    </button>
+        tile.dataset.position = position;
+        tile.dataset.tile = tileNumber;
 
-                </div>
+        tile.style.backgroundImage =
+            `url("${puzzleImage}")`;
 
-            </div>
+        tile.style.backgroundSize =
+            `${puzzleSize * 100}% ${puzzleSize * 100}%`;
 
-        </div>
+        tile.style.backgroundPosition =
+            `${(col * 100) / (puzzleSize - 1)}% ` +
+            `${(row * 100) / (puzzleSize - 1)}%`;
 
-    </section>
+    });
 
+}
 
-    <!-- =====================================================
-         COUNTDOWN
-    ====================================================== -->
 
-    <section
-        id="countdown"
-        class="countdown-section">
+// =====================================================
+// CHECK SOLVED
+// =====================================================
 
-        <div class="container">
+function isSolved() {
 
-            <h2 class="section-title">
-                ⏰ Birthday Countdown
-            </h2>
+    return puzzleTiles.every(
+        (value, index) =>
+            value === index
+    );
 
+}
 
-            <div class="countdown-container">
 
-                <div class="countdown-input">
+// =====================================================
+// COMPLETE GAME
+// =====================================================
 
-                    <label for="birthdayDate">
-                        Set Your Birthday Date:
-                    </label>
+function completeGame() {
 
-                    <input
-                        type="datetime-local"
-                        id="birthdayDate">
+    stopGameTimer();
 
-                </div>
+    const completion =
+        document.getElementById("gameCompletion");
 
+    const finalTime =
+        document.getElementById("finalTime");
 
-                <div
-                    class="countdown-display"
-                    id="countdownDisplay">
+    const finalMoves =
+        document.getElementById("finalMoves");
 
-                    <div class="time-unit">
+    if (finalTime) {
+        finalTime.textContent =
+            formatGameTime(gameSeconds);
+    }
 
-                        <span
-                            class="time-number"
-                            id="days">
-                            00
-                        </span>
+    if (finalMoves) {
+        finalMoves.textContent =
+            moves;
+    }
 
-                        <span class="time-label">
-                            Days
-                        </span>
+    if (completion) {
+        completion.style.display = "flex";
+    }
 
-                    </div>
+    createConfetti();
 
+}
 
-                    <div class="time-unit">
 
-                        <span
-                            class="time-number"
-                            id="hours">
-                            00
-                        </span>
+// =====================================================
+// SOLUTION
+// =====================================================
 
-                        <span class="time-label">
-                            Hours
-                        </span>
+function showSolution() {
 
-                    </div>
+    const preview =
+        document.getElementById("solutionPreview");
 
+    const image =
+        document.getElementById("solutionImage");
 
-                    <div class="time-unit">
+    if (!preview || !image) return;
 
-                        <span
-                            class="time-number"
-                            id="minutes">
-                            00
-                        </span>
+    image.src = puzzleImage;
 
-                        <span class="time-label">
-                            Minutes
-                        </span>
+    preview.style.display = "block";
 
-                    </div>
+}
 
 
-                    <div class="time-unit">
+// =====================================================
+// GAME TIMER
+// =====================================================
 
-                        <span
-                            class="time-number"
-                            id="seconds">
-                            00
-                        </span>
+function startGameTimer() {
 
-                        <span class="time-label">
-                            Seconds
-                        </span>
+    stopGameTimer();
 
-                    </div>
+    gameStartTime = Date.now();
 
-                </div>
+    gameTimerInterval =
+        setInterval(() => {
 
+            gameSeconds =
+                Math.floor(
+                    (Date.now() - gameStartTime) / 1000
+                );
 
-                <div
-                    class="countdown-message"
-                    id="countdownMessage">
+            updateGameStats();
 
-                    <p>
-                        Set your birthday date to start the countdown!
-                    </p>
+        }, 1000);
 
-                </div>
+}
 
-            </div>
 
-        </div>
+function stopGameTimer() {
 
-    </section>
+    if (gameTimerInterval) {
 
+        clearInterval(gameTimerInterval);
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+        gameTimerInterval = null;
 
-    <footer class="footer">
+    }
 
-        <div class="container">
+}
 
-            <p>
-                © 2026 Birthday Celebration Website.
-                Made with ❤️ for special moments!
-            </p>
 
+function formatGameTime(seconds) {
 
-            <div class="footer-links">
+    const minutes =
+        Math.floor(seconds / 60);
 
-                <a href="#home">
-                    Home
-                </a>
+    const secs =
+        seconds % 60;
 
-                <a href="#gallery">
-                    Gallery
-                </a>
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(secs).padStart(2, "0")
+    );
 
-                <a href="#game">
-                    Game
-                </a>
+}
 
-                <a href="#countdown">
-                    Countdown
-                </a>
 
-            </div>
+function updateGameStats() {
 
-        </div>
+    const timer =
+        document.getElementById("gameTimer");
 
-    </footer>
+    const moveCounter =
+        document.getElementById("moveCounter");
 
+    if (timer) {
+        timer.textContent =
+            formatGameTime(gameSeconds);
+    }
 
-    <!-- =====================================================
-         SCRIPT
-    ====================================================== -->
+    if (moveCounter) {
+        moveCounter.textContent =
+            moves;
+    }
 
-    <script src="script.js"></script>
+}
 
-</body>
 
-</html>
+// =====================================================
+// SHUFFLE
+// =====================================================
+
+function shuffleArray(array) {
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+        [
+            array[i],
+            array[j]
+        ] = [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+}
+
+
+// =====================================================
+// COUNTDOWN
+// =====================================================
+
+// 🎂 BUJJI Birthday
+// 05 September 2027 - 12:00 AM
+
+let birthdayDate =
+    new Date("2027-09-05T00:00:00");
+
+
+function initializeCountdown() {
+
+    const input =
+        document.getElementById("birthdayDate");
+
+    // Show the selected birthday in the input
+    if (input) {
+
+        input.value =
+            "2027-09-05T00:00";
+
+        input.addEventListener(
+            "change",
+            () => {
+
+                if (!input.value) return;
+
+                birthdayDate =
+                    new Date(input.value);
+
+                updateCountdown();
+
+            }
+        );
+
+    }
+
+    updateCountdown();
+
+    setInterval(
+        updateCountdown,
+        1000
+    );
+
+}
+
+
+function updateCountdown() {
+
+    const now =
+        new Date();
+
+    let difference =
+        birthdayDate.getTime() -
+        now.getTime();
+
+    if (difference <= 0) {
+
+        birthdayDate =
+            new Date(
+                `${birthdayDate.getFullYear() + 1}-09-05T00:00:00`
+            );
+
+        difference =
+            birthdayDate.getTime() -
+            now.getTime();
+
+    }
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+    const hours =
+        Math.floor(
+            (difference /
+                (1000 * 60 * 60)) % 24
+        );
+
+    const minutes =
+        Math.floor(
+            (difference /
+                (1000 * 60)) % 60
+        );
+
+    const seconds =
+        Math.floor(
+            (difference / 1000) % 60
+        );
+
+    setCountdownValue(
+        "days",
+        days
+    );
+
+    setCountdownValue(
+        "hours",
+        hours
+    );
+
+    setCountdownValue(
+        "minutes",
+        minutes
+    );
+
+    setCountdownValue(
+        "seconds",
+        seconds
+    );
+
+}
+
+
+function setCountdownValue(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) return;
+
+    element.textContent =
+        String(value).padStart(2, "0");
+
+}
+
+
+// =====================================================
+// EVENT LISTENERS
+// =====================================================
+
+function initializeEventListeners() {
+
+    const celebrateButton =
+        document.getElementById("celebrateBtn");
+
+    if (celebrateButton) {
+
+        celebrateButton.addEventListener(
+            "click",
+            celebrate
+        );
+
+    }
+
+    const nextButton =
+        document.getElementById("nextSlideBtn");
+
+    const previousButton =
+        document.getElementById("prevSlideBtn");
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            nextSlide
+        );
+
+    }
+
+    if (previousButton) {
+
+        previousButton.addEventListener(
+            "click",
+            previousSlide
+        );
+
+    }
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "ArrowRight") {
+                nextSlide();
+            }
+
+            if (event.key === "ArrowLeft") {
+                previousSlide();
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// IMAGE ERROR HANDLING
+// =====================================================
+
+function initializeImageErrors() {
+
+    document.addEventListener(
+        "error",
+        event => {
+
+            if (
+                event.target &&
+                event.target.tagName === "IMG"
+            ) {
+
+                console.log(
+                    "Image failed:",
+                    event.target.src
+                );
+
+            }
+
+        },
+        true
+    );
+
+}
+
+
+// =====================================================
+// MOBILE SWIPE
+// =====================================================
+
+let touchStartX = 0;
+
+document.addEventListener(
+    "touchstart",
+    event => {
+
+        touchStartX =
+            event.changedTouches[0].screenX;
+
+    },
+    { passive: true }
+);
+
+
+document.addEventListener(
+    "touchend",
+    event => {
+
+        const touchEndX =
+            event.changedTouches[0].screenX;
+
+        const difference =
+            touchStartX - touchEndX;
+
+        if (Math.abs(difference) < 50) {
+            return;
+        }
+
+        if (difference > 0) {
+            nextSlide();
+        } else {
+            previousSlide();
+        }
+
+    },
+    { passive: true }
+);
+```
