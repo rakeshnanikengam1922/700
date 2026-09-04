@@ -55,7 +55,6 @@ body {
 }
 
 @keyframes particlesMove {
-
     from {
         transform: translateY(0);
     }
@@ -63,7 +62,6 @@ body {
     to {
         transform: translateY(-100px);
     }
-
 }
 
 
@@ -108,7 +106,6 @@ body {
 }
 
 @keyframes balloonFloat {
-
     0%, 100% {
         transform: translateY(0) rotate(-5deg);
     }
@@ -116,7 +113,6 @@ body {
     50% {
         transform: translateY(-35px) rotate(5deg);
     }
-
 }
 
 
@@ -160,7 +156,6 @@ body {
 
 .nav-links a:hover {
     color: #ffd166;
-    transform: translateY(-2px);
 }
 
 .menu-toggle {
@@ -200,16 +195,6 @@ body {
     font-size: .85rem;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    animation: badgePulse 2s infinite;
-}
-
-@keyframes badgePulse {
-
-    50% {
-        transform: scale(1.04);
-        box-shadow: 0 0 30px rgba(255,105,180,.25);
-    }
-
 }
 
 .hero-title {
@@ -218,7 +203,6 @@ body {
     line-height: .95;
     font-weight: 800;
     margin-bottom: 25px;
-    text-shadow: 0 10px 40px rgba(0,0,0,.35);
 }
 
 .hero-title span {
@@ -237,11 +221,9 @@ body {
 }
 
 @keyframes gradientText {
-
     to {
         background-position: 300% center;
     }
-
 }
 
 .hero-subtitle {
@@ -280,10 +262,39 @@ body {
     position: relative;
     font-size: 120px;
     z-index: 2;
-    animation:
-        cakeBounce 2.2s ease-in-out infinite,
-        cakeRotate 5s ease-in-out infinite;
-    filter: drop-shadow(0 15px 25px rgba(0,0,0,.35));
+    animation: cakeBounce 2.2s ease-in-out infinite;
+}
+
+.cake-pop {
+    animation: cakePop .7s ease !important;
+}
+
+@keyframes cakePop {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.35) rotate(-8deg);
+    }
+
+    70% {
+        transform: scale(.9) rotate(8deg);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes cakeBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
 }
 
 .candles {
@@ -292,60 +303,13 @@ body {
     display: flex;
     gap: 14px;
     z-index: 3;
-    animation: candleFloat 2s ease-in-out infinite;
 }
 
 .candles span {
     font-size: 32px;
-    filter: drop-shadow(0 0 12px rgba(255,190,50,.7));
-}
-
-@keyframes cakeBounce {
-
-    0%, 100% {
-        transform: translateY(0) rotate(-2deg);
-    }
-
-    50% {
-        transform: translateY(-14px) rotate(2deg);
-    }
-
-}
-
-@keyframes cakeRotate {
-
-    0%, 100% {
-        filter: drop-shadow(
-            0 15px 25px rgba(0,0,0,.35)
-        );
-    }
-
-    50% {
-        filter:
-            drop-shadow(
-                0 15px 25px rgba(0,0,0,.35)
-            )
-            drop-shadow(
-                0 0 20px rgba(255,150,100,.4)
-            );
-    }
-
-}
-
-@keyframes candleFloat {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-
 }
 
 @keyframes cakeGlow {
-
     from {
         transform: scale(.85);
         opacity: .5;
@@ -355,7 +319,6 @@ body {
         transform: scale(1.2);
         opacity: .9;
     }
-
 }
 
 
@@ -389,8 +352,6 @@ body {
         #ff4d8d,
         #8e44ad
     );
-    box-shadow:
-        0 10px 30px rgba(255,77,141,.25);
 }
 
 .surprise-button {
@@ -399,8 +360,6 @@ body {
         #ff9f1c,
         #ff4d6d
     );
-    box-shadow:
-        0 10px 30px rgba(255,159,28,.25);
 }
 
 .celebrate-button:hover,
@@ -412,19 +371,6 @@ body {
     margin-top: 35px;
     font-size: .8rem;
     color: rgba(255,255,255,.55);
-}
-
-.scroll-hint span {
-    margin: 0 8px;
-    animation: scrollArrow 1.5s infinite;
-}
-
-@keyframes scrollArrow {
-
-    50% {
-        transform: translateY(5px);
-    }
-
 }
 
 
@@ -486,9 +432,8 @@ body {
     cursor: pointer;
 }
 
-.gallery-controls button.active,
-.gallery-controls button:hover {
-    background: rgba(255,255,255,.18);
+.gallery-controls button.active {
+    background: rgba(255,255,255,.2);
 }
 
 .gallery-grid {
@@ -504,7 +449,6 @@ body {
     border-radius: 22px;
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.12);
-    box-shadow: 0 20px 45px rgba(0,0,0,.25);
 }
 
 .gallery-item img {
@@ -572,11 +516,6 @@ body {
     font-size: 1.3rem;
     cursor: pointer;
     z-index: 3;
-    backdrop-filter: blur(10px);
-}
-
-.slide-arrow:hover {
-    background: rgba(255,255,255,.25);
 }
 
 .slide-arrow.prev {
@@ -617,16 +556,12 @@ body {
     padding: 45px;
     text-align: center;
     border-radius: 30px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.13),
-            rgba(255,255,255,.05)
-        );
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.13),
+        rgba(255,255,255,.05)
+    );
     border: 1px solid rgba(255,255,255,.15);
-    box-shadow: 0 30px 70px rgba(0,0,0,.25);
-    backdrop-filter: blur(18px);
-    animation: letterFloat 5s ease-in-out infinite;
 }
 
 .letter-decoration {
@@ -656,25 +591,9 @@ body {
     line-height: 1.8;
 }
 
-.letter-signature strong {
-    font-size: 1.3rem;
-}
-
-@keyframes letterFloat {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-
-}
-
 
 /* =========================
-   GAME
+   PUZZLE
 ========================= */
 
 .game-card {
@@ -684,17 +603,11 @@ body {
     border-radius: 28px;
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.12);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 25px 60px rgba(0,0,0,.25);
 }
 
 .difficulty-section {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.difficulty-section label {
-    margin-right: 8px;
 }
 
 .difficulty-section select {
@@ -729,13 +642,23 @@ body {
 }
 
 .puzzle-tile {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    background-color: #222;
     background-repeat: no-repeat;
     cursor: pointer;
-    transition: .2s;
+    transition: filter .2s, transform .15s;
 }
 
 .puzzle-tile:hover {
     filter: brightness(1.2);
+}
+
+.puzzle-tile.empty {
+    background: rgba(255,255,255,.04);
+    cursor: default;
 }
 
 .game-buttons {
@@ -775,7 +698,6 @@ body {
 .solution-preview img {
     display: block;
     width: 100%;
-    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 15px;
@@ -783,7 +705,7 @@ body {
 
 
 /* =========================
-   BIRTHDAY JOURNAL
+   JOURNAL
 ========================= */
 
 .journal-card {
@@ -791,29 +713,22 @@ body {
     margin: auto;
     padding: 35px;
     border-radius: 32px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.12),
-            rgba(255,255,255,.045)
-        );
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.12),
+        rgba(255,255,255,.045)
+    );
     border: 1px solid rgba(255,255,255,.14);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 30px 80px rgba(0,0,0,.3);
 }
-
-
-/* RANDOM QUESTION */
 
 .question-box {
     padding: 28px;
     border-radius: 25px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(199,125,255,.18),
-            rgba(255,105,180,.1)
-        );
+    background: linear-gradient(
+        135deg,
+        rgba(199,125,255,.18),
+        rgba(255,105,180,.1)
+    );
     border: 1px solid rgba(255,255,255,.12);
     margin-bottom: 25px;
 }
@@ -850,6 +765,13 @@ body {
     justify-content: center;
 }
 
+.next-question-btn,
+.add-answer-btn,
+.send-journal-btn {
+    cursor: pointer;
+    font-family: inherit;
+}
+
 .next-question-btn {
     display: block;
     margin: 22px auto 0;
@@ -858,18 +780,7 @@ body {
     border-radius: 999px;
     background: rgba(255,255,255,.1);
     color: white;
-    font-family: inherit;
-    cursor: pointer;
-    transition: .3s;
 }
-
-.next-question-btn:hover {
-    background: rgba(255,255,255,.2);
-    transform: translateY(-2px);
-}
-
-
-/* ANSWER */
 
 .journal-answer {
     margin-bottom: 28px;
@@ -894,16 +805,10 @@ body {
     color: white;
     font-family: inherit;
     line-height: 1.6;
-    transition: .3s;
 }
 
 .journal-card textarea::placeholder {
     color: rgba(255,255,255,.4);
-}
-
-.journal-card textarea:focus {
-    border-color: rgba(255,209,102,.6);
-    box-shadow: 0 0 25px rgba(255,209,102,.08);
 }
 
 .add-answer-btn {
@@ -917,25 +822,14 @@ body {
         #ff4d8d
     );
     color: white;
-    font-family: inherit;
     font-weight: 600;
-    cursor: pointer;
-    transition: .3s;
 }
-
-.add-answer-btn:hover {
-    transform: translateY(-2px);
-}
-
-
-/* SAVED ANSWERS */
 
 .saved-answers {
     margin: 25px 0;
     padding: 22px;
     border-radius: 22px;
     background: rgba(255,255,255,.055);
-    border: 1px solid rgba(255,255,255,.09);
 }
 
 .saved-title {
@@ -953,15 +847,13 @@ body {
     color: rgba(255,255,255,.4);
     font-size: .85rem;
     text-align: center;
-    padding: 10px;
 }
 
 .answer-card {
     position: relative;
-    padding: 16px 45px 16px 17px;
+    padding: 16px 50px 16px 17px;
     border-radius: 17px;
     background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.08);
 }
 
 .answer-question {
@@ -991,57 +883,27 @@ body {
     cursor: pointer;
 }
 
-.remove-answer:hover {
-    background: rgba(255,80,100,.25);
-}
-
-
-/* FREE JOURNAL */
-
 .free-journal {
     margin-top: 25px;
-}
-
-.free-journal textarea {
-    min-height: 150px;
-}
-
-
-/* SEND */
-
-.journal-submit {
-    text-align: center;
-    margin-top: 30px;
 }
 
 .send-journal-btn {
     border: none;
     padding: 15px 28px;
     border-radius: 999px;
-    background:
-        linear-gradient(
-            135deg,
-            #ff4d8d,
-            #ff9f1c
-        );
+    background: linear-gradient(
+        135deg,
+        #ff4d8d,
+        #ff9f1c
+    );
     color: white;
-    font-family: inherit;
     font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
-    box-shadow:
-        0 12px 35px rgba(255,77,141,.2);
-    transition: .3s;
+    margin-top: 30px;
 }
 
-.send-journal-btn:hover {
-    transform: translateY(-4px) scale(1.02);
-}
-
-.send-journal-btn:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-    transform: none;
+.journal-submit {
+    text-align: center;
 }
 
 .send-note {
@@ -1056,27 +918,23 @@ body {
     padding: 14px 18px;
     border-radius: 15px;
     text-align: center;
-    font-size: .85rem;
-    line-height: 1.5;
 }
 
 .journal-status.success {
     display: block;
     background: rgba(50,200,120,.12);
-    border: 1px solid rgba(50,200,120,.25);
     color: #b8ffd8;
 }
 
 .journal-status.error {
     display: block;
     background: rgba(255,80,100,.12);
-    border: 1px solid rgba(255,80,100,.25);
     color: #ffd0d7;
 }
 
 
 /* =========================
-   FULLSCREEN LIGHTBOX
+   LIGHTBOX
 ========================= */
 
 .gallery-lightbox {
@@ -1086,7 +944,6 @@ body {
     align-items: center;
     justify-content: center;
     background: rgba(5,0,15,.96);
-    backdrop-filter: blur(15px);
     z-index: 3000;
     padding: 30px;
 }
@@ -1105,7 +962,6 @@ body {
     max-height: 78vh;
     object-fit: contain;
     border-radius: 18px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.6);
 }
 
 .lightbox-close {
@@ -1118,7 +974,6 @@ body {
     border-radius: 50%;
     background: rgba(255,255,255,.12);
     color: white;
-    font-size: 1.3rem;
     cursor: pointer;
 }
 
@@ -1136,11 +991,6 @@ body {
     cursor: pointer;
 }
 
-.lightbox-btn:hover,
-.lightbox-close:hover {
-    background: rgba(255,255,255,.25);
-}
-
 .lightbox-prev {
     left: 30px;
 }
@@ -1151,13 +1001,10 @@ body {
 
 .lightbox-caption {
     margin-top: 15px;
-    font-size: 1rem;
-    color: rgba(255,255,255,.8);
 }
 
 .lightbox-counter {
     margin-top: 8px;
-    font-size: .8rem;
     color: rgba(255,255,255,.5);
 }
 
@@ -1191,19 +1038,17 @@ body {
     padding: 45px 35px;
     text-align: center;
     border-radius: 30px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(120,50,180,.9),
-            rgba(35,5,65,.95)
-        );
+    background: linear-gradient(
+        145deg,
+        rgba(120,50,180,.95),
+        rgba(35,5,65,.98)
+    );
     border: 1px solid rgba(255,255,255,.18);
     box-shadow: 0 30px 100px rgba(0,0,0,.5);
     animation: modalPop .45s ease;
 }
 
 @keyframes modalPop {
-
     from {
         transform: scale(.8) translateY(30px);
         opacity: 0;
@@ -1213,7 +1058,6 @@ body {
         transform: scale(1) translateY(0);
         opacity: 1;
     }
-
 }
 
 .surprise-close {
@@ -1231,15 +1075,6 @@ body {
 
 .surprise-icon {
     font-size: 4rem;
-    animation: giftBounce 1.5s infinite;
-}
-
-@keyframes giftBounce {
-
-    50% {
-        transform: translateY(-12px) rotate(5deg);
-    }
-
 }
 
 .surprise-card h2 {
@@ -1251,7 +1086,6 @@ body {
 .surprise-cake {
     font-size: 5rem;
     margin: 10px;
-    animation: cakeBounce 2s infinite;
 }
 
 .surprise-card p {
@@ -1269,25 +1103,16 @@ body {
     border: none;
     padding: 13px 25px;
     border-radius: 999px;
-    background:
-        linear-gradient(
-            135deg,
-            #ff4d8d,
-            #ff9f1c
-        );
+    background: linear-gradient(
+        135deg,
+        #ff4d8d,
+        #ff9f1c
+    );
     color: white;
     font-family: inherit;
     font-weight: 700;
     cursor: pointer;
-    transition: .3s;
 }
-
-.surprise-celebrate:hover {
-    transform: scale(1.05);
-}
-
-
-/* COMPLETION */
 
 .completion-icon {
     font-size: 4rem;
@@ -1309,13 +1134,18 @@ body {
    CONFETTI
 ========================= */
 
-.confetti-piece {
+.confetti-container {
     position: fixed;
-    top: -30px;
-    z-index: 5000;
+    inset: 0;
     pointer-events: none;
-    font-size: 22px;
-    animation: confettiFall 3s linear forwards;
+    z-index: 5000;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -40px;
+    animation: confettiFall 3.5s linear forwards;
 }
 
 @keyframes confettiFall {
@@ -1326,9 +1156,7 @@ body {
     }
 
     100% {
-        transform:
-            translateY(110vh)
-            rotate(720deg);
+        transform: translateY(115vh) rotate(720deg);
         opacity: 0;
     }
 
@@ -1366,10 +1194,6 @@ footer {
     font-size: .85rem;
 }
 
-.footer-links a:hover {
-    color: white;
-}
-
 .copyright {
     color: rgba(255,255,255,.45);
     font-size: .75rem;
@@ -1396,7 +1220,6 @@ footer {
         flex-direction: column;
         gap: 0;
         background: rgba(20,0,40,.96);
-        backdrop-filter: blur(15px);
     }
 
     .nav-links.active {
@@ -1405,8 +1228,7 @@ footer {
 
     .nav-links a {
         padding: 15px 25px;
-        border-bottom:
-            1px solid rgba(255,255,255,.06);
+        border-bottom: 1px solid rgba(255,255,255,.06);
     }
 
     .menu-toggle {
@@ -1415,15 +1237,6 @@ footer {
 
     .hero-title {
         font-size: 3.3rem;
-    }
-
-    .hero-subtitle {
-        font-size: .9rem;
-    }
-
-    .birthday-cake {
-        transform: scale(.9);
-        margin-top: 25px;
     }
 
     .gallery-grid {
@@ -1447,14 +1260,6 @@ footer {
         padding: 22px 15px;
     }
 
-    .question-box {
-        padding: 22px 16px;
-    }
-
-    .question-text {
-        font-size: 1.35rem;
-    }
-
     .lightbox-btn {
         width: 42px;
         height: 42px;
@@ -1473,20 +1278,7 @@ footer {
         right: 15px;
     }
 
-    .lightbox-content img {
-        max-height: 70vh;
-    }
-
-    .surprise-card {
-        padding: 40px 22px;
-    }
-
-    .surprise-card h2 {
-        font-size: 2.2rem;
-    }
-
 }
-
 
 @media (max-width: 450px) {
 
