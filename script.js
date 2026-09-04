@@ -1736,8 +1736,7 @@ function renderJournalAnswers() {
     );
 
 }
-
-
+ 
 /* =====================================================
    SEND JOURNAL
 ===================================================== */
@@ -1745,25 +1744,17 @@ function renderJournalAnswers() {
 async function sendJournalAnswers() {
 
     const sendButton =
-        document.getElementById(
-            "sendJournalBtn"
-        );
-
+        document.getElementById("sendJournalBtn");
 
     const journalMessage =
-        document.getElementById(
-            "journalMessage"
-        );
-
+        document.getElementById("journalMessage");
 
     if (!sendButton || !journalMessage) {
         return;
     }
 
-
     const freeJournal =
         journalMessage.value.trim();
-
 
     if (
         journalAnswers.length === 0 &&
@@ -1776,40 +1767,20 @@ async function sendJournalAnswers() {
         );
 
         return;
-
     }
 
 
     /*
-       IMPORTANT:
+       RECEIVER EMAIL
 
-       Replace this email with YOUR email address.
-
-       Example:
-       const receiverEmail = "yourname@gmail.com";
+       Ee email ki BUJJI answers vastayi.
     */
 
     const receiverEmail =
-        "YOUR_EMAIL@example.com";
-
-
-    if (
-        receiverEmail ===
-        "YOUR_EMAIL@example.com"
-    ) {
-
-        showJournalStatus(
-            "First replace YOUR_EMAIL@example.com in script.js with your email address 📩",
-            "error"
-        );
-
-        return;
-
-    }
+        "rakeshnanikengam1922@gmail.com";
 
 
     let answersText = "";
-
 
     journalAnswers.forEach(
         (entry, index) => {
@@ -1869,7 +1840,6 @@ async function sendJournalAnswers() {
 
     sendButton.disabled =
         true;
-
 
     sendButton.textContent =
         "📩 Sending...";
@@ -1932,6 +1902,11 @@ async function sendJournalAnswers() {
 
 
     } catch (error) {
+
+        console.error(
+            "Journal send error:",
+            error
+        );
 
         showJournalStatus(
             "Something went wrong while sending. Please try again.",
