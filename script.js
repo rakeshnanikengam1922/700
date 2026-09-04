@@ -6,7 +6,18 @@ let currentSlide = 0;
 
 let puzzleSize = 3;
 let puzzleTiles = [];
-let puzzleImage = "IMG-20240822-WA0003.jpg";
+
+const puzzleImages = [
+    "IMG-20240822-WA0003.jpg",
+    "IMG-20240904-WA0003.jpg",
+    "IMG_2647.jpg",
+    "NPTL3186.JPG",
+    "OLSB4991.JPG",
+    "Snapchat-1779683539.jpg",
+    "Snapchat-2018150645.jpg"
+];
+
+let puzzleImage = puzzleImages[0];
 
 let selectedPosition = null;
 
@@ -429,16 +440,16 @@ function initializePuzzleGame() {
         document.getElementById("playAgainBtn");
 
 
-    // Difficulty change
+    // Difficulty
     if (difficulty) {
 
         difficulty.addEventListener("change", () => {
 
-            const selectedSize =
-                parseInt(difficulty.value, 10);
-
             puzzleSize =
-                selectedSize || 3;
+                parseInt(
+                    difficulty.value,
+                    10
+                ) || 3;
 
             startNewGame();
 
@@ -447,7 +458,7 @@ function initializePuzzleGame() {
     }
 
 
-    // NEW GAME
+    // New Game
     if (newGame) {
 
         newGame.addEventListener("click", () => {
@@ -459,7 +470,7 @@ function initializePuzzleGame() {
     }
 
 
-    // SHOW SOLUTION
+    // Show Solution
     if (solution) {
 
         solution.addEventListener("click", () => {
@@ -471,7 +482,7 @@ function initializePuzzleGame() {
     }
 
 
-    // PLAY AGAIN
+    // Play Again
     if (playAgain) {
 
         playAgain.addEventListener("click", () => {
@@ -483,14 +494,54 @@ function initializePuzzleGame() {
     }
 
 
-    // Start first game
+    // First game
     startNewGame();
 
 }
 
 
 // =====================================================
-// START NEW GAME - FIXED
+// SELECT DIFFERENT PUZZLE IMAGE
+// =====================================================
+
+function selectNewPuzzleImage() {
+
+    if (puzzleImages.length <= 1) {
+        puzzleImage = puzzleImages[0];
+        return;
+    }
+
+
+    const oldImage =
+        puzzleImage;
+
+
+    let newImage;
+
+
+    do {
+
+        newImage =
+            puzzleImages[
+                Math.floor(
+                    Math.random() *
+                    puzzleImages.length
+                )
+            ];
+
+    } while (
+        newImage === oldImage
+    );
+
+
+    puzzleImage =
+        newImage;
+
+}
+
+
+// =====================================================
+// START NEW GAME
 // =====================================================
 
 function startNewGame() {
@@ -499,7 +550,7 @@ function startNewGame() {
     stopGameTimer();
 
 
-    // Reset game values
+    // Reset game
     moves = 0;
 
     gameSeconds = 0;
@@ -509,35 +560,48 @@ function startNewGame() {
     selectedPosition = null;
 
 
-    // Update timer and moves
+    // Reset stats
     updateGameStats();
 
 
     // Hide completion screen
     const completion =
-        document.getElementById("gameCompletion");
+        document.getElementById(
+            "gameCompletion"
+        );
 
     if (completion) {
 
-        completion.style.display = "none";
+        completion.style.display =
+            "none";
 
     }
 
 
     // Hide solution preview
     const solutionPreview =
-        document.querySelector(".solution-preview");
+        document.querySelector(
+            ".solution-preview"
+        );
 
     if (solutionPreview) {
 
-        solutionPreview.style.display = "none";
+        solutionPreview.style.display =
+            "none";
 
     }
 
 
-    // Reset solution image
+    // ⭐ IMPORTANT:
+    // Select a different image
+    selectNewPuzzleImage();
+
+
+    // Update solution image
     const solutionImage =
-        document.getElementById("solutionImage");
+        document.getElementById(
+            "solutionImage"
+        );
 
     if (solutionImage) {
 
@@ -547,20 +611,22 @@ function startNewGame() {
     }
 
 
-    // Create completely new puzzle
+    // Create puzzle using new image
     createPuzzle();
 
 }
 
 
 // =====================================================
-// CREATE PUZZLE - FIXED
+// CREATE PUZZLE
 // =====================================================
 
 function createPuzzle() {
 
     const board =
-        document.getElementById("puzzleBoard");
+        document.getElementById(
+            "puzzleBoard"
+        );
 
     if (!board) return;
 
@@ -569,7 +635,7 @@ function createPuzzle() {
     board.innerHTML = "";
 
 
-    // Set grid size
+    // Set grid
     board.style.gridTemplateColumns =
         `repeat(${puzzleSize}, 1fr)`;
 
@@ -584,7 +650,9 @@ function createPuzzle() {
     // Create ordered tiles
     puzzleTiles =
         Array.from(
-            { length: total },
+            {
+                length: total
+            },
             (_, index) => index
         );
 
@@ -594,14 +662,16 @@ function createPuzzle() {
 
         shuffleArray(puzzleTiles);
 
-    } while (isSolved());
+    } while (
+        isSolved()
+    );
 
 
-    // Render fresh puzzle
+    // Render puzzle
     renderPuzzle();
 
 
-    // Start fresh timer
+    // Start timer
     startGameTimer();
 
 }
@@ -614,7 +684,9 @@ function createPuzzle() {
 function renderPuzzle() {
 
     const board =
-        document.getElementById("puzzleBoard");
+        document.getElementById(
+            "puzzleBoard"
+        );
 
     if (!board) return;
 
@@ -628,6 +700,7 @@ function renderPuzzle() {
             const tile =
                 document.createElement("div");
 
+
             tile.className =
                 "puzzle-tile";
 
@@ -635,19 +708,24 @@ function renderPuzzle() {
             tile.dataset.position =
                 position;
 
+
             tile.dataset.tile =
                 tileNumber;
 
 
             const row =
                 Math.floor(
-                    tileNumber / puzzleSize
+                    tileNumber /
+                    puzzleSize
                 );
 
+
             const col =
-                tileNumber % puzzleSize;
+                tileNumber %
+                puzzleSize;
 
 
+            // Current puzzle image
             tile.style.backgroundImage =
                 `url("${puzzleImage}")`;
 
@@ -659,15 +737,23 @@ function renderPuzzle() {
             const x =
                 puzzleSize === 1
                     ? 0
-                    : (col * 100) /
-                      (puzzleSize - 1);
+                    : (
+                        col * 100
+                    ) /
+                    (
+                        puzzleSize - 1
+                    );
 
 
             const y =
                 puzzleSize === 1
                     ? 0
-                    : (row * 100) /
-                      (puzzleSize - 1);
+                    : (
+                        row * 100
+                    ) /
+                    (
+                        puzzleSize - 1
+                    );
 
 
             tile.style.backgroundPosition =
@@ -678,7 +764,9 @@ function renderPuzzle() {
                 "click",
                 () => {
 
-                    selectPuzzleTile(position);
+                    selectPuzzleTile(
+                        position
+                    );
 
                 }
             );
@@ -699,18 +787,25 @@ function renderPuzzle() {
 function selectPuzzleTile(position) {
 
     const tiles =
-        document.querySelectorAll(".puzzle-tile");
+        document.querySelectorAll(
+            ".puzzle-tile"
+        );
 
 
-    // First tile selection
-    if (selectedPosition === null) {
+    // First tile
+    if (
+        selectedPosition === null
+    ) {
 
-        selectedPosition = position;
+        selectedPosition =
+            position;
+
 
         if (tiles[position]) {
 
             tiles[position]
-                .classList.add("selected");
+                .classList
+                .add("selected");
 
         }
 
@@ -719,24 +814,30 @@ function selectPuzzleTile(position) {
     }
 
 
-    // Same tile clicked again
-    if (selectedPosition === position) {
+    // Same tile
+    if (
+        selectedPosition === position
+    ) {
 
         if (tiles[position]) {
 
             tiles[position]
-                .classList.remove("selected");
+                .classList
+                .remove("selected");
 
         }
 
-        selectedPosition = null;
+
+        selectedPosition =
+            null;
+
 
         return;
 
     }
 
 
-    // Swap two tiles
+    // Swap
     [
         puzzleTiles[selectedPosition],
         puzzleTiles[position]
@@ -749,18 +850,19 @@ function selectPuzzleTile(position) {
     moves++;
 
 
-    selectedPosition = null;
+    selectedPosition =
+        null;
 
 
-    // Re-render puzzle
+    // Re-render
     renderPuzzle();
 
 
-    // Update stats
+    // Stats
     updateGameStats();
 
 
-    // Check completion
+    // Check solved
     if (isSolved()) {
 
         completeGame();
@@ -797,19 +899,29 @@ function completeGame() {
 
 
     const completion =
-        document.getElementById("gameCompletion");
+        document.getElementById(
+            "gameCompletion"
+        );
+
 
     const finalTime =
-        document.getElementById("finalTime");
+        document.getElementById(
+            "finalTime"
+        );
+
 
     const finalMoves =
-        document.getElementById("finalMoves");
+        document.getElementById(
+            "finalMoves"
+        );
 
 
     if (finalTime) {
 
         finalTime.textContent =
-            formatGameTime(gameSeconds);
+            formatGameTime(
+                gameSeconds
+            );
 
     }
 
@@ -843,15 +955,23 @@ function completeGame() {
 function showSolution() {
 
     const image =
-        document.getElementById("solutionImage");
+        document.getElementById(
+            "solutionImage"
+        );
+
 
     const preview =
-        document.querySelector(".solution-preview");
+        document.querySelector(
+            ".solution-preview"
+        );
 
 
-    if (!image || !preview) return;
+    if (!image || !preview) {
+        return;
+    }
 
 
+    // Show CURRENT puzzle image
     image.src =
         puzzleImage;
 
@@ -868,7 +988,6 @@ function showSolution() {
 
 function startGameTimer() {
 
-    // Stop any existing timer first
     stopGameTimer();
 
 
@@ -906,13 +1025,17 @@ function startGameTimer() {
 
 function stopGameTimer() {
 
-    if (gameTimerInterval !== null) {
+    if (
+        gameTimerInterval !== null
+    ) {
 
         clearInterval(
             gameTimerInterval
         );
 
-        gameTimerInterval = null;
+
+        gameTimerInterval =
+            null;
 
     }
 
@@ -930,14 +1053,17 @@ function formatGameTime(seconds) {
             seconds / 60
         );
 
+
     const secs =
         seconds % 60;
 
 
     return (
-        String(minutes).padStart(2, "0") +
+        String(minutes)
+            .padStart(2, "0") +
         ":" +
-        String(secs).padStart(2, "0")
+        String(secs)
+            .padStart(2, "0")
     );
 
 }
@@ -950,16 +1076,23 @@ function formatGameTime(seconds) {
 function updateGameStats() {
 
     const timer =
-        document.getElementById("gameTimer");
+        document.getElementById(
+            "gameTimer"
+        );
+
 
     const moveCounter =
-        document.getElementById("moveCounter");
+        document.getElementById(
+            "moveCounter"
+        );
 
 
     if (timer) {
 
         timer.textContent =
-            formatGameTime(gameSeconds);
+            formatGameTime(
+                gameSeconds
+            );
 
     }
 
@@ -988,7 +1121,8 @@ function shuffleArray(array) {
 
         const j =
             Math.floor(
-                Math.random() * (i + 1)
+                Math.random() *
+                (i + 1)
             );
 
 
@@ -1012,7 +1146,9 @@ function shuffleArray(array) {
 function initializeCountdown() {
 
     const input =
-        document.getElementById("birthdayDate");
+        document.getElementById(
+            "birthdayDate"
+        );
 
 
     if (input) {
@@ -1033,7 +1169,9 @@ function initializeCountdown() {
 
 
                 const selected =
-                    new Date(input.value);
+                    new Date(
+                        input.value
+                    );
 
 
                 if (
@@ -1044,6 +1182,7 @@ function initializeCountdown() {
 
                     birthdayDate =
                         selected;
+
 
                     updateCountdown();
 
@@ -1075,20 +1214,24 @@ function formatDateForInput(date) {
     const year =
         date.getFullYear();
 
+
     const month =
         String(
             date.getMonth() + 1
         ).padStart(2, "0");
+
 
     const day =
         String(
             date.getDate()
         ).padStart(2, "0");
 
+
     const hours =
         String(
             date.getHours()
         ).padStart(2, "0");
+
 
     const minutes =
         String(
@@ -1114,9 +1257,11 @@ function updateCountdown() {
         new Date();
 
 
-    // If selected birthday has passed,
+    // If date has passed,
     // move to next year
-    if (birthdayDate <= now) {
+    if (
+        birthdayDate <= now
+    ) {
 
         birthdayDate =
             new Date(
@@ -1155,7 +1300,12 @@ function updateCountdown() {
     const days =
         Math.floor(
             difference /
-            (1000 * 60 * 60 * 24)
+            (
+                1000 *
+                60 *
+                60 *
+                24
+            )
         );
 
 
@@ -1163,7 +1313,11 @@ function updateCountdown() {
         Math.floor(
             (
                 difference /
-                (1000 * 60 * 60)
+                (
+                    1000 *
+                    60 *
+                    60
+                )
             ) % 24
         );
 
@@ -1172,7 +1326,10 @@ function updateCountdown() {
         Math.floor(
             (
                 difference /
-                (1000 * 60)
+                (
+                    1000 *
+                    60
+                )
             ) % 60
         );
 
@@ -1191,15 +1348,18 @@ function updateCountdown() {
         days
     );
 
+
     setCountdownValue(
         "hours",
         hours
     );
 
+
     setCountdownValue(
         "minutes",
         minutes
     );
+
 
     setCountdownValue(
         "seconds",
@@ -1295,7 +1455,9 @@ function setCountdownValue(
 ) {
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
 
     if (!element) return;
@@ -1303,8 +1465,14 @@ function setCountdownValue(
 
     element.textContent =
         String(
-            Math.max(0, value)
-        ).padStart(2, "0");
+            Math.max(
+                0,
+                value
+            )
+        ).padStart(
+            2,
+            "0"
+        );
 
 }
 
@@ -1315,7 +1483,7 @@ function setCountdownValue(
 
 function initializeEventListeners() {
 
-    // Celebration button
+    // Celebration
     const celebrateButton =
         document.getElementById(
             "celebrateBtn"
@@ -1366,7 +1534,7 @@ function initializeEventListeners() {
     }
 
 
-    // Keyboard controls
+    // Keyboard
     document.addEventListener(
         "keydown",
         event => {
@@ -1383,7 +1551,8 @@ function initializeEventListeners() {
             ) {
 
                 if (
-                    event.key === "ArrowRight"
+                    event.key ===
+                    "ArrowRight"
                 ) {
 
                     nextSlide();
@@ -1392,7 +1561,8 @@ function initializeEventListeners() {
 
 
                 if (
-                    event.key === "ArrowLeft"
+                    event.key ===
+                    "ArrowLeft"
                 ) {
 
                     previousSlide();
@@ -1405,7 +1575,7 @@ function initializeEventListeners() {
     );
 
 
-    // Swipe controls
+    // Swipe
     const slideshowContainer =
         document.querySelector(
             ".slideshow-container"
@@ -1426,7 +1596,9 @@ function initializeEventListeners() {
                         .screenX;
 
             },
-            { passive: true }
+            {
+                passive: true
+            }
         );
 
 
@@ -1445,7 +1617,9 @@ function initializeEventListeners() {
 
 
                 if (
-                    Math.abs(difference) < 50
+                    Math.abs(
+                        difference
+                    ) < 50
                 ) {
 
                     return;
@@ -1453,7 +1627,9 @@ function initializeEventListeners() {
                 }
 
 
-                if (difference > 0) {
+                if (
+                    difference > 0
+                ) {
 
                     nextSlide();
 
@@ -1464,7 +1640,9 @@ function initializeEventListeners() {
                 }
 
             },
-            { passive: true }
+            {
+                passive: true
+            }
         );
 
     }
