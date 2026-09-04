@@ -1,14 +1,62 @@
 alert("SCRIPT STARTED ✅");
 
+
+/* =====================================================
+   START WEBSITE
+===================================================== */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    initializeNavigation();
-    initializeCelebration();
-    initializeGallery();
-    initializeFullscreenGallery();
-    initializeSurprise();
-    initializePuzzle();
-    initializeJournal();
+    console.log("1 - DOM LOADED");
+
+    try {
+        initializeNavigation();
+        console.log("2 - Navigation OK");
+    } catch (error) {
+        console.error("NAVIGATION ERROR:", error);
+    }
+
+    try {
+        initializeCelebration();
+        console.log("3 - Celebration OK");
+    } catch (error) {
+        console.error("CELEBRATION ERROR:", error);
+    }
+
+    try {
+        initializeGallery();
+        console.log("4 - Gallery OK");
+    } catch (error) {
+        console.error("GALLERY ERROR:", error);
+    }
+
+    try {
+        initializeFullscreenGallery();
+        console.log("5 - Fullscreen Gallery OK");
+    } catch (error) {
+        console.error("FULLSCREEN GALLERY ERROR:", error);
+    }
+
+    try {
+        initializeSurprise();
+        console.log("6 - Surprise OK");
+    } catch (error) {
+        console.error("SURPRISE ERROR:", error);
+    }
+
+    try {
+        initializePuzzle();
+        console.log("7 - Puzzle OK");
+    } catch (error) {
+        console.error("PUZZLE ERROR:", error);
+    }
+
+    try {
+        initializeJournal();
+        console.log("8 - Journal OK");
+    } catch (error) {
+        console.error("JOURNAL ERROR:", error);
+    }
 
 });
 
@@ -44,8 +92,19 @@ function initializeNavigation() {
                 return;
             }
 
-            const target =
-                document.querySelector(targetId);
+            let target = null;
+
+            try {
+                target =
+                    document.querySelector(targetId);
+            } catch (error) {
+                console.error(
+                    "Navigation target error:",
+                    targetId,
+                    error
+                );
+                return;
+            }
 
             if (target) {
 
@@ -64,7 +123,7 @@ function initializeNavigation() {
 
         });
 
-    });
+    }
 
 }
 
@@ -79,10 +138,18 @@ function initializeCelebration() {
         document.getElementById("celebrateBtn");
 
     if (!celebrateBtn) {
+
+        console.warn(
+            "Celebrate button not found"
+        );
+
         return;
+
     }
 
     celebrateBtn.addEventListener("click", () => {
+
+        console.log("CELEBRATE BUTTON CLICKED");
 
         createConfetti(120);
 
@@ -94,7 +161,9 @@ function initializeCelebration() {
             cake.classList.add("cake-pop");
 
             setTimeout(() => {
+
                 cake.classList.remove("cake-pop");
+
             }, 700);
 
         }
@@ -129,6 +198,16 @@ function createConfetti(amount = 50) {
     document.body.appendChild(container);
 
 
+    const symbols = [
+        "🎉",
+        "🎊",
+        "✨",
+        "💖",
+        "🌸",
+        "🥳"
+    ];
+
+
     for (let i = 0; i < amount; i++) {
 
         const piece =
@@ -136,6 +215,14 @@ function createConfetti(amount = 50) {
 
         piece.className =
             "confetti-piece";
+
+        piece.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
 
         piece.style.left =
             Math.random() * 100 + "%";
@@ -152,7 +239,11 @@ function createConfetti(amount = 50) {
 
 
     setTimeout(() => {
-        container.remove();
+
+        if (container) {
+            container.remove();
+        }
+
     }, 4000);
 
 }
@@ -219,6 +310,7 @@ function initializeGallery() {
         }
 
         gridViewBtn.classList.add("active");
+
         slideshowViewBtn.classList.remove("active");
 
     });
@@ -235,6 +327,7 @@ function initializeGallery() {
         }
 
         slideshowViewBtn.classList.add("active");
+
         gridViewBtn.classList.remove("active");
 
     });
@@ -274,7 +367,9 @@ function initializeFullscreenGallery() {
         .forEach((item, index) => {
 
             item.addEventListener("click", () => {
+
                 openLightbox(index);
+
             });
 
         });
@@ -295,7 +390,9 @@ function initializeFullscreenGallery() {
         lightboxPrev.addEventListener(
             "click",
             () => {
+
                 changeLightboxImage(-1);
+
             }
         );
 
@@ -307,50 +404,63 @@ function initializeFullscreenGallery() {
         lightboxNext.addEventListener(
             "click",
             () => {
+
                 changeLightboxImage(1);
+
             }
         );
 
     }
 
 
-    galleryLightbox.addEventListener("click", (e) => {
+    galleryLightbox.addEventListener(
+        "click",
+        (e) => {
 
-        if (e.target === galleryLightbox) {
-            closeLightbox();
+            if (e.target === galleryLightbox) {
+                closeLightbox();
+            }
+
         }
+    );
 
-    });
+
+    document.addEventListener(
+        "keydown",
+        (e) => {
+
+            if (
+                galleryLightbox.getAttribute(
+                    "aria-hidden"
+                ) === "true"
+            ) {
+                return;
+            }
 
 
-    document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                closeLightbox();
+            }
 
-        if (
-            galleryLightbox.getAttribute("aria-hidden") ===
-            "true"
-        ) {
-            return;
+
+            if (e.key === "ArrowLeft") {
+                changeLightboxImage(-1);
+            }
+
+
+            if (e.key === "ArrowRight") {
+                changeLightboxImage(1);
+            }
+
         }
-
-
-        if (e.key === "Escape") {
-            closeLightbox();
-        }
-
-
-        if (e.key === "ArrowLeft") {
-            changeLightboxImage(-1);
-        }
-
-
-        if (e.key === "ArrowRight") {
-            changeLightboxImage(1);
-        }
-
-    });
+    );
 
 }
 
+
+/* =====================================================
+   OPEN LIGHTBOX
+===================================================== */
 
 function openLightbox(index) {
 
@@ -360,7 +470,10 @@ function openLightbox(index) {
 
 
     const lightbox =
-        document.getElementById("galleryLightbox");
+        document.getElementById(
+            "galleryLightbox"
+        );
+
 
     if (!lightbox) {
         return;
@@ -380,16 +493,26 @@ function openLightbox(index) {
 }
 
 
+/* =====================================================
+   UPDATE LIGHTBOX
+===================================================== */
+
 function updateLightbox() {
 
     const image =
-        document.getElementById("lightboxImage");
+        document.getElementById(
+            "lightboxImage"
+        );
 
     const caption =
-        document.getElementById("lightboxCaption");
+        document.getElementById(
+            "lightboxCaption"
+        );
 
     const counter =
-        document.getElementById("lightboxCounter");
+        document.getElementById(
+            "lightboxCounter"
+        );
 
 
     if (image) {
@@ -421,6 +544,10 @@ function updateLightbox() {
 }
 
 
+/* =====================================================
+   CHANGE LIGHTBOX IMAGE
+===================================================== */
+
 function changeLightboxImage(direction) {
 
     lightboxIndex =
@@ -436,10 +563,17 @@ function changeLightboxImage(direction) {
 }
 
 
+/* =====================================================
+   CLOSE LIGHTBOX
+===================================================== */
+
 function closeLightbox() {
 
     const lightbox =
-        document.getElementById("galleryLightbox");
+        document.getElementById(
+            "galleryLightbox"
+        );
+
 
     if (!lightbox) {
         return;
@@ -466,35 +600,48 @@ function closeLightbox() {
 function initializeSurprise() {
 
     const surpriseBtn =
-        document.getElementById("surpriseBtn");
+        document.getElementById(
+            "surpriseBtn"
+        );
 
     const surpriseModal =
-        document.getElementById("surpriseModal");
+        document.getElementById(
+            "surpriseModal"
+        );
 
     const surpriseClose =
-        document.getElementById("surpriseClose");
+        document.getElementById(
+            "surpriseClose"
+        );
 
     const surpriseCelebrate =
-        document.getElementById("surpriseCelebrate");
+        document.getElementById(
+            "surpriseCelebrate"
+        );
 
 
     if (surpriseBtn && surpriseModal) {
 
-        surpriseBtn.addEventListener("click", () => {
+        surpriseBtn.addEventListener(
+            "click",
+            () => {
 
-            surpriseModal.classList.add("active");
+                surpriseModal.classList.add(
+                    "active"
+                );
 
-            surpriseModal.setAttribute(
-                "aria-hidden",
-                "false"
-            );
+                surpriseModal.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
 
-            document.body.style.overflow =
-                "hidden";
+                document.body.style.overflow =
+                    "hidden";
 
-            createConfetti(80);
+                createConfetti(80);
 
-        });
+            }
+        );
 
     }
 
@@ -527,30 +674,42 @@ function initializeSurprise() {
 
     if (surpriseModal) {
 
-        surpriseModal.addEventListener("click", (e) => {
+        surpriseModal.addEventListener(
+            "click",
+            (e) => {
 
-            if (e.target === surpriseModal) {
-                closeSurprise();
+                if (e.target === surpriseModal) {
+                    closeSurprise();
+                }
+
             }
-
-        });
+        );
 
     }
 
 }
 
 
+/* =====================================================
+   CLOSE SURPRISE
+===================================================== */
+
 function closeSurprise() {
 
     const modal =
-        document.getElementById("surpriseModal");
+        document.getElementById(
+            "surpriseModal"
+        );
+
 
     if (!modal) {
         return;
     }
 
 
-    modal.classList.remove("active");
+    modal.classList.remove(
+        "active"
+    );
 
     modal.setAttribute(
         "aria-hidden",
@@ -583,19 +742,26 @@ const puzzleImages = [
 let puzzleImage =
     puzzleImages[0];
 
-let puzzleSize = 4;
+let puzzleSize =
+    4;
 
-let puzzleTiles = [];
+let puzzleTiles =
+    [];
 
-let emptyIndex = 0;
+let emptyIndex =
+    0;
 
-let moves = 0;
+let moves =
+    0;
 
-let timerSeconds = 0;
+let timerSeconds =
+    0;
 
-let timerInterval = null;
+let timerInterval =
+    null;
 
-let puzzleStarted = false;
+let puzzleStarted =
+    false;
 
 
 /* =====================================================
@@ -644,7 +810,8 @@ function initializePuzzle() {
 
         puzzleSize =
             parseInt(
-                difficulty.value || "4"
+                difficulty.value || "4",
+                10
             );
 
 
@@ -654,7 +821,8 @@ function initializePuzzle() {
 
                 puzzleSize =
                     parseInt(
-                        difficulty.value || "4"
+                        difficulty.value || "4",
+                        10
                     );
 
                 startNewGame();
@@ -800,9 +968,22 @@ function createPuzzle() {
         puzzleSize * puzzleSize;
 
 
+    if (puzzleSize < 2) {
+
+        console.error(
+            "Puzzle size must be at least 2"
+        );
+
+        return;
+
+    }
+
+
     puzzleTiles =
         Array.from(
-            { length: total },
+            {
+                length: total
+            },
             (_, index) => index
         );
 
@@ -816,8 +997,7 @@ function createPuzzle() {
 
 
     /*
-       Shuffle using legal moves only.
-       Therefore puzzle will always be solvable.
+       Shuffle with legal moves.
     */
 
     for (let i = 0; i < 300; i++) {
@@ -833,13 +1013,23 @@ function createPuzzle() {
 
             if (
                 puzzleTiles[j] !== null &&
-                isAdjacent(j, emptyIndex)
+                isAdjacent(
+                    j,
+                    emptyIndex
+                )
             ) {
 
                 possibleMoves.push(j);
 
             }
 
+        }
+
+
+        if (
+            possibleMoves.length === 0
+        ) {
+            break;
         }
 
 
@@ -865,12 +1055,56 @@ function createPuzzle() {
 
 
     /*
-       Make sure it isn't already solved.
+       If somehow solved, make one legal move.
     */
 
     if (isPuzzleSolved()) {
-        createPuzzle();
-        return;
+
+        const possibleMoves = [];
+
+        for (
+            let j = 0;
+            j < total;
+            j++
+        ) {
+
+            if (
+                puzzleTiles[j] !== null &&
+                isAdjacent(
+                    j,
+                    emptyIndex
+                )
+            ) {
+
+                possibleMoves.push(j);
+
+            }
+
+        }
+
+
+        if (possibleMoves.length > 0) {
+
+            const randomIndex =
+                possibleMoves[
+                    Math.floor(
+                        Math.random() *
+                        possibleMoves.length
+                    )
+                ];
+
+
+            puzzleTiles[emptyIndex] =
+                puzzleTiles[randomIndex];
+
+            puzzleTiles[randomIndex] =
+                null;
+
+            emptyIndex =
+                randomIndex;
+
+        }
+
     }
 
 
@@ -952,24 +1186,13 @@ function renderPuzzle() {
                 "puzzle-tile";
 
 
-            /*
-               EMPTY BOX
-            */
-
             if (tileValue === null) {
 
                 tile.classList.add(
                     "empty"
                 );
 
-            }
-
-
-            /*
-               PHOTO TILE
-            */
-
-            else {
+            } else {
 
                 const row =
                     Math.floor(
@@ -982,12 +1205,6 @@ function renderPuzzle() {
                     tileValue %
                     puzzleSize;
 
-
-                /*
-                   IMPORTANT:
-                   Image is loaded from the
-                   same root folder as index.html.
-                */
 
                 tile.style.backgroundImage =
                     `url("./${puzzleImage}")`;
@@ -1099,11 +1316,15 @@ function movePuzzleTile(index) {
    CHECK ADJACENT
 ===================================================== */
 
-function isAdjacent(index1, index2) {
+function isAdjacent(
+    index1,
+    index2
+) {
 
     const row1 =
         Math.floor(
-            index1 / puzzleSize
+            index1 /
+            puzzleSize
         );
 
 
@@ -1114,7 +1335,8 @@ function isAdjacent(index1, index2) {
 
     const row2 =
         Math.floor(
-            index2 / puzzleSize
+            index2 /
+            puzzleSize
         );
 
 
@@ -1191,7 +1413,7 @@ function startPuzzleTimer() {
 
 function stopPuzzleTimer() {
 
-    if (timerInterval) {
+    if (timerInterval !== null) {
 
         clearInterval(
             timerInterval
@@ -1215,7 +1437,6 @@ function updatePuzzleStats() {
         document.getElementById(
             "timer"
         );
-
 
     const movesDisplay =
         document.getElementById(
@@ -1318,6 +1539,10 @@ function showPuzzleCompletion() {
 }
 
 
+/* =====================================================
+   CLOSE COMPLETION
+===================================================== */
+
 function closeCompletion() {
 
     const completionModal =
@@ -1377,9 +1602,11 @@ const journalQuestions = [
 ];
 
 
-let currentQuestionIndex = 0;
+let currentQuestionIndex =
+    0;
 
-let journalAnswers = [];
+let journalAnswers =
+    [];
 
 
 /* =====================================================
@@ -1393,12 +1620,10 @@ function initializeJournal() {
             "nextQuestionBtn"
         );
 
-
     const addAnswerBtn =
         document.getElementById(
             "addAnswerBtn"
         );
-
 
     const sendJournalBtn =
         document.getElementById(
@@ -1472,12 +1697,10 @@ function showRandomQuestion() {
             "questionText"
         );
 
-
     const questionNumber =
         document.getElementById(
             "questionNumber"
         );
-
 
     const answerBox =
         document.getElementById(
@@ -1525,7 +1748,6 @@ async function addCurrentAnswer() {
         document.getElementById(
             "questionAnswer"
         );
-
 
     const addButton =
         document.getElementById(
@@ -1767,11 +1989,9 @@ function renderJournalAnswers() {
                 question
             );
 
-
             card.appendChild(
                 answer
             );
-
 
             card.appendChild(
                 removeButton
@@ -1865,14 +2085,12 @@ async function sendSingleJournalAnswer(
 
         return true;
 
-
     } catch (error) {
 
         console.error(
             "Email sending error:",
             error
         );
-
 
         return false;
 
@@ -1892,12 +2110,10 @@ async function sendJournalAnswers() {
             "sendJournalBtn"
         );
 
-
     const journalMessage =
         document.getElementById(
             "journalMessage"
         );
-
 
     const receiverEmail =
         "rakeshnanikengam1922@gmail.com";
@@ -1970,7 +2186,6 @@ async function sendJournalAnswers() {
                 `Question ${index + 1}`,
                 item.question
             );
-
 
             formData.append(
                 `Answer ${index + 1}`,
@@ -2091,14 +2306,17 @@ function showJournalStatus(
 
 
     showJournalStatus.timer =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            status.textContent =
-                "";
+                status.textContent =
+                    "";
 
-            status.className =
-                "journal-status";
+                status.className =
+                    "journal-status";
 
-        }, 5000);
+            },
+            5000
+        );
 
 }
