@@ -167,3 +167,464 @@
 
 }
 ```
+/* =====================================================
+   FINAL FIXES FOR CURRENT HTML + SCRIPT
+===================================================== */
+
+/* ================= GALLERY ================= */
+
+/* Phone + desktop rendu places lo caption visible */
+.gallery-overlay {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+    bottom: 0;
+    padding: 3rem 1rem 1rem;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.88)
+    );
+}
+
+.gallery-overlay h3 {
+    color: #fff;
+    margin: 0 0 5px;
+    font-size: 1.1rem;
+}
+
+.gallery-overlay p {
+    color: #fff;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+
+/* ================= VIEW BUTTONS ================= */
+
+.gallery-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.view-btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.view-btn.active {
+    transform: translateY(-2px);
+}
+
+
+/* ================= SLIDESHOW ================= */
+
+.gallery-slideshow {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.slide {
+    display: none;
+    position: relative;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slide img {
+    display: block;
+    width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.slide-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 35px 15px 15px;
+    text-align: center;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.85)
+    );
+}
+
+.slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    z-index: 5;
+}
+
+.slide-btn.prev {
+    left: 12px;
+}
+
+.slide-btn.next {
+    right: 12px;
+}
+
+.slide-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+/* ================= PUZZLE ================= */
+
+.puzzle-board {
+    width: min(90vw, 360px);
+    height: min(90vw, 360px);
+    aspect-ratio: 1 / 1;
+    display: grid;
+    gap: 3px;
+    padding: 4px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.puzzle-tile {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    background-repeat: no-repeat;
+
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.puzzle-tile:hover {
+    transform: scale(1.02);
+}
+
+.puzzle-tile.selected {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.9);
+    filter: brightness(1.15);
+}
+
+
+/* ================= GAME CONTROLS ================= */
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.game-controls select {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.game-stats {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.stat-box {
+    min-width: 90px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-box span {
+    display: block;
+    font-size: 0.75rem;
+}
+
+.stat-box strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+
+/* ================= SOLUTION ================= */
+
+.solution-preview {
+    display: block !important;
+    width: 100%;
+    max-width: 300px;
+}
+
+.solution-preview img {
+    display: block !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.solution-preview p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+
+/* ================= GAME COMPLETION ================= */
+
+.game-completion {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.65);
+}
+
+.completion-card {
+    width: min(90vw, 400px);
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.completion-icon {
+    font-size: 4rem;
+}
+
+.completion-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.completion-stats span,
+.completion-stats strong {
+    display: block;
+}
+
+.completion-stats strong {
+    font-size: 1.4rem;
+}
+
+
+/* ================= COUNTDOWN ================= */
+
+.date-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.date-selector label {
+    font-weight: 600;
+}
+
+#birthdayDate {
+    width: min(100%, 320px);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 15px;
+    color: #333;
+    color-scheme: light;
+}
+
+.countdown-display {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.countdown-box {
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: 18px;
+}
+
+.countdown-box strong {
+    display: block;
+    font-size: 2.5rem;
+    line-height: 1.1;
+}
+
+.countdown-box span {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+.countdown-message {
+    margin-top: 25px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .gallery-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .gallery-item {
+        width: 100%;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+    }
+
+    .gallery-overlay {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+        padding: 3rem 1rem 1rem;
+    }
+
+    .gallery-overlay h3 {
+        font-size: 1rem;
+    }
+
+    .gallery-overlay p {
+        font-size: 0.85rem;
+    }
+
+    .puzzle-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .puzzle-board {
+        width: min(92vw, 340px);
+        height: min(92vw, 340px);
+    }
+
+    .solution-preview {
+        width: min(80vw, 280px);
+    }
+
+    .countdown-display {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .countdown-box {
+        padding: 16px 8px;
+    }
+
+    .countdown-box strong {
+        font-size: 2rem;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .gallery-item img {
+        height: 230px;
+    }
+
+    .gallery-overlay {
+        padding: 2.5rem 0.8rem 0.8rem;
+    }
+
+    .gallery-overlay h3 {
+        font-size: 0.95rem;
+    }
+
+    .gallery-overlay p {
+        font-size: 0.8rem;
+    }
+
+    .puzzle-board {
+        width: 92vw;
+        height: 92vw;
+        max-width: 330px;
+        max-height: 330px;
+    }
+
+    .countdown-box strong {
+        font-size: 1.7rem;
+    }
+
+    .countdown-box span {
+        font-size: 0.75rem;
+    }
+
+    .slide-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
+
+}
