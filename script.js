@@ -1,1524 +1,90 @@
 // =====================================================
-// BUJJI BIRTHDAY WEBSITE - FINAL script.js
+// PREMIUM FEATURES
 // =====================================================
 
-let currentSlide = 0;
-
-let puzzleSize = 3;
-let puzzleTiles = [];
-
-const puzzleImages = [
-    "IMG-20240822-WA0003.jpg",
-    "IMG-20240904-WA0003.jpg",
-    "IMG_2647.jpg",
-    "NPTL3186.JPG",
-    "OLSB4991.JPG",
-    "Snapchat-1779683539.jpg",
-    "Snapchat-2018150645.jpg"
-];
-
-let puzzleImage = puzzleImages[0];
-
-let selectedPosition = null;
-
-let gameTimerInterval = null;
-let gameStartTime = null;
-let gameSeconds = 0;
-let moves = 0;
-
-let birthdayDate = new Date(2027, 8, 5, 0, 0, 0);
+let lightboxIndex = 0;
 
 
-// =====================================================
-// PAGE LOAD
-// =====================================================
+// ================= PREMIUM INITIALIZATION =================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    initializeNavigation();
-    initializeBackgroundAnimations();
-    initializeGallery();
-    initializeSlideshow();
-    initializePuzzleGame();
-    initializeCountdown();
-    initializeEventListeners();
-    initializeImageErrors();
+    initializeFullscreenGallery();
+    initializeSurprise();
 
 });
 
 
-// =====================================================
-// NAVIGATION
-// =====================================================
+// ================= FULLSCREEN GALLERY =================
 
-function initializeNavigation() {
+function initializeFullscreenGallery() {
 
-    const navToggle = document.getElementById("navToggle");
-    const navMenu = document.getElementById("navMenu");
+    const lightbox =
+        document.getElementById("galleryLightbox");
 
-    if (navToggle && navMenu) {
+    const lightboxImage =
+        document.getElementById("lightboxImage");
 
-        navToggle.addEventListener("click", () => {
+    const lightboxCaption =
+        document.getElementById("lightboxCaption");
 
-            navToggle.classList.toggle("active");
-            navMenu.classList.toggle("active");
+    const lightboxCounter =
+        document.getElementById("lightboxCounter");
 
-        });
+    const closeButton =
+        document.getElementById("lightboxClose");
 
-        navMenu.querySelectorAll("a").forEach(link => {
-
-            link.addEventListener("click", () => {
-
-                navToggle.classList.remove("active");
-                navMenu.classList.remove("active");
-
-            });
-
-        });
-
-    }
-
-
-    document.querySelectorAll("a[href^='#']").forEach(link => {
-
-        link.addEventListener("click", function (event) {
-
-            const targetId = this.getAttribute("href");
-
-            if (!targetId || targetId === "#") {
-                return;
-            }
-
-            const target = document.querySelector(targetId);
-
-            if (target) {
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }
-
-        });
-
-    });
-
-}
-
-
-// =====================================================
-// BACKGROUND ANIMATIONS
-// =====================================================
-
-function initializeBackgroundAnimations() {
-
-    const particles =
-        document.getElementById("particles");
-
-    if (!particles) return;
-
-    particles.innerHTML = "";
-
-    for (let i = 0; i < 35; i++) {
-
-        const particle =
-            document.createElement("span");
-
-        particle.className = "particle";
-
-        particle.style.left =
-            Math.random() * 100 + "%";
-
-        particle.style.top =
-            Math.random() * 100 + "%";
-
-        particle.style.animationDelay =
-            Math.random() * 5 + "s";
-
-        particle.style.animationDuration =
-            3 + Math.random() * 5 + "s";
-
-        particles.appendChild(particle);
-
-    }
-
-}
-
-
-// =====================================================
-// CELEBRATION
-// =====================================================
-
-function celebrate() {
-
-    createConfetti();
-
-}
-
-
-function createConfetti() {
-
-    const container =
-        document.getElementById("confettiContainer");
-
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    const symbols = [
-        "🎉",
-        "🎊",
-        "✨",
-        "💖",
-        "⭐",
-        "🎈",
-        "❤️",
-        "🥳"
-    ];
-
-    for (let i = 0; i < 80; i++) {
-
-        const item =
-            document.createElement("span");
-
-        item.className = "confetti";
-
-        item.textContent =
-            symbols[
-                Math.floor(
-                    Math.random() * symbols.length
-                )
-            ];
-
-        item.style.left =
-            Math.random() * 100 + "%";
-
-        item.style.animationDelay =
-            Math.random() * 2 + "s";
-
-        item.style.animationDuration =
-            2 + Math.random() * 3 + "s";
-
-        container.appendChild(item);
-
-    }
-
-    setTimeout(() => {
-
-        container.innerHTML = "";
-
-    }, 6000);
-
-}
-
-
-// =====================================================
-// GALLERY
-// =====================================================
-
-const galleryImages = [
-    "IMG-20240822-WA0003.jpg",
-    "IMG-20240904-WA0003.jpg",
-    "IMG_2647.jpg",
-    "NPTL3186.JPG",
-    "OLSB4991.JPG",
-    "Snapchat-1779683539.jpg",
-    "Snapchat-2018150645.jpg"
-];
-
-
-const galleryCaptions = [
-    "Happy Birthday, my love ❤️ You make every day brighter!",
-    "Wishing you a day filled with smiles, happiness and beautiful memories 🎂",
-    "Happy Birthday to a very special person ✨",
-    "May your year ahead be full of happiness and beautiful moments 🌸",
-    "Keep smiling and keep shining ✨",
-    "Another beautiful memory to remember forever 💖",
-    "Wishing you endless happiness and smiles 🥰"
-];
-
-
-function initializeGallery() {
-
-    const gallery =
-        document.getElementById("galleryGrid");
-
-    if (!gallery) return;
-
-    const items =
-        gallery.querySelectorAll(".gallery-item");
-
-    items.forEach((item, index) => {
-
-        const image =
-            item.querySelector("img");
-
-        const caption =
-            item.querySelector(".gallery-overlay p");
-
-        if (image && galleryImages[index]) {
-
-            image.src =
-                galleryImages[index];
-
-        }
-
-        if (caption && galleryCaptions[index]) {
-
-            caption.textContent =
-                galleryCaptions[index];
-
-        }
-
-    });
-
-
-    const gridButton =
-        document.getElementById("gridViewBtn");
-
-    const slideshowButton =
-        document.getElementById("slideshowViewBtn");
-
-    const slideshow =
-        document.getElementById("gallerySlideshow");
-
-
-    if (gridButton) {
-
-        gridButton.addEventListener("click", () => {
-
-            gallery.style.display = "grid";
-
-            if (slideshow) {
-                slideshow.style.display = "none";
-            }
-
-            gridButton.classList.add("active");
-
-            if (slideshowButton) {
-                slideshowButton.classList.remove("active");
-            }
-
-        });
-
-    }
-
-
-    if (slideshowButton) {
-
-        slideshowButton.addEventListener("click", () => {
-
-            gallery.style.display = "none";
-
-            if (slideshow) {
-                slideshow.style.display = "block";
-            }
-
-            slideshowButton.classList.add("active");
-
-            if (gridButton) {
-                gridButton.classList.remove("active");
-            }
-
-            showSlide(currentSlide);
-
-        });
-
-    }
-
-}
-
-
-// =====================================================
-// SLIDESHOW
-// =====================================================
-
-function initializeSlideshow() {
-
-    const slides =
-        document.querySelectorAll(".slide");
-
-    const indicators =
-        document.querySelectorAll(".indicator");
-
-    if (!slides.length) return;
-
-    showSlide(0);
-
-
-    indicators.forEach((indicator, index) => {
-
-        indicator.addEventListener("click", () => {
-
-            showSlide(index);
-
-        });
-
-    });
-
-}
-
-
-function showSlide(index) {
-
-    const slides =
-        document.querySelectorAll(".slide");
-
-    const indicators =
-        document.querySelectorAll(".indicator");
-
-    if (!slides.length) return;
-
-
-    if (index >= slides.length) {
-        index = 0;
-    }
-
-    if (index < 0) {
-        index = slides.length - 1;
-    }
-
-
-    currentSlide = index;
-
-
-    slides.forEach((slide, i) => {
-
-        slide.classList.toggle(
-            "active",
-            i === currentSlide
-        );
-
-    });
-
-
-    indicators.forEach((indicator, i) => {
-
-        indicator.classList.toggle(
-            "active",
-            i === currentSlide
-        );
-
-    });
-
-}
-
-
-function nextSlide() {
-
-    showSlide(currentSlide + 1);
-
-}
-
-
-function previousSlide() {
-
-    showSlide(currentSlide - 1);
-
-}
-
-
-// =====================================================
-// PUZZLE GAME
-// =====================================================
-
-function initializePuzzleGame() {
-
-    const difficulty =
-        document.getElementById("difficultySelect");
-
-    const newGame =
-        document.getElementById("newGameBtn");
-
-    const solution =
-        document.getElementById("showSolutionBtn");
-
-    const playAgain =
-        document.getElementById("playAgainBtn");
-
-
-    // Difficulty
-    if (difficulty) {
-
-        difficulty.addEventListener("change", () => {
-
-            puzzleSize =
-                parseInt(
-                    difficulty.value,
-                    10
-                ) || 3;
-
-            startNewGame();
-
-        });
-
-    }
-
-
-    // New Game
-    if (newGame) {
-
-        newGame.addEventListener("click", () => {
-
-            startNewGame();
-
-        });
-
-    }
-
-
-    // Show Solution
-    if (solution) {
-
-        solution.addEventListener("click", () => {
-
-            showSolution();
-
-        });
-
-    }
-
-
-    // Play Again
-    if (playAgain) {
-
-        playAgain.addEventListener("click", () => {
-
-            startNewGame();
-
-        });
-
-    }
-
-
-    // First game
-    startNewGame();
-
-}
-
-
-// =====================================================
-// SELECT DIFFERENT PUZZLE IMAGE
-// =====================================================
-
-function selectNewPuzzleImage() {
-
-    if (puzzleImages.length <= 1) {
-        puzzleImage = puzzleImages[0];
-        return;
-    }
-
-
-    const oldImage =
-        puzzleImage;
-
-
-    let newImage;
-
-
-    do {
-
-        newImage =
-            puzzleImages[
-                Math.floor(
-                    Math.random() *
-                    puzzleImages.length
-                )
-            ];
-
-    } while (
-        newImage === oldImage
-    );
-
-
-    puzzleImage =
-        newImage;
-
-}
-
-
-// =====================================================
-// START NEW GAME
-// =====================================================
-
-function startNewGame() {
-
-    // Stop previous timer
-    stopGameTimer();
-
-
-    // Reset game
-    moves = 0;
-
-    gameSeconds = 0;
-
-    gameStartTime = null;
-
-    selectedPosition = null;
-
-
-    // Reset stats
-    updateGameStats();
-
-
-    // Hide completion screen
-    const completion =
-        document.getElementById(
-            "gameCompletion"
-        );
-
-    if (completion) {
-
-        completion.style.display =
-            "none";
-
-    }
-
-
-    // Hide solution preview
-    const solutionPreview =
-        document.querySelector(
-            ".solution-preview"
-        );
-
-    if (solutionPreview) {
-
-        solutionPreview.style.display =
-            "none";
-
-    }
-
-
-    // ⭐ IMPORTANT:
-    // Select a different image
-    selectNewPuzzleImage();
-
-
-    // Update solution image
-    const solutionImage =
-        document.getElementById(
-            "solutionImage"
-        );
-
-    if (solutionImage) {
-
-        solutionImage.src =
-            puzzleImage;
-
-    }
-
-
-    // Create puzzle using new image
-    createPuzzle();
-
-}
-
-
-// =====================================================
-// CREATE PUZZLE
-// =====================================================
-
-function createPuzzle() {
-
-    const board =
-        document.getElementById(
-            "puzzleBoard"
-        );
-
-    if (!board) return;
-
-
-    // Clear old puzzle
-    board.innerHTML = "";
-
-
-    // Set grid
-    board.style.gridTemplateColumns =
-        `repeat(${puzzleSize}, 1fr)`;
-
-    board.style.gridTemplateRows =
-        `repeat(${puzzleSize}, 1fr)`;
-
-
-    const total =
-        puzzleSize * puzzleSize;
-
-
-    // Create ordered tiles
-    puzzleTiles =
-        Array.from(
-            {
-                length: total
-            },
-            (_, index) => index
-        );
-
-
-    // Shuffle
-    do {
-
-        shuffleArray(puzzleTiles);
-
-    } while (
-        isSolved()
-    );
-
-
-    // Render puzzle
-    renderPuzzle();
-
-
-    // Start timer
-    startGameTimer();
-
-}
-
-
-// =====================================================
-// RENDER PUZZLE
-// =====================================================
-
-function renderPuzzle() {
-
-    const board =
-        document.getElementById(
-            "puzzleBoard"
-        );
-
-    if (!board) return;
-
-
-    board.innerHTML = "";
-
-
-    puzzleTiles.forEach(
-        (tileNumber, position) => {
-
-            const tile =
-                document.createElement("div");
-
-
-            tile.className =
-                "puzzle-tile";
-
-
-            tile.dataset.position =
-                position;
-
-
-            tile.dataset.tile =
-                tileNumber;
-
-
-            const row =
-                Math.floor(
-                    tileNumber /
-                    puzzleSize
-                );
-
-
-            const col =
-                tileNumber %
-                puzzleSize;
-
-
-            // Current puzzle image
-            tile.style.backgroundImage =
-                `url("${puzzleImage}")`;
-
-
-            tile.style.backgroundSize =
-                `${puzzleSize * 100}% ${puzzleSize * 100}%`;
-
-
-            const x =
-                puzzleSize === 1
-                    ? 0
-                    : (
-                        col * 100
-                    ) /
-                    (
-                        puzzleSize - 1
-                    );
-
-
-            const y =
-                puzzleSize === 1
-                    ? 0
-                    : (
-                        row * 100
-                    ) /
-                    (
-                        puzzleSize - 1
-                    );
-
-
-            tile.style.backgroundPosition =
-                `${x}% ${y}%`;
-
-
-            tile.addEventListener(
-                "click",
-                () => {
-
-                    selectPuzzleTile(
-                        position
-                    );
-
-                }
-            );
-
-
-            board.appendChild(tile);
-
-        }
-    );
-
-}
-
-
-// =====================================================
-// SELECT / SWAP PUZZLE TILES
-// =====================================================
-
-function selectPuzzleTile(position) {
-
-    const tiles =
-        document.querySelectorAll(
-            ".puzzle-tile"
-        );
-
-
-    // First tile
-    if (
-        selectedPosition === null
-    ) {
-
-        selectedPosition =
-            position;
-
-
-        if (tiles[position]) {
-
-            tiles[position]
-                .classList
-                .add("selected");
-
-        }
-
-        return;
-
-    }
-
-
-    // Same tile
-    if (
-        selectedPosition === position
-    ) {
-
-        if (tiles[position]) {
-
-            tiles[position]
-                .classList
-                .remove("selected");
-
-        }
-
-
-        selectedPosition =
-            null;
-
-
-        return;
-
-    }
-
-
-    // Swap
-    [
-        puzzleTiles[selectedPosition],
-        puzzleTiles[position]
-    ] = [
-        puzzleTiles[position],
-        puzzleTiles[selectedPosition]
-    ];
-
-
-    moves++;
-
-
-    selectedPosition =
-        null;
-
-
-    // Re-render
-    renderPuzzle();
-
-
-    // Stats
-    updateGameStats();
-
-
-    // Check solved
-    if (isSolved()) {
-
-        completeGame();
-
-    }
-
-}
-
-
-// =====================================================
-// CHECK SOLVED
-// =====================================================
-
-function isSolved() {
-
-    return puzzleTiles.every(
-        (value, index) => {
-
-            return value === index;
-
-        }
-    );
-
-}
-
-
-// =====================================================
-// COMPLETE GAME
-// =====================================================
-
-function completeGame() {
-
-    stopGameTimer();
-
-
-    const completion =
-        document.getElementById(
-            "gameCompletion"
-        );
-
-
-    const finalTime =
-        document.getElementById(
-            "finalTime"
-        );
-
-
-    const finalMoves =
-        document.getElementById(
-            "finalMoves"
-        );
-
-
-    if (finalTime) {
-
-        finalTime.textContent =
-            formatGameTime(
-                gameSeconds
-            );
-
-    }
-
-
-    if (finalMoves) {
-
-        finalMoves.textContent =
-            moves;
-
-    }
-
-
-    if (completion) {
-
-        completion.style.display =
-            "flex";
-
-    }
-
-
-    // Celebration
-    createConfetti();
-
-}
-
-
-// =====================================================
-// SHOW SOLUTION
-// =====================================================
-
-function showSolution() {
-
-    const image =
-        document.getElementById(
-            "solutionImage"
-        );
-
-
-    const preview =
-        document.querySelector(
-            ".solution-preview"
-        );
-
-
-    if (!image || !preview) {
-        return;
-    }
-
-
-    // Show CURRENT puzzle image
-    image.src =
-        puzzleImage;
-
-
-    preview.style.display =
-        "block";
-
-}
-
-
-// =====================================================
-// GAME TIMER
-// =====================================================
-
-function startGameTimer() {
-
-    stopGameTimer();
-
-
-    gameStartTime =
-        Date.now();
-
-
-    gameTimerInterval =
-        setInterval(() => {
-
-            if (!gameStartTime) {
-                return;
-            }
-
-
-            gameSeconds =
-                Math.floor(
-                    (
-                        Date.now() -
-                        gameStartTime
-                    ) / 1000
-                );
-
-
-            updateGameStats();
-
-        }, 1000);
-
-}
-
-
-// =====================================================
-// STOP GAME TIMER
-// =====================================================
-
-function stopGameTimer() {
-
-    if (
-        gameTimerInterval !== null
-    ) {
-
-        clearInterval(
-            gameTimerInterval
-        );
-
-
-        gameTimerInterval =
-            null;
-
-    }
-
-}
-
-
-// =====================================================
-// FORMAT GAME TIME
-// =====================================================
-
-function formatGameTime(seconds) {
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-
-    const secs =
-        seconds % 60;
-
-
-    return (
-        String(minutes)
-            .padStart(2, "0") +
-        ":" +
-        String(secs)
-            .padStart(2, "0")
-    );
-
-}
-
-
-// =====================================================
-// UPDATE GAME STATS
-// =====================================================
-
-function updateGameStats() {
-
-    const timer =
-        document.getElementById(
-            "gameTimer"
-        );
-
-
-    const moveCounter =
-        document.getElementById(
-            "moveCounter"
-        );
-
-
-    if (timer) {
-
-        timer.textContent =
-            formatGameTime(
-                gameSeconds
-            );
-
-    }
-
-
-    if (moveCounter) {
-
-        moveCounter.textContent =
-            moves;
-
-    }
-
-}
-
-
-// =====================================================
-// SHUFFLE
-// =====================================================
-
-function shuffleArray(array) {
-
-    for (
-        let i = array.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
-
-
-        [
-            array[i],
-            array[j]
-        ] = [
-            array[j],
-            array[i]
-        ];
-
-    }
-
-}
-
-
-// =====================================================
-// COUNTDOWN
-// =====================================================
-
-function initializeCountdown() {
-
-    const input =
-        document.getElementById(
-            "birthdayDate"
-        );
-
-
-    if (input) {
-
-        input.value =
-            formatDateForInput(
-                birthdayDate
-            );
-
-
-        input.addEventListener(
-            "change",
-            () => {
-
-                if (!input.value) {
-                    return;
-                }
-
-
-                const selected =
-                    new Date(
-                        input.value
-                    );
-
-
-                if (
-                    !isNaN(
-                        selected.getTime()
-                    )
-                ) {
-
-                    birthdayDate =
-                        selected;
-
-
-                    updateCountdown();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    updateCountdown();
-
-
-    setInterval(
-        updateCountdown,
-        1000
-    );
-
-}
-
-
-// =====================================================
-// FORMAT DATE FOR INPUT
-// =====================================================
-
-function formatDateForInput(date) {
-
-    const year =
-        date.getFullYear();
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-
-    const hours =
-        String(
-            date.getHours()
-        ).padStart(2, "0");
-
-
-    const minutes =
-        String(
-            date.getMinutes()
-        ).padStart(2, "0");
-
-
-    return (
-        `${year}-${month}-${day}` +
-        `T${hours}:${minutes}`
-    );
-
-}
-
-
-// =====================================================
-// UPDATE COUNTDOWN
-// =====================================================
-
-function updateCountdown() {
-
-    const now =
-        new Date();
-
-
-    // If date has passed,
-    // move to next year
-    if (
-        birthdayDate <= now
-    ) {
-
-        birthdayDate =
-            new Date(
-                birthdayDate.getFullYear() + 1,
-                8,
-                5,
-                0,
-                0,
-                0
-            );
-
-
-        const input =
-            document.getElementById(
-                "birthdayDate"
-            );
-
-
-        if (input) {
-
-            input.value =
-                formatDateForInput(
-                    birthdayDate
-                );
-
-        }
-
-    }
-
-
-    const difference =
-        birthdayDate.getTime() -
-        now.getTime();
-
-
-    const days =
-        Math.floor(
-            difference /
-            (
-                1000 *
-                60 *
-                60 *
-                24
-            )
-        );
-
-
-    const hours =
-        Math.floor(
-            (
-                difference /
-                (
-                    1000 *
-                    60 *
-                    60
-                )
-            ) % 24
-        );
-
-
-    const minutes =
-        Math.floor(
-            (
-                difference /
-                (
-                    1000 *
-                    60
-                )
-            ) % 60
-        );
-
-
-    const seconds =
-        Math.floor(
-            (
-                difference /
-                1000
-            ) % 60
-        );
-
-
-    setCountdownValue(
-        "days",
-        days
-    );
-
-
-    setCountdownValue(
-        "hours",
-        hours
-    );
-
-
-    setCountdownValue(
-        "minutes",
-        minutes
-    );
-
-
-    setCountdownValue(
-        "seconds",
-        seconds
-    );
-
-
-    updateCountdownMessage();
-
-}
-
-
-// =====================================================
-// COUNTDOWN MESSAGE
-// =====================================================
-
-function updateCountdownMessage() {
-
-    const message =
-        document.getElementById(
-            "countdownMessage"
-        );
-
-
-    if (!message) return;
-
-
-    const day =
-        String(
-            birthdayDate.getDate()
-        ).padStart(2, "0");
-
-
-    const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ];
-
-
-    const month =
-        monthNames[
-            birthdayDate.getMonth()
-        ];
-
-
-    const year =
-        birthdayDate.getFullYear();
-
-
-    let hours =
-        birthdayDate.getHours();
-
-
-    const minutes =
-        String(
-            birthdayDate.getMinutes()
-        ).padStart(2, "0");
-
-
-    const ampm =
-        hours >= 12
-            ? "PM"
-            : "AM";
-
-
-    hours =
-        hours % 12 || 12;
-
-
-    message.textContent =
-        `🎂 Next Birthday: ${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
-
-}
-
-
-// =====================================================
-// COUNTDOWN VALUE
-// =====================================================
-
-function setCountdownValue(
-    id,
-    value
-) {
-
-    const element =
-        document.getElementById(
-            id
-        );
-
-
-    if (!element) return;
-
-
-    element.textContent =
-        String(
-            Math.max(
-                0,
-                value
-            )
-        ).padStart(
-            2,
-            "0"
-        );
-
-}
-
-
-// =====================================================
-// EVENT LISTENERS
-// =====================================================
-
-function initializeEventListeners() {
-
-    // Celebration
-    const celebrateButton =
-        document.getElementById(
-            "celebrateBtn"
-        );
-
-
-    if (celebrateButton) {
-
-        celebrateButton.addEventListener(
-            "click",
-            celebrate
-        );
-
-    }
-
-
-    // Next slide
-    const nextButton =
-        document.getElementById(
-            "nextSlideBtn"
-        );
-
-
-    // Previous slide
     const previousButton =
-        document.getElementById(
-            "prevSlideBtn"
+        document.getElementById("lightboxPrev");
+
+    const nextButton =
+        document.getElementById("lightboxNext");
+
+
+    if (!lightbox) return;
+
+
+    // Gallery grid images
+    const galleryItems =
+        document.querySelectorAll(
+            ".gallery-item img"
         );
 
 
-    if (nextButton) {
+    galleryItems.forEach((image, index) => {
 
-        nextButton.addEventListener(
+        image.addEventListener("click", () => {
+
+            openLightbox(index);
+
+        });
+
+    });
+
+
+    // Slideshow images
+    const slides =
+        document.querySelectorAll(
+            ".slide img"
+        );
+
+
+    slides.forEach((image, index) => {
+
+        image.addEventListener("click", () => {
+
+            openLightbox(index);
+
+        });
+
+    });
+
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
             "click",
-            nextSlide
+            closeLightbox
         );
 
     }
@@ -1528,46 +94,40 @@ function initializeEventListeners() {
 
         previousButton.addEventListener(
             "click",
-            previousSlide
+            () => {
+
+                changeLightboxImage(-1);
+
+            }
         );
 
     }
 
 
-    // Keyboard
-    document.addEventListener(
-        "keydown",
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            () => {
+
+                changeLightboxImage(1);
+
+            }
+        );
+
+    }
+
+
+    // Click outside image to close
+    lightbox.addEventListener(
+        "click",
         event => {
 
-            const slideshow =
-                document.getElementById(
-                    "gallerySlideshow"
-                );
-
-
             if (
-                slideshow &&
-                slideshow.style.display !== "none"
+                event.target === lightbox
             ) {
 
-                if (
-                    event.key ===
-                    "ArrowRight"
-                ) {
-
-                    nextSlide();
-
-                }
-
-
-                if (
-                    event.key ===
-                    "ArrowLeft"
-                ) {
-
-                    previousSlide();
-
-                }
+                closeLightbox();
 
             }
 
@@ -1575,105 +135,333 @@ function initializeEventListeners() {
     );
 
 
-    // Swipe
-    const slideshowContainer =
-        document.querySelector(
-            ".slideshow-container"
-        );
+    // Keyboard controls
+    document.addEventListener(
+        "keydown",
+        event => {
 
+            if (
+                !lightbox.classList.contains(
+                    "active"
+                )
+            ) {
 
-    if (slideshowContainer) {
+                return;
 
-        let touchStartX = 0;
-
-
-        slideshowContainer.addEventListener(
-            "touchstart",
-            event => {
-
-                touchStartX =
-                    event.changedTouches[0]
-                        .screenX;
-
-            },
-            {
-                passive: true
             }
-        );
 
 
-        slideshowContainer.addEventListener(
-            "touchend",
-            event => {
+            if (
+                event.key === "Escape"
+            ) {
 
-                const touchEndX =
-                    event.changedTouches[0]
-                        .screenX;
+                closeLightbox();
 
-
-                const difference =
-                    touchStartX -
-                    touchEndX;
-
-
-                if (
-                    Math.abs(
-                        difference
-                    ) < 50
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    difference > 0
-                ) {
-
-                    nextSlide();
-
-                } else {
-
-                    previousSlide();
-
-                }
-
-            },
-            {
-                passive: true
             }
+
+
+            if (
+                event.key === "ArrowRight"
+            ) {
+
+                changeLightboxImage(1);
+
+            }
+
+
+            if (
+                event.key === "ArrowLeft"
+            ) {
+
+                changeLightboxImage(-1);
+
+            }
+
+        }
+    );
+
+}
+
+
+function openLightbox(index) {
+
+    const lightbox =
+        document.getElementById(
+            "galleryLightbox"
         );
+
+    if (!lightbox) return;
+
+
+    lightboxIndex =
+        Math.max(
+            0,
+            Math.min(
+                index,
+                galleryImages.length - 1
+            )
+        );
+
+
+    updateLightbox();
+
+
+    lightbox.classList.add("active");
+
+    lightbox.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function updateLightbox() {
+
+    const image =
+        document.getElementById(
+            "lightboxImage"
+        );
+
+    const caption =
+        document.getElementById(
+            "lightboxCaption"
+        );
+
+    const counter =
+        document.getElementById(
+            "lightboxCounter"
+        );
+
+
+    if (!image) return;
+
+
+    image.src =
+        galleryImages[lightboxIndex];
+
+
+    image.alt =
+        `Birthday Memory ${lightboxIndex + 1}`;
+
+
+    if (caption) {
+
+        caption.textContent =
+            galleryCaptions[
+                lightboxIndex
+            ];
+
+    }
+
+
+    if (counter) {
+
+        counter.textContent =
+            `${lightboxIndex + 1} / ${galleryImages.length}`;
 
     }
 
 }
 
 
-// =====================================================
-// IMAGE ERROR HANDLING
-// =====================================================
+function changeLightboxImage(direction) {
 
-function initializeImageErrors() {
+    lightboxIndex += direction;
 
-    document.addEventListener(
-        "error",
-        event => {
 
-            if (
-                event.target &&
-                event.target.tagName === "IMG"
-            ) {
+    if (
+        lightboxIndex >=
+        galleryImages.length
+    ) {
 
-                console.warn(
-                    "Image failed to load:",
-                    event.target.src
+        lightboxIndex = 0;
+
+    }
+
+
+    if (
+        lightboxIndex < 0
+    ) {
+
+        lightboxIndex =
+            galleryImages.length - 1;
+
+    }
+
+
+    updateLightbox();
+
+}
+
+
+function closeLightbox() {
+
+    const lightbox =
+        document.getElementById(
+            "galleryLightbox"
+        );
+
+    if (!lightbox) return;
+
+
+    lightbox.classList.remove(
+        "active"
+    );
+
+    lightbox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+// ================= SURPRISE =================
+
+function initializeSurprise() {
+
+    const button =
+        document.getElementById(
+            "surpriseBtn"
+        );
+
+    const modal =
+        document.getElementById(
+            "surpriseModal"
+        );
+
+    const close =
+        document.getElementById(
+            "surpriseClose"
+        );
+
+    const celebrateButton =
+        document.getElementById(
+            "surpriseCelebrate"
+        );
+
+
+    if (!button || !modal) return;
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            modal.classList.add(
+                "active"
+            );
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow =
+                "hidden";
+
+            createConfetti();
+
+        }
+    );
+
+
+    if (close) {
+
+        close.addEventListener(
+            "click",
+            closeSurprise
+        );
+
+    }
+
+
+    if (celebrateButton) {
+
+        celebrateButton.addEventListener(
+            "click",
+            () => {
+
+                createConfetti();
+
+                setTimeout(
+                    closeSurprise,
+                    700
                 );
 
             }
+        );
 
-        },
-        true
+    }
+
+
+    modal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeSurprise();
+
+            }
+
+        }
     );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains(
+                    "active"
+                )
+            ) {
+
+                closeSurprise();
+
+            }
+
+        }
+    );
+
+}
+
+
+function closeSurprise() {
+
+    const modal =
+        document.getElementById(
+            "surpriseModal"
+        );
+
+    if (!modal) return;
+
+
+    modal.classList.remove(
+        "active"
+    );
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.style.overflow =
+        "";
 
 }
