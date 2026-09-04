@@ -30,9 +30,7 @@ function initializeNavigation() {
     if (menuToggle && navLinks) {
 
         menuToggle.addEventListener("click", () => {
-
             navLinks.classList.toggle("active");
-
         });
 
     }
@@ -88,7 +86,7 @@ function initializeCelebration() {
 
     celebrateBtn.addEventListener("click", () => {
 
-        createConfetti(100);
+        createConfetti(120);
 
         const cake =
             document.getElementById("cakeEmoji");
@@ -98,9 +96,7 @@ function initializeCelebration() {
             cake.classList.add("cake-pop");
 
             setTimeout(() => {
-
                 cake.classList.remove("cake-pop");
-
             }, 700);
 
         }
@@ -134,6 +130,7 @@ function createConfetti(amount = 50) {
 
     document.body.appendChild(container);
 
+
     for (let i = 0; i < amount; i++) {
 
         const piece =
@@ -155,10 +152,9 @@ function createConfetti(amount = 50) {
 
     }
 
+
     setTimeout(() => {
-
         container.remove();
-
     }, 4000);
 
 }
@@ -208,9 +204,11 @@ function initializeGallery() {
     const gallerySlideshow =
         document.getElementById("gallerySlideshow");
 
+
     if (!gridViewBtn || !slideshowViewBtn) {
         return;
     }
+
 
     gridViewBtn.addEventListener("click", () => {
 
@@ -267,6 +265,7 @@ function initializeFullscreenGallery() {
     const lightboxNext =
         document.getElementById("lightboxNext");
 
+
     if (!galleryLightbox) {
         return;
     }
@@ -277,9 +276,7 @@ function initializeFullscreenGallery() {
         .forEach((item, index) => {
 
             item.addEventListener("click", () => {
-
                 openLightbox(index);
-
             });
 
         });
@@ -300,9 +297,7 @@ function initializeFullscreenGallery() {
         lightboxPrev.addEventListener(
             "click",
             () => {
-
                 changeLightboxImage(-1);
-
             }
         );
 
@@ -314,64 +309,47 @@ function initializeFullscreenGallery() {
         lightboxNext.addEventListener(
             "click",
             () => {
-
                 changeLightboxImage(1);
-
             }
         );
 
     }
 
 
-    galleryLightbox.addEventListener(
-        "click",
-        (e) => {
+    galleryLightbox.addEventListener("click", (e) => {
 
-            if (e.target === galleryLightbox) {
-
-                closeLightbox();
-
-            }
-
+        if (e.target === galleryLightbox) {
+            closeLightbox();
         }
-    );
+
+    });
 
 
-    document.addEventListener(
-        "keydown",
-        (e) => {
+    document.addEventListener("keydown", (e) => {
 
-            if (
-                galleryLightbox.getAttribute(
-                    "aria-hidden"
-                ) === "true"
-            ) {
-                return;
-            }
-
-
-            if (e.key === "Escape") {
-
-                closeLightbox();
-
-            }
-
-
-            if (e.key === "ArrowLeft") {
-
-                changeLightboxImage(-1);
-
-            }
-
-
-            if (e.key === "ArrowRight") {
-
-                changeLightboxImage(1);
-
-            }
-
+        if (
+            galleryLightbox.getAttribute("aria-hidden") ===
+            "true"
+        ) {
+            return;
         }
-    );
+
+
+        if (e.key === "Escape") {
+            closeLightbox();
+        }
+
+
+        if (e.key === "ArrowLeft") {
+            changeLightboxImage(-1);
+        }
+
+
+        if (e.key === "ArrowRight") {
+            changeLightboxImage(1);
+        }
+
+    });
 
 }
 
@@ -382,12 +360,14 @@ function openLightbox(index) {
 
     updateLightbox();
 
+
     const lightbox =
         document.getElementById("galleryLightbox");
 
     if (!lightbox) {
         return;
     }
+
 
     lightbox.classList.add("active");
 
@@ -417,7 +397,7 @@ function updateLightbox() {
     if (image) {
 
         image.src =
-            galleryImages[lightboxIndex];
+            `./${galleryImages[lightboxIndex]}`;
 
         image.alt =
             `Memory ${lightboxIndex + 1}`;
@@ -467,6 +447,7 @@ function closeLightbox() {
         return;
     }
 
+
     lightbox.classList.remove("active");
 
     lightbox.setAttribute(
@@ -501,26 +482,21 @@ function initializeSurprise() {
 
     if (surpriseBtn && surpriseModal) {
 
-        surpriseBtn.addEventListener(
-            "click",
-            () => {
+        surpriseBtn.addEventListener("click", () => {
 
-                surpriseModal.classList.add(
-                    "active"
-                );
+            surpriseModal.classList.add("active");
 
-                surpriseModal.setAttribute(
-                    "aria-hidden",
-                    "false"
-                );
+            surpriseModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
 
-                document.body.style.overflow =
-                    "hidden";
+            document.body.style.overflow =
+                "hidden";
 
-                createConfetti(80);
+            createConfetti(80);
 
-            }
-        );
+        });
 
     }
 
@@ -553,18 +529,13 @@ function initializeSurprise() {
 
     if (surpriseModal) {
 
-        surpriseModal.addEventListener(
-            "click",
-            (e) => {
+        surpriseModal.addEventListener("click", (e) => {
 
-                if (e.target === surpriseModal) {
-
-                    closeSurprise();
-
-                }
-
+            if (e.target === surpriseModal) {
+                closeSurprise();
             }
-        );
+
+        });
 
     }
 
@@ -580,6 +551,7 @@ function closeSurprise() {
         return;
     }
 
+
     modal.classList.remove("active");
 
     modal.setAttribute(
@@ -594,7 +566,7 @@ function closeSurprise() {
 
 
 /* =====================================================
-   PUZZLE GAME
+   PUZZLE
 ===================================================== */
 
 const puzzleImages = [
@@ -627,6 +599,10 @@ let timerInterval = null;
 
 let puzzleStarted = false;
 
+
+/* =====================================================
+   INITIALIZE PUZZLE
+===================================================== */
 
 function initializePuzzle() {
 
@@ -672,6 +648,7 @@ function initializePuzzle() {
             parseInt(
                 difficulty.value || "4"
             );
+
 
         difficulty.addEventListener(
             "change",
@@ -735,6 +712,10 @@ function initializePuzzle() {
 }
 
 
+/* =====================================================
+   START NEW GAME
+===================================================== */
+
 function startNewGame() {
 
     stopPuzzleTimer();
@@ -748,18 +729,25 @@ function startNewGame() {
 
     selectPuzzleImage();
 
-
     createPuzzle();
-
 
     updatePuzzleStats();
 
 }
 
 
+/* =====================================================
+   SELECT RANDOM IMAGE
+===================================================== */
+
 function selectPuzzleImage() {
 
-    if (puzzleImages.length <= 1) {
+    if (puzzleImages.length === 0) {
+        return;
+    }
+
+
+    if (puzzleImages.length === 1) {
 
         puzzleImage =
             puzzleImages[0];
@@ -770,6 +758,7 @@ function selectPuzzleImage() {
 
 
     let newImage;
+
 
     do {
 
@@ -792,12 +781,17 @@ function selectPuzzleImage() {
 }
 
 
+/* =====================================================
+   CREATE PUZZLE
+===================================================== */
+
 function createPuzzle() {
 
     const puzzleContainer =
         document.getElementById(
             "puzzleContainer"
         );
+
 
     if (!puzzleContainer) {
         return;
@@ -807,12 +801,6 @@ function createPuzzle() {
     const total =
         puzzleSize * puzzleSize;
 
-
-    /*
-       Start from solved puzzle.
-       Then make many valid random moves.
-       This guarantees the puzzle is solvable.
-    */
 
     puzzleTiles =
         Array.from(
@@ -829,7 +817,12 @@ function createPuzzle() {
         total - 1;
 
 
-    for (let i = 0; i < 250; i++) {
+    /*
+       Shuffle using legal moves only.
+       Therefore puzzle will always be solvable.
+    */
+
+    for (let i = 0; i < 300; i++) {
 
         const possibleMoves = [];
 
@@ -873,6 +866,16 @@ function createPuzzle() {
     }
 
 
+    /*
+       Make sure it isn't already solved.
+    */
+
+    if (isPuzzleSolved()) {
+        createPuzzle();
+        return;
+    }
+
+
     renderPuzzle();
 
 
@@ -881,10 +884,14 @@ function createPuzzle() {
             "solutionImage"
         );
 
+
     if (solutionImage) {
 
         solutionImage.src =
-            puzzleImage;
+            `./${puzzleImage}`;
+
+        solutionImage.alt =
+            "Puzzle solution";
 
     }
 
@@ -893,6 +900,7 @@ function createPuzzle() {
         document.getElementById(
             "solutionPreview"
         );
+
 
     if (solutionPreview) {
 
@@ -904,6 +912,10 @@ function createPuzzle() {
 }
 
 
+/* =====================================================
+   RENDER PUZZLE
+===================================================== */
+
 function renderPuzzle() {
 
     const puzzleContainer =
@@ -911,12 +923,14 @@ function renderPuzzle() {
             "puzzleContainer"
         );
 
+
     if (!puzzleContainer) {
         return;
     }
 
 
-    puzzleContainer.innerHTML = "";
+    puzzleContainer.innerHTML =
+        "";
 
 
     puzzleContainer.style.gridTemplateColumns =
@@ -931,12 +945,18 @@ function renderPuzzle() {
                     "button"
                 );
 
+
             tile.type =
                 "button";
+
 
             tile.className =
                 "puzzle-tile";
 
+
+            /*
+               EMPTY BOX
+            */
 
             if (tileValue === null) {
 
@@ -944,7 +964,14 @@ function renderPuzzle() {
                     "empty"
                 );
 
-            } else {
+            }
+
+
+            /*
+               PHOTO TILE
+            */
+
+            else {
 
                 const row =
                     Math.floor(
@@ -952,24 +979,29 @@ function renderPuzzle() {
                         puzzleSize
                     );
 
+
                 const col =
                     tileValue %
                     puzzleSize;
 
 
+                /*
+                   IMPORTANT:
+                   Image is loaded from the
+                   same root folder as index.html.
+                */
+
                 tile.style.backgroundImage =
-                    `url("${puzzleImage}")`;
+                    `url("./${puzzleImage}")`;
+
+
+                tile.style.backgroundRepeat =
+                    "no-repeat";
 
 
                 tile.style.backgroundSize =
                     `${puzzleSize * 100}% ${puzzleSize * 100}%`;
 
-
-                /*
-                   For a 4x4 puzzle:
-                   tile 0 = top-left
-                   tile 15 = bottom-right
-                */
 
                 if (puzzleSize > 1) {
 
@@ -977,6 +1009,12 @@ function renderPuzzle() {
                         `${(col * 100) / (puzzleSize - 1)}% ${(row * 100) / (puzzleSize - 1)}%`;
 
                 }
+
+
+                tile.setAttribute(
+                    "aria-label",
+                    `Puzzle piece ${tileValue + 1}`
+                );
 
 
                 tile.addEventListener(
@@ -1000,6 +1038,10 @@ function renderPuzzle() {
 
 }
 
+
+/* =====================================================
+   MOVE PUZZLE TILE
+===================================================== */
 
 function movePuzzleTile(index) {
 
@@ -1026,6 +1068,7 @@ function movePuzzleTile(index) {
 
     puzzleTiles[emptyIndex] =
         puzzleTiles[index];
+
 
     puzzleTiles[index] =
         null;
@@ -1054,12 +1097,17 @@ function movePuzzleTile(index) {
 }
 
 
+/* =====================================================
+   CHECK ADJACENT
+===================================================== */
+
 function isAdjacent(index1, index2) {
 
     const row1 =
         Math.floor(
             index1 / puzzleSize
         );
+
 
     const col1 =
         index1 %
@@ -1070,6 +1118,7 @@ function isAdjacent(index1, index2) {
         Math.floor(
             index2 / puzzleSize
         );
+
 
     const col2 =
         index2 %
@@ -1083,6 +1132,10 @@ function isAdjacent(index1, index2) {
 
 }
 
+
+/* =====================================================
+   CHECK SOLVED
+===================================================== */
 
 function isPuzzleSolved() {
 
@@ -1107,10 +1160,16 @@ function isPuzzleSolved() {
     }
 
 
-    return puzzleTiles[last] === null;
+    return (
+        puzzleTiles[last] === null
+    );
 
 }
 
+
+/* =====================================================
+   PUZZLE TIMER
+===================================================== */
 
 function startPuzzleTimer() {
 
@@ -1140,12 +1199,17 @@ function stopPuzzleTimer() {
             timerInterval
         );
 
-        timerInterval = null;
+        timerInterval =
+            null;
 
     }
 
 }
 
+
+/* =====================================================
+   UPDATE PUZZLE STATS
+===================================================== */
 
 function updatePuzzleStats() {
 
@@ -1153,6 +1217,7 @@ function updatePuzzleStats() {
         document.getElementById(
             "timer"
         );
+
 
     const movesDisplay =
         document.getElementById(
@@ -1175,6 +1240,7 @@ function updatePuzzleStats() {
                 timerSeconds / 60
             );
 
+
         const seconds =
             timerSeconds % 60;
 
@@ -1187,12 +1253,17 @@ function updatePuzzleStats() {
 }
 
 
+/* =====================================================
+   SHOW SOLUTION
+===================================================== */
+
 function showSolution() {
 
     const solutionPreview =
         document.getElementById(
             "solutionPreview"
         );
+
 
     if (!solutionPreview) {
         return;
@@ -1217,9 +1288,13 @@ function showSolution() {
 }
 
 
+/* =====================================================
+   PUZZLE COMPLETION
+===================================================== */
+
 function showPuzzleCompletion() {
 
-    createConfetti(80);
+    createConfetti(100);
 
 
     const completionModal =
@@ -1233,6 +1308,7 @@ function showPuzzleCompletion() {
         completionModal.classList.add(
             "active"
         );
+
 
         completionModal.setAttribute(
             "aria-hidden",
@@ -1308,6 +1384,10 @@ let currentQuestionIndex = 0;
 let journalAnswers = [];
 
 
+/* =====================================================
+   INITIALIZE JOURNAL
+===================================================== */
+
 function initializeJournal() {
 
     const nextQuestionBtn =
@@ -1315,10 +1395,12 @@ function initializeJournal() {
             "nextQuestionBtn"
         );
 
+
     const addAnswerBtn =
         document.getElementById(
             "addAnswerBtn"
         );
+
 
     const sendJournalBtn =
         document.getElementById(
@@ -1360,35 +1442,31 @@ function initializeJournal() {
 }
 
 
+/* =====================================================
+   RANDOM QUESTION
+===================================================== */
+
 function showRandomQuestion() {
 
-    if (
-        journalQuestions.length <= 1
-    ) {
+    let newIndex;
 
-        currentQuestionIndex = 0;
 
-    } else {
+    do {
 
-        let newIndex;
+        newIndex =
+            Math.floor(
+                Math.random() *
+                journalQuestions.length
+            );
 
-        do {
+    } while (
+        journalQuestions.length > 1 &&
+        newIndex === currentQuestionIndex
+    );
 
-            newIndex =
-                Math.floor(
-                    Math.random() *
-                    journalQuestions.length
-                );
 
-        } while (
-            newIndex ===
-            currentQuestionIndex
-        );
-
-        currentQuestionIndex =
-            newIndex;
-
-    }
+    currentQuestionIndex =
+        newIndex;
 
 
     const questionText =
@@ -1396,10 +1474,12 @@ function showRandomQuestion() {
             "questionText"
         );
 
+
     const questionNumber =
         document.getElementById(
             "questionNumber"
         );
+
 
     const answerBox =
         document.getElementById(
@@ -1427,7 +1507,8 @@ function showRandomQuestion() {
 
     if (answerBox) {
 
-        answerBox.value = "";
+        answerBox.value =
+            "";
 
         answerBox.focus();
 
@@ -1437,7 +1518,7 @@ function showRandomQuestion() {
 
 
 /* =====================================================
-   ADD ANSWER + SEND EMAIL
+   ADD CURRENT ANSWER
 ===================================================== */
 
 async function addCurrentAnswer() {
@@ -1446,6 +1527,7 @@ async function addCurrentAnswer() {
         document.getElementById(
             "questionAnswer"
         );
+
 
     const addButton =
         document.getElementById(
@@ -1527,7 +1609,7 @@ async function addCurrentAnswer() {
 
 
         showJournalStatus(
-            "💖 Answer added and sent!",
+            "💖 Answer added and sent successfully!",
             "success"
         );
 
@@ -1577,17 +1659,32 @@ function renderJournalAnswers() {
     }
 
 
-    answerList.innerHTML = "";
+    answerList.innerHTML =
+        "";
 
 
     if (
         journalAnswers.length === 0
     ) {
 
-        answerList.innerHTML =
-            `<p class="empty-answer">
-                Your answers will appear here...
-            </p>`;
+        const empty =
+            document.createElement(
+                "p"
+            );
+
+
+        empty.className =
+            "empty-answer";
+
+
+        empty.textContent =
+            "Your answers will appear here...";
+
+
+        answerList.appendChild(
+            empty
+        );
+
 
         return;
 
@@ -1602,6 +1699,7 @@ function renderJournalAnswers() {
                     "div"
                 );
 
+
             card.className =
                 "answer-card";
 
@@ -1611,8 +1709,10 @@ function renderJournalAnswers() {
                     "div"
                 );
 
+
             question.className =
                 "answer-question";
+
 
             question.textContent =
                 item.question;
@@ -1623,8 +1723,10 @@ function renderJournalAnswers() {
                     "div"
                 );
 
+
             answer.className =
                 "answer-value";
+
 
             answer.textContent =
                 item.answer;
@@ -1635,11 +1737,14 @@ function renderJournalAnswers() {
                     "button"
                 );
 
+
             removeButton.type =
                 "button";
 
+
             removeButton.className =
                 "remove-answer";
+
 
             removeButton.textContent =
                 "✕ Remove";
@@ -1664,9 +1769,11 @@ function renderJournalAnswers() {
                 question
             );
 
+
             card.appendChild(
                 answer
             );
+
 
             card.appendChild(
                 removeButton
@@ -1684,7 +1791,7 @@ function renderJournalAnswers() {
 
 
 /* =====================================================
-   SEND ONE ANSWER
+   SEND SINGLE ANSWER
 ===================================================== */
 
 async function sendSingleJournalAnswer(
@@ -1737,11 +1844,14 @@ async function sendSingleJournalAnswer(
                 `https://formsubmit.co/ajax/${receiverEmail}`,
                 {
                     method: "POST",
+
                     body: formData,
+
                     headers: {
                         "Accept":
                             "application/json"
                     }
+
                 }
             );
 
@@ -1749,7 +1859,7 @@ async function sendSingleJournalAnswer(
         if (!response.ok) {
 
             throw new Error(
-                "Unable to send answer"
+                "Email sending failed"
             );
 
         }
@@ -1784,6 +1894,7 @@ async function sendJournalAnswers() {
             "sendJournalBtn"
         );
 
+
     const journalMessage =
         document.getElementById(
             "journalMessage"
@@ -1794,12 +1905,15 @@ async function sendJournalAnswers() {
         "rakeshnanikengam1922@gmail.com";
 
 
+    const personalMessage =
+        journalMessage
+            ? journalMessage.value.trim()
+            : "";
+
+
     if (
         journalAnswers.length === 0 &&
-        (
-            !journalMessage ||
-            !journalMessage.value.trim()
-        )
+        !personalMessage
     ) {
 
         showJournalStatus(
@@ -1859,6 +1973,7 @@ async function sendJournalAnswers() {
                 item.question
             );
 
+
             formData.append(
                 `Answer ${index + 1}`,
                 item.answer
@@ -1868,14 +1983,11 @@ async function sendJournalAnswers() {
     );
 
 
-    if (
-        journalMessage &&
-        journalMessage.value.trim()
-    ) {
+    if (personalMessage) {
 
         formData.append(
             "Personal Journal Message",
-            journalMessage.value.trim()
+            personalMessage
         );
 
     }
@@ -1888,11 +2000,14 @@ async function sendJournalAnswers() {
                 `https://formsubmit.co/ajax/${receiverEmail}`,
                 {
                     method: "POST",
+
                     body: formData,
+
                     headers: {
                         "Accept":
                             "application/json"
                     }
+
                 }
             );
 
