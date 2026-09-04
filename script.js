@@ -37,29 +37,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (let i = 0; i < count; i++) {
 
-            const confetti =
-                document.createElement("div");
+            const confetti = document.createElement("div");
 
             confetti.textContent =
                 emojis[
                     Math.floor(
-                        Math.random() *
-                        emojis.length
+                        Math.random() * emojis.length
                     )
                 ];
 
             confetti.style.position = "fixed";
 
-            /*
-               Random horizontal position
-            */
             confetti.style.left =
                 Math.random() * 100 + "vw";
 
-            /*
-               Different starting heights
-               so emojis don't appear in one line
-            */
             confetti.style.top =
                 (-10 - Math.random() * 80) + "vh";
 
@@ -78,9 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             confetti.style.willChange =
                 "transform, opacity";
 
-            document.body.appendChild(
-                confetti
-            );
+            document.body.appendChild(confetti);
 
             const fallDistance =
                 window.innerHeight + 150;
@@ -94,19 +83,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const startTime =
                 performance.now();
 
-            /*
-               Give every emoji a slightly
-               different side-to-side movement
-            */
             const driftAmount =
                 20 + Math.random() * 40;
 
             const driftSpeed =
                 2 + Math.random() * 3;
 
-            function animateConfetti(
-                currentTime
-            ) {
+            function animateConfetti(currentTime) {
 
                 const elapsed =
                     currentTime - startTime;
@@ -118,12 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                 const y =
-                    fallDistance *
-                    progress;
+                    fallDistance * progress;
 
                 const rotate =
-                    rotation *
-                    progress;
+                    rotation * progress;
 
                 const drift =
                     Math.sin(
@@ -142,9 +123,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     rotate +
                     "deg)";
 
-                /*
-                   Fade out near the end
-                */
                 if (progress > 0.75) {
 
                     confetti.style.opacity =
@@ -175,9 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
             requestAnimationFrame(
                 animateConfetti
             );
-
         }
-
     }
 
 
@@ -192,7 +168,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const celebrateBtn =
         get("celebrateBtn");
 
-
     if (celebrateBtn) {
 
         celebrateBtn.addEventListener(
@@ -201,12 +176,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 createConfetti(120);
 
-
                 const cake =
                     document.querySelector(
                         ".birthday-cake"
                     );
-
 
                 if (cake) {
 
@@ -214,9 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         "cake-pop"
                     );
 
-
                     void cake.offsetWidth;
-
 
                     cake.classList.add(
                         "cake-pop"
@@ -258,33 +229,25 @@ document.addEventListener("DOMContentLoaded", function () {
             ".gallery-item"
         );
 
-
     const galleryLightbox =
         get("galleryLightbox");
-
 
     const lightboxImage =
         get("lightboxImage");
 
-
     const lightboxCaption =
         get("lightboxCaption");
-
 
     const lightboxClose =
         get("lightboxClose");
 
-
     const lightboxPrev =
         get("lightboxPrev");
-
 
     const lightboxNext =
         get("lightboxNext");
 
-
-    let currentGalleryIndex =
-        0;
+    let currentGalleryIndex = 0;
 
 
     function openLightbox(index) {
@@ -293,25 +256,20 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         currentGalleryIndex =
             index;
-
 
         const item =
             galleryItems[
                 currentGalleryIndex
             ];
 
-
         const image =
             item.querySelector("img");
-
 
         if (!image) {
             return;
         }
-
 
         if (lightboxImage) {
 
@@ -324,7 +282,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
         if (lightboxCaption) {
 
             lightboxCaption.textContent =
@@ -335,13 +292,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
         if (galleryLightbox) {
 
             galleryLightbox.classList.add(
                 "active"
             );
-
 
             galleryLightbox.setAttribute(
                 "aria-hidden",
@@ -359,11 +314,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         galleryLightbox.classList.remove(
             "active"
         );
-
 
         galleryLightbox.setAttribute(
             "aria-hidden",
@@ -379,9 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         currentGalleryIndex--;
-
 
         if (currentGalleryIndex < 0) {
 
@@ -389,7 +340,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 galleryItems.length - 1;
 
         }
-
 
         openLightbox(
             currentGalleryIndex
@@ -404,9 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         currentGalleryIndex++;
-
 
         if (
             currentGalleryIndex >=
@@ -416,7 +364,6 @@ document.addEventListener("DOMContentLoaded", function () {
             currentGalleryIndex = 0;
 
         }
-
 
         openLightbox(
             currentGalleryIndex
@@ -507,20 +454,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-
             if (event.key === "Escape") {
 
                 closeLightbox();
 
             }
 
-
             if (event.key === "ArrowLeft") {
 
                 showPreviousGalleryImage();
 
             }
-
 
             if (event.key === "ArrowRight") {
 
@@ -549,24 +493,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 "img"
             );
 
-
         const prev =
             slideshow.querySelector(
                 ".prev"
             );
-
 
         const next =
             slideshow.querySelector(
                 ".next"
             );
 
-
         const indicators =
             slideshow.querySelector(
                 ".slide-indicators"
             );
-
 
         let slideIndex = 0;
 
@@ -577,9 +517,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             slideIndex = index;
-
 
             if (slideIndex < 0) {
 
@@ -587,7 +525,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     slides.length - 1;
 
             }
-
 
             if (
                 slideIndex >=
@@ -597,7 +534,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 slideIndex = 0;
 
             }
-
 
             slides.forEach(
                 function (slide, i) {
@@ -617,7 +553,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     indicators.querySelectorAll(
                         "button"
                     );
-
 
                 dots.forEach(
                     function (dot, i) {
@@ -671,7 +606,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             indicators.innerHTML = "";
 
-
             slides.forEach(
                 function (_, index) {
 
@@ -680,17 +614,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             "button"
                         );
 
-
                     dot.type =
                         "button";
-
 
                     dot.setAttribute(
                         "aria-label",
                         "Show image " +
                         (index + 1)
                     );
-
 
                     dot.addEventListener(
                         "click",
@@ -700,7 +631,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
                     );
-
 
                     indicators.appendChild(
                         dot
@@ -715,16 +645,11 @@ document.addEventListener("DOMContentLoaded", function () {
         showSlide(0);
 
 
-        /*
-           Slideshow image opens lightbox
-        */
-
         slides.forEach(
             function (slide, index) {
 
                 slide.style.cursor =
                     "pointer";
-
 
                 slide.addEventListener(
                     "click",
@@ -741,7 +666,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
-
                         if (lightboxCaption) {
 
                             lightboxCaption.textContent =
@@ -750,13 +674,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         }
 
-
                         if (galleryLightbox) {
 
                             galleryLightbox.classList.add(
                                 "active"
                             );
-
 
                             galleryLightbox.setAttribute(
                                 "aria-hidden",
@@ -781,10 +703,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const surpriseBtn =
         get("surpriseBtn");
 
-
     const surpriseModal =
         get("surpriseModal");
-
 
     const surpriseClose =
         get("surpriseClose");
@@ -802,14 +722,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         "active"
                     );
 
-
                     surpriseModal.setAttribute(
                         "aria-hidden",
                         "false"
                     );
 
                 }
-
 
                 createConfetti(80);
 
@@ -830,7 +748,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     surpriseModal.classList.remove(
                         "active"
                     );
-
 
                     surpriseModal.setAttribute(
                         "aria-hidden",
@@ -860,7 +777,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         "active"
                     );
 
-
                     surpriseModal.setAttribute(
                         "aria-hidden",
                         "true"
@@ -875,7 +791,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       PUZZLE — ONLY 3 × 3
+       PUZZLE — 3 × 3 IMAGE TILE SWAP
     ===================================================== */
 
     const puzzleImages = [
@@ -897,16 +813,31 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
 
+    const puzzleSize = 3;
+
+    const totalPuzzleTiles =
+        puzzleSize * puzzleSize;
+
+
     let puzzleImage =
         puzzleImages[0];
 
+    /*
+       Example:
 
-    const puzzleSize = 3;
+       [ 0 ][ 1 ][ 2 ]
+       [ 3 ][ 4 ][ 5 ]
+       [ 6 ][ 7 ][ 8 ]
 
+       puzzleTiles contains the
+       current positions.
+
+       No empty tile.
+    */
 
     let puzzleTiles = [];
 
-    let emptyIndex = 8;
+    let selectedTileIndex = null;
 
     let moves = 0;
 
@@ -922,18 +853,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const container =
             get("puzzleContainer");
 
-
         const newGame =
             get("newGameBtn");
-
 
         const solution =
             get("showSolutionBtn");
 
-
         const playAgain =
             get("playAgainBtn");
-
 
         const completionClose =
             get("completionClose");
@@ -951,7 +878,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         console.log(
-            "Puzzle initialized — 3x3"
+            "Puzzle initialized — 3x3 tile swap"
         );
 
 
@@ -1000,6 +927,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       START NEW PUZZLE
+    ===================================================== */
+
     function startNewGame() {
 
         stopPuzzleTimer();
@@ -1011,15 +942,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         puzzleStarted = false;
 
+        selectedTileIndex = null;
+
 
         selectPuzzleImage();
 
+
         createPuzzle();
+
 
         updatePuzzleStats();
 
     }
 
+
+    /* =====================================================
+       SELECT RANDOM IMAGE
+    ===================================================== */
 
     function selectPuzzleImage() {
 
@@ -1062,26 +1001,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       CREATE RANDOM 3 × 3 PUZZLE
+    ===================================================== */
+
     function createPuzzle() {
 
         const container =
             get("puzzleContainer");
-
 
         if (!container) {
             return;
         }
 
 
-        const total =
-            puzzleSize *
-            puzzleSize;
+        /*
+           Start with:
 
+           0 1 2
+           3 4 5
+           6 7 8
+        */
 
         puzzleTiles =
             Array.from(
                 {
-                    length: total
+                    length:
+                        totalPuzzleTiles
                 },
                 function (_, index) {
 
@@ -1091,137 +1037,54 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        puzzleTiles[
-            total - 1
-        ] = null;
-
-
-        emptyIndex =
-            total - 1;
-
-
         /*
-           Shuffle with legal moves.
-           Puzzle always remains solvable.
+           Fisher-Yates shuffle
+           Randomly mixes all 9 tiles.
         */
 
-        for (
-            let i = 0;
-            i < 150;
-            i++
-        ) {
-
-            const possibleMoves = [];
-
+        do {
 
             for (
-                let j = 0;
-                j < total;
-                j++
+                let i =
+                    puzzleTiles.length - 1;
+                i > 0;
+                i--
             ) {
-
-                if (
-                    puzzleTiles[j] !== null &&
-                    isAdjacent(
-                        j,
-                        emptyIndex
-                    )
-                ) {
-
-                    possibleMoves.push(j);
-
-                }
-
-            }
-
-
-            if (!possibleMoves.length) {
-                break;
-            }
-
-
-            const randomIndex =
-                possibleMoves[
-                    Math.floor(
-                        Math.random() *
-                        possibleMoves.length
-                    )
-                ];
-
-
-            puzzleTiles[emptyIndex] =
-                puzzleTiles[randomIndex];
-
-
-            puzzleTiles[randomIndex] =
-                null;
-
-
-            emptyIndex =
-                randomIndex;
-
-        }
-
-
-        /*
-           Make sure puzzle isn't already solved.
-        */
-
-        if (isPuzzleSolved()) {
-
-            const possibleMoves = [];
-
-
-            for (
-                let j = 0;
-                j < total;
-                j++
-            ) {
-
-                if (
-                    puzzleTiles[j] !== null &&
-                    isAdjacent(
-                        j,
-                        emptyIndex
-                    )
-                ) {
-
-                    possibleMoves.push(j);
-
-                }
-
-            }
-
-
-            if (possibleMoves.length) {
 
                 const randomIndex =
-                    possibleMoves[
-                        Math.floor(
-                            Math.random() *
-                            possibleMoves.length
-                        )
-                    ];
+                    Math.floor(
+                        Math.random() *
+                        (i + 1)
+                    );
 
 
-                puzzleTiles[emptyIndex] =
+                const temp =
+                    puzzleTiles[i];
+
+
+                puzzleTiles[i] =
                     puzzleTiles[randomIndex];
 
 
                 puzzleTiles[randomIndex] =
-                    null;
-
-
-                emptyIndex =
-                    randomIndex;
+                    temp;
 
             }
 
-        }
+        } while (
+            isPuzzleSolved()
+        );
+
+
+        selectedTileIndex = null;
 
 
         renderPuzzle();
 
+
+        /*
+           Solution image
+        */
 
         const solutionImage =
             get("solutionImage");
@@ -1231,7 +1094,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             solutionImage.src =
                 "./" + puzzleImage;
-
 
             solutionImage.alt =
                 "Puzzle solution";
@@ -1253,11 +1115,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       RENDER 9 IMAGE TILES
+    ===================================================== */
+
     function renderPuzzle() {
 
         const container =
             get("puzzleContainer");
-
 
         if (!container) {
             return;
@@ -1293,136 +1158,98 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
-                   EMPTY TILE
-                   Shows matching part of same image.
+                   Find which part of original
+                   image this tile belongs to.
                 */
 
-                if (
-                    tileValue === null
-                ) {
-
-                    tile.classList.add(
-                        "empty"
+                const row =
+                    Math.floor(
+                        tileValue /
+                        puzzleSize
                     );
 
 
-                    const emptyRow =
-                        Math.floor(
-                            emptyIndex /
-                            puzzleSize
-                        );
-
-
-                    const emptyCol =
-                        emptyIndex %
-                        puzzleSize;
-
-
-                    tile.style.backgroundImage =
-                        'url("./' +
-                        puzzleImage +
-                        '")';
-
-
-                    tile.style.backgroundRepeat =
-                        "no-repeat";
-
-
-                    tile.style.backgroundSize =
-                        (puzzleSize * 100) +
-                        "% " +
-                        (puzzleSize * 100) +
-                        "%";
-
-
-                    tile.style.backgroundPosition =
-                        (
-                            (emptyCol * 100) /
-                            (puzzleSize - 1)
-                        ) +
-                        "% " +
-                        (
-                            (emptyRow * 100) /
-                            (puzzleSize - 1)
-                        ) +
-                        "%";
-
-
-                    tile.setAttribute(
-                        "aria-label",
-                        "Empty puzzle space"
-                    );
-
-                }
+                const col =
+                    tileValue %
+                    puzzleSize;
 
 
                 /*
-                   NORMAL TILE
+                   Use the SAME image for
+                   all 9 pieces.
                 */
 
-                else {
-
-                    const row =
-                        Math.floor(
-                            tileValue /
-                            puzzleSize
-                        );
+                tile.style.backgroundImage =
+                    'url("./' +
+                    puzzleImage +
+                    '")';
 
 
-                    const col =
-                        tileValue %
-                        puzzleSize;
+                tile.style.backgroundRepeat =
+                    "no-repeat";
 
 
-                    tile.style.backgroundImage =
-                        'url("./' +
-                        puzzleImage +
-                        '")';
+                tile.style.backgroundSize =
+                    "300% 300%";
 
 
-                    tile.style.backgroundRepeat =
-                        "no-repeat";
+                /*
+                   Position the correct
+                   image portion.
+                */
+
+                tile.style.backgroundPosition =
+                    (
+                        (col / 2) * 100
+                    ) +
+                    "% " +
+                    (
+                        (row / 2) * 100
+                    ) +
+                    "%";
 
 
-                    tile.style.backgroundSize =
-                        (puzzleSize * 100) +
-                        "% " +
-                        (puzzleSize * 100) +
-                        "%";
+                tile.setAttribute(
+                    "aria-label",
+                    "Puzzle tile " +
+                    (tileValue + 1)
+                );
 
 
-                    tile.style.backgroundPosition =
-                        (
-                            (col * 100) /
-                            (puzzleSize - 1)
-                        ) +
-                        "% " +
-                        (
-                            (row * 100) /
-                            (puzzleSize - 1)
-                        ) +
-                        "%";
+                /*
+                   Selected tile highlight
+                */
 
+                if (
+                    selectedTileIndex ===
+                    index
+                ) {
 
-                    tile.setAttribute(
-                        "aria-label",
-                        "Puzzle piece " +
-                        (tileValue + 1)
-                    );
+                    tile.style.outline =
+                        "4px solid #ffffff";
 
+                    tile.style.outlineOffset =
+                        "-4px";
 
-                    tile.addEventListener(
-                        "click",
-                        function () {
+                    tile.style.transform =
+                        "scale(0.94)";
 
-                            movePuzzleTile(
-                                index
-                            );
-
-                        }
-                    );
+                    tile.style.filter =
+                        "brightness(1.2)";
 
                 }
+
+
+                tile.addEventListener(
+                    "click",
+                    function () {
+
+                        selectPuzzleTile(
+                            index
+                        );
+
+                    }
+                );
 
 
                 container.appendChild(
@@ -1435,42 +1262,94 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function movePuzzleTile(index) {
+    /* =====================================================
+       SELECT / SWAP TILES
+    ===================================================== */
+
+    function selectPuzzleTile(index) {
+
+        /*
+           First click
+        */
 
         if (
-            !isAdjacent(
-                index,
-                emptyIndex
-            )
+            selectedTileIndex === null
         ) {
+
+            selectedTileIndex =
+                index;
+
+
+            if (!puzzleStarted) {
+
+                puzzleStarted = true;
+
+                startPuzzleTimer();
+
+            }
+
+
+            renderPuzzle();
 
             return;
 
         }
 
 
-        if (!puzzleStarted) {
+        /*
+           Clicking same tile again
+           cancels selection.
+        */
 
-            puzzleStarted = true;
+        if (
+            selectedTileIndex ===
+            index
+        ) {
 
-            startPuzzleTimer();
+            selectedTileIndex =
+                null;
+
+            renderPuzzle();
+
+            return;
 
         }
 
 
-        puzzleTiles[emptyIndex] =
-            puzzleTiles[index];
+        /*
+           Second tile selected.
+           SWAP BOTH TILES.
+        */
+
+        const firstIndex =
+            selectedTileIndex;
 
 
-        puzzleTiles[index] =
-            null;
-
-
-        emptyIndex =
+        const secondIndex =
             index;
 
 
+        const temp =
+            puzzleTiles[firstIndex];
+
+
+        puzzleTiles[firstIndex] =
+            puzzleTiles[secondIndex];
+
+
+        puzzleTiles[secondIndex] =
+            temp;
+
+
+        /*
+           One swap = one move
+        */
+
         moves++;
+
+
+        selectedTileIndex =
+            null;
 
 
         updatePuzzleStats();
@@ -1478,6 +1357,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         renderPuzzle();
 
+
+        /*
+           Check if image is complete.
+        */
 
         if (isPuzzleSolved()) {
 
@@ -1490,52 +1373,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function isAdjacent(
-        index1,
-        index2
-    ) {
-
-        const row1 =
-            Math.floor(
-                index1 /
-                puzzleSize
-            );
-
-
-        const col1 =
-            index1 %
-            puzzleSize;
-
-
-        const row2 =
-            Math.floor(
-                index2 /
-                puzzleSize
-            );
-
-
-        const col2 =
-            index2 %
-            puzzleSize;
-
-
-        return (
-            Math.abs(row1 - row2) +
-            Math.abs(col1 - col2)
-        ) === 1;
-
-    }
-
+    /* =====================================================
+       CHECK PUZZLE SOLVED
+    ===================================================== */
 
     function isPuzzleSolved() {
 
-        const last =
-            puzzleTiles.length - 1;
-
-
         for (
             let i = 0;
-            i < last;
+            i < totalPuzzleTiles;
             i++
         ) {
 
@@ -1550,12 +1396,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        return (
-            puzzleTiles[last] === null
-        );
+        return true;
 
     }
 
+
+    /* =====================================================
+       PUZZLE TIMER
+    ===================================================== */
 
     function startPuzzleTimer() {
 
@@ -1567,7 +1415,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 function () {
 
                     timerSeconds++;
-
 
                     updatePuzzleStats();
 
@@ -1588,7 +1435,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 timerInterval
             );
 
-
             timerInterval =
                 null;
 
@@ -1597,11 +1443,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       PUZZLE STATS
+    ===================================================== */
+
     function updatePuzzleStats() {
 
         const timer =
             get("timer");
-
 
         const movesDisplay =
             get("moves");
@@ -1639,6 +1488,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       SHOW SOLUTION
+    ===================================================== */
+
     function showSolution() {
 
         const preview =
@@ -1667,6 +1520,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+
+    /* =====================================================
+       PUZZLE COMPLETION
+    ===================================================== */
 
     function showPuzzleCompletion() {
 
@@ -1752,26 +1609,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const journalQuestion =
         get("journalQuestion");
 
-
     const journalAnswer =
         get("journalAnswer");
-
 
     const addAnswerBtn =
         get("addAnswerBtn");
 
-
     const savedAnswers =
         get("savedAnswers");
-
 
     const freeJournal =
         get("freeJournal");
 
-
     const sendJournalBtn =
         get("sendJournalBtn");
-
 
     const journalStatus =
         get("journalStatus");
@@ -1997,19 +1848,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 : "Birthday Journal";
 
 
-        /*
-           Show answer immediately
-        */
-
         addSavedAnswer(
             question,
             answer
         );
 
-
-        /*
-           Send email immediately
-        */
 
         sendSingleJournalAnswer(
             question,
@@ -2024,10 +1867,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /*
-           Show another question
-        */
 
         setTimeout(
             function () {
@@ -2169,8 +2008,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       REMOVE DIFFICULTY OPTION IF IT EXISTS
-       Puzzle is always 3 × 3
+       REMOVE DIFFICULTY OPTION
+       PUZZLE IS ALWAYS 3 × 3
     ===================================================== */
 
     const difficulty =
