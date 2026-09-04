@@ -1,20 +1,31 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 Happy Birthday NOOR🎂</title>
+
+    <title>🎉 Happy Birthday NOOR 🎂</title>
+
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="/image/IMG-20250812-WA0034.jpg">
+
+    <!-- GitHub repository root lo unna image -->
+    <link rel="icon" type="image/jpeg" href="IMG-20240822-WA0003.jpg">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@300;400;600;700&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
-    <!-- Animated Background Elements -->
+
+    <!-- =====================================================
+         BACKGROUND ANIMATION
+    ====================================================== -->
+
     <div class="background-animation">
+
         <div class="floating-balloons">
             <div class="balloon balloon-1">🎈</div>
             <div class="balloon balloon-2">🎈</div>
@@ -22,302 +33,973 @@
             <div class="balloon balloon-4">🎈</div>
             <div class="balloon balloon-5">🎈</div>
         </div>
+
         <div class="confetti-container" id="confettiContainer"></div>
+
         <div class="particles" id="particles"></div>
+
     </div>
 
-    <!-- Navigation -->
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
     <nav class="navbar" id="navbar">
+
         <div class="nav-container">
-            <div class="nav-logo">NOOR🎂</div>
+
+            <div class="nav-logo">
+                NOOR🎂
+            </div>
+
             <div class="nav-toggle" id="navToggle">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#gallery" class="nav-link">Gallery</a></li>
-                <li><a href="#music" class="nav-link">Music</a></li>
-                <li><a href="#game" class="nav-link">Game</a></li>
-                <li><a href="#countdown" class="nav-link">Countdown</a></li>
+
+                <li>
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+
+                <li>
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                </li>
+
+                <li>
+                    <a href="#music" class="nav-link">Music</a>
+                </li>
+
+                <li>
+                    <a href="#game" class="nav-link">Game</a>
+                </li>
+
+                <li>
+                    <a href="#countdown" class="nav-link">Countdown</a>
+                </li>
+
             </ul>
+
         </div>
+
     </nav>
 
-    <!-- Hero Section -->
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
     <section id="home" class="hero">
+
         <div class="hero-content">
-            <h1 class="hero-title animate-bounce ">Happy Birthday NOOR🎉</h1>
-            <p class="hero-subtitle">Let's celebrate this special day together!</p>
+
+            <h1 class="hero-title animate-bounce">
+                Happy Birthday NOOR🎉
+            </h1>
+
+            <p class="hero-subtitle">
+                Let's celebrate this special day together!
+            </p>
+
             <div class="birthday-candles">
+
                 <div class="candle">
                     <div class="flame"></div>
                     <div class="wick"></div>
                     <div class="wax"></div>
                 </div>
+
                 <div class="candle">
                     <div class="flame"></div>
                     <div class="wick"></div>
                     <div class="wax"></div>
                 </div>
+
                 <div class="candle">
                     <div class="flame"></div>
                     <div class="wick"></div>
                     <div class="wax"></div>
                 </div>
+
             </div>
-            <button class="cta-button" id="celebrateBtn">Start the Celebration! 🎊</button>
+
+            <button class="cta-button" id="celebrateBtn">
+                Start the Celebration! 🎊
+            </button>
+
         </div>
+
     </section>
 
-    <!-- Photo Gallery Section -->
+
+    <!-- =====================================================
+         PHOTO GALLERY
+    ====================================================== -->
+
     <section id="gallery" class="gallery-section">
+
         <div class="container">
-            <h2 class="section-title">📸 Memory Gallery</h2>
+
+            <h2 class="section-title">
+                📸 Memory Gallery
+            </h2>
+
+
             <div class="gallery-controls">
-                <button class="gallery-btn" id="gridViewBtn">Grid View</button>
-                <button class="gallery-btn" id="slideshowViewBtn">Slideshow</button>
+
+                <button class="gallery-btn" id="gridViewBtn">
+                    Grid View
+                </button>
+
+                <button class="gallery-btn" id="slideshowViewBtn">
+                    Slideshow
+                </button>
+
             </div>
 
-            <!-- Grid View -->
+
+            <!-- =================================================
+                 GRID VIEW
+            ================================================== -->
+
             <div class="gallery-grid" id="galleryGrid">
-                <div class="gallery-item" data-caption="Birthday Party 2024">
-                    <img src="/image/IMG-20250812-WA0034.jpg" alt="Birthday celebration">
+
+
+                <!-- PHOTO 1 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="IMG-20240822-WA0003.jpg"
+                        alt="NOOR Memory 1">
+
                     <div class="gallery-overlay">
-                        <!-- <h3>Birthday Party 2025</h3> -->
-                        <p>Happy Birthday, my love ❤️ You make every day brighter!</p>
+
+                        <p>
+                            Happy Birthday, my love ❤️
+                            You make every day brighter!
+                        </p>
+
                     </div>
+
                 </div>
-                <div class="gallery-item" data-caption="Cake Time!">
-                    <img src="/image/IMG-20250812-WA0035.jpg" alt="Birthday cake">
+
+
+                <!-- PHOTO 2 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="IMG-20240904-WA0003.jpg"
+                        alt="NOOR Memory 2">
+
                     <div class="gallery-overlay">
-                        <!-- <h3>Cake Time!</h3> -->
-                        <p>Wishing you a day filled with smiles, hugs, and all your favorite things 🎂</p>
+
+                        <p>
+                            Wishing you a day filled with
+                            smiles, happiness and beautiful memories 🎂
+                        </p>
+
                     </div>
+
                 </div>
-                <div class="gallery-item" data-caption="Friends Forever">
-                    <img src="/image/IMG-20250812-WA0036.jpg" alt="Friends celebrating">
+
+
+                <!-- PHOTO 3 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="IMG_2647.jpg"
+                        alt="NOOR Memory 3">
+
                     <div class="gallery-overlay">
-                        <!-- <h3>Friends Forever</h3> -->
-                        <p>Happy Birthday to the most beautiful soul I know ✨</p>
+
+                        <p>
+                            Happy Birthday to a very special person ✨
+                        </p>
+
                     </div>
+
                 </div>
-                <div class="gallery-item" data-caption="Birthday Surprise">
-                    <img src="/image/IMG-20250812-WA0037.jpg" alt="Birthday surprise">
+
+
+                <!-- PHOTO 4 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="NPTL3186.JPG"
+                        alt="NOOR Memory 4">
+
                     <div class="gallery-overlay">
-                        <!-- <h3>Birthday Surprise</h3> -->
-                        <p>May your year ahead be as magical as your smile 🌸</p>
+
+                        <p>
+                            May your year ahead be full of
+                            happiness and beautiful moments 🌸
+                        </p>
+
                     </div>
+
                 </div>
-                <div class="gallery-item" data-caption="Party Decorations">
-                    <img src="/image/WhatsApp Image 2025-08-12 at 13.34.52_08b6634b.jpg" alt="Party decorations">
+
+
+                <!-- PHOTO 5 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="OLSB4991.JPG"
+                        alt="NOOR Memory 5">
+
                     <div class="gallery-overlay">
-                        <!-- <h3>Party Decorations</h3> -->
-                        <p>You’re my today and all of my tomorrows 🥰</p>
+
+                        <p>
+                            Keep smiling and keep shining ✨
+                        </p>
+
                     </div>
+
                 </div>
-                <div class="gallery-item" data-caption="Group Photo">
-                    <img src="/image/WhatsApp Image 2025-08-12 at 13.37.00_3cfeaaf7.jpg" alt="Group photo">
+
+
+                <!-- PHOTO 6 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="Snapchat-1779683539.jpg"
+                        alt="NOOR Memory 6">
+
                     <div class="gallery-overlay">
-                        <!-- <h3>Group Photo</h3> -->
-                        <p>Happy Birthday, princess 👑 You deserve the world</p>
+
+                        <p>
+                            Another beautiful memory to remember forever 💖
+                        </p>
+
                     </div>
+
                 </div>
+
+
+                <!-- PHOTO 7 -->
+
+                <div class="gallery-item"
+                    data-caption="Beautiful Memory">
+
+                    <img
+                        src="Snapchat-2018150645.jpg"
+                        alt="NOOR Memory 7">
+
+                    <div class="gallery-overlay">
+
+                        <p>
+                            Wishing you endless happiness and smiles 🥰
+                        </p>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <!-- Slideshow View -->
-            <div class="gallery-slideshow" id="gallerySlideshow" style="display: none;">
+
+            <!-- =================================================
+                 SLIDESHOW
+            ================================================== -->
+
+            <div
+                class="gallery-slideshow"
+                id="gallerySlideshow"
+                style="display:none;"
+            >
+
                 <div class="slideshow-container">
+
+
+                    <!-- SLIDE 1 -->
+
                     <div class="slide active">
-                        <img src="/image/IMG-20250812-WA0037.jpg" alt="Birthday celebration">
-                        <div class="slide-caption">Every birthday of yours is special, but this one is my favorite
-                            because I get to spend it with you 💖</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/image/WhatsApp Image 2025-08-12 at 13.34.52_08b6634b.jpg" alt="Birthday cake">
-                        <div class="slide-caption">Here’s to another year of love, laughter, and dreams together 💍
+
+                        <img
+                            src="IMG-20240822-WA0003.jpg"
+                            alt="NOOR Memory 1">
+
+                        <div class="slide-caption">
+                            Every memory becomes special when
+                            it is shared with someone special 💖
                         </div>
+
                     </div>
+
+
+                    <!-- SLIDE 2 -->
+
                     <div class="slide">
-                        <img src="/image/WhatsApp Image 2025-08-12 at 13.37.00_3cfeaaf7.jpg" alt="Friends celebrating">
-                        <div class="slide-caption">Happy Birthday, my heartbeat ❤️ Every moment with you is a gift I’ll
-                            cherish forever.</div>
+
+                        <img
+                            src="IMG-20240904-WA0003.jpg"
+                            alt="NOOR Memory 2">
+
+                        <div class="slide-caption">
+                            Wishing you a birthday filled with
+                            happiness, smiles and beautiful moments 🎂
+                        </div>
+
                     </div>
+
+
+                    <!-- SLIDE 3 -->
+
+                    <div class="slide">
+
+                        <img
+                            src="IMG_2647.jpg"
+                            alt="NOOR Memory 3">
+
+                        <div class="slide-caption">
+                            Keep smiling and make every moment memorable ✨
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLIDE 4 -->
+
+                    <div class="slide">
+
+                        <img
+                            src="NPTL3186.JPG"
+                            alt="NOOR Memory 4">
+
+                        <div class="slide-caption">
+                            May all your dreams come true 🌸
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLIDE 5 -->
+
+                    <div class="slide">
+
+                        <img
+                            src="OLSB4991.JPG"
+                            alt="NOOR Memory 5">
+
+                        <div class="slide-caption">
+                            Here's to another year of wonderful memories 💝
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLIDE 6 -->
+
+                    <div class="slide">
+
+                        <img
+                            src="Snapchat-1779683539.jpg"
+                            alt="NOOR Memory 6">
+
+                        <div class="slide-caption">
+                            Stay happy, stay amazing and keep smiling ❤️
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLIDE 7 -->
+
+                    <div class="slide">
+
+                        <img
+                            src="Snapchat-2018150645.jpg"
+                            alt="NOOR Memory 7">
+
+                        <div class="slide-caption">
+                            Happy Birthday NOOR! 🎉🎂
+                        </div>
+
+                    </div>
+
                 </div>
-                <button class="slide-btn prev" id="prevSlideBtn">❮</button>
-                <button class="slide-btn next" id="nextSlideBtn">❯</button>
+
+
+                <!-- PREVIOUS -->
+
+                <button
+                    class="slide-btn prev"
+                    id="prevSlideBtn"
+                >
+                    ❮
+                </button>
+
+
+                <!-- NEXT -->
+
+                <button
+                    class="slide-btn next"
+                    id="nextSlideBtn"
+                >
+                    ❯
+                </button>
+
+
+                <!-- INDICATORS -->
+
                 <div class="slide-indicators">
-                    <span class="indicator active" data-slide="0"></span>
-                    <span class="indicator" data-slide="1"></span>
-                    <span class="indicator" data-slide="2"></span>
+
+                    <span
+                        class="indicator active"
+                        data-slide="0">
+                    </span>
+
+                    <span
+                        class="indicator"
+                        data-slide="1">
+                    </span>
+
+                    <span
+                        class="indicator"
+                        data-slide="2">
+                    </span>
+
+                    <span
+                        class="indicator"
+                        data-slide="3">
+                    </span>
+
+                    <span
+                        class="indicator"
+                        data-slide="4">
+                    </span>
+
+                    <span
+                        class="indicator"
+                        data-slide="5">
+                    </span>
+
+                    <span
+                        class="indicator"
+                        data-slide="6">
+                    </span>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- Music Section -->
+
+    <!-- =====================================================
+         MUSIC
+    ====================================================== -->
+
     <section id="music" class="music-section">
+
         <div class="container">
-            <h2 class="section-title">🎵 Your Fev song</h2>
+
+            <h2 class="section-title">
+                🎵 Your Fev Song
+            </h2>
+
             <div class="music-player">
+
                 <div class="player-display">
+
                     <div class="album-art">
-                        <div class="vinyl-record" id="vinylRecord">
+
+                        <div
+                            class="vinyl-record"
+                            id="vinylRecord"
+                        >
+
                             <div class="vinyl-center"></div>
+
                         </div>
+
                     </div>
+
+
                     <div class="track-info">
-                        <h3 id="trackTitle">Your Fev song</h3>
-                        <p id="trackArtist">My Love</p>
+
+                        <h3 id="trackTitle">
+                            Your Fev Song
+                        </h3>
+
+                        <p id="trackArtist">
+                            My Love
+                        </p>
+
+
                         <div class="progress-container">
-                            <div class="progress-bar" id="progressBar">
-                                <div class="progress" id="progress"></div>
+
+                            <div
+                                class="progress-bar"
+                                id="progressBar"
+                            >
+
+                                <div
+                                    class="progress"
+                                    id="progress">
+                                </div>
+
                             </div>
+
+
                             <div class="time-display">
-                                <span id="currentTime">0:00</span>
-                                <span id="duration">2:30</span>
+
+                                <span id="currentTime">
+                                    0:00
+                                </span>
+
+                                <span id="duration">
+                                    2:30
+                                </span>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
+
+
+                <!-- MUSIC CONTROLS -->
 
                 <div class="player-controls">
-                    <button class="control-btn" id="prevTrackBtn">⏮️</button>
-                    <button class="control-btn play-pause-btn" id="playPauseBtn">▶️</button>
-                    <button class="control-btn" id="nextTrackBtn">⏭️</button>
+
+                    <button
+                        class="control-btn"
+                        id="prevTrackBtn">
+                        ⏮️
+                    </button>
+
+                    <button
+                        class="control-btn play-pause-btn"
+                        id="playPauseBtn">
+                        ▶️
+                    </button>
+
+                    <button
+                        class="control-btn"
+                        id="nextTrackBtn">
+                        ⏭️
+                    </button>
+
                 </div>
+
+
+                <!-- VOLUME -->
 
                 <div class="volume-control">
+
                     <span>🔊</span>
-                    <input type="range" id="volumeSlider" min="0" max="100" value="50">
+
+                    <input
+                        type="range"
+                        id="volumeSlider"
+                        min="0"
+                        max="100"
+                        value="50"
+                    >
+
                 </div>
+
+
+                <!-- PLAYLIST -->
 
                 <div class="playlist">
-                    <h4>Happy Birthday My Love💝</h4>
-                    <div class="playlist-item active" data-track="0">
+
+                    <h4>
+                        Happy Birthday My Love 💝
+                    </h4>
+
+
+                    <div
+                        class="playlist-item active"
+                        data-track="0"
+                    >
+
                         <span>💖</span>
-                        <span>100%</span>
+                        <span>Song 1</span>
+
                     </div>
-                    <div class="playlist-item" data-track="1">
+
+
+                    <div
+                        class="playlist-item"
+                        data-track="1"
+                    >
+
                         <span>💝</span>
-                        <span>100%</span>
+                        <span>Song 2</span>
+
                     </div>
-                    <div class="playlist-item" data-track="2">
+
+
+                    <div
+                        class="playlist-item"
+                        data-track="2"
+                    >
+
                         <span>💞</span>
-                        <span>100%</span>
+                        <span>Song 3</span>
+
                     </div>
+
                 </div>
 
-                <!-- Audio elements -->
-                <audio id="audioPlayer" preload="metadata">
-                    <source src="" type="audio/mpeg">
+
+                <!-- AUDIO -->
+
+                <audio
+                    id="audioPlayer"
+                    preload="metadata"
+                >
+                    <source
+                        src=""
+                        type="audio/mpeg"
+                    >
                 </audio>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- Puzzle Game Section -->
+
+    <!-- =====================================================
+         PUZZLE GAME
+    ====================================================== -->
+
     <section id="game" class="game-section">
+
         <div class="container">
-            <h2 class="section-title">🧩 Birthday Puzzle Challenge</h2>
+
+            <h2 class="section-title">
+                🧩 Birthday Puzzle Challenge
+            </h2>
+
+
             <div class="game-controls">
+
                 <div class="difficulty-selector">
-                    <label>Difficulty:</label>
+
+                    <label for="difficultySelect">
+                        Difficulty:
+                    </label>
+
                     <select id="difficultySelect">
-                        <option value="easy">Easy (3x3)</option>
-                        <option value="medium">Medium (4x4)</option>
-                        <option value="hard">Hard (5x5)</option>
+
+                        <option value="easy">
+                            Easy (3x3)
+                        </option>
+
+                        <option value="medium">
+                            Medium (4x4)
+                        </option>
+
+                        <option value="hard">
+                            Hard (5x5)
+                        </option>
+
                     </select>
+
                 </div>
+
+
                 <div class="game-stats">
+
                     <div class="stat">
+
                         <span>Time:</span>
-                        <span id="gameTimer">00:00</span>
+
+                        <span id="gameTimer">
+                            00:00
+                        </span>
+
                     </div>
+
+
                     <div class="stat">
+
                         <span>Moves:</span>
-                        <span id="moveCounter">0</span>
+
+                        <span id="moveCounter">
+                            0
+                        </span>
+
                     </div>
+
                 </div>
-                <button class="game-btn" id="newGameBtn">New Game</button>
-                <button class="game-btn" id="showSolutionBtn">Show Solution</button>
+
+
+                <button
+                    class="game-btn"
+                    id="newGameBtn">
+                    New Game
+                </button>
+
+
+                <button
+                    class="game-btn"
+                    id="showSolutionBtn">
+                    Show Solution
+                </button>
+
             </div>
+
 
             <div class="puzzle-container">
-                <div class="puzzle-board" id="puzzleBoard">
-                    <!-- Puzzle pieces will be generated here -->
+
+                <div
+                    class="puzzle-board"
+                    id="puzzleBoard">
                 </div>
-                <div class="solution-preview" id="solutionPreview">
-                    <h4>Solution Preview:</h4>
-                    <img src="" alt="Solution" id="solutionImage">
+
+
+                <div
+                    class="solution-preview"
+                    id="solutionPreview">
+
+                    <h4>
+                        Solution Preview:
+                    </h4>
+
+                    <img
+                        src=""
+                        alt="Solution"
+                        id="solutionImage"
+                    >
+
                 </div>
+
             </div>
 
-            <div class="game-completion" id="gameCompletion" style="display: none;">
+
+            <div
+                class="game-completion"
+                id="gameCompletion"
+                style="display:none;"
+            >
+
                 <div class="completion-message">
-                    <h3>🎉 Congratulations! 🎉</h3>
-                    <p>You solved the puzzle!</p>
-                    <p>Time: <span id="finalTime"></span></p>
-                    <p>Moves: <span id="finalMoves"></span></p>
-                    <button class="game-btn" id="playAgainBtn">Play Again</button>
+
+                    <h3>
+                        🎉 Congratulations! 🎉
+                    </h3>
+
+                    <p>
+                        You solved the puzzle!
+                    </p>
+
+                    <p>
+                        Time:
+                        <span id="finalTime"></span>
+                    </p>
+
+                    <p>
+                        Moves:
+                        <span id="finalMoves"></span>
+                    </p>
+
+                    <button
+                        class="game-btn"
+                        id="playAgainBtn">
+                        Play Again
+                    </button>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- Countdown Section -->
-    <section id="countdown" class="countdown-section">
+
+    <!-- =====================================================
+         COUNTDOWN
+    ====================================================== -->
+
+    <section
+        id="countdown"
+        class="countdown-section"
+    >
+
         <div class="container">
-            <h2 class="section-title">⏰ Birthday Countdown</h2>
+
+            <h2 class="section-title">
+                ⏰ Birthday Countdown
+            </h2>
+
+
             <div class="countdown-container">
+
                 <div class="countdown-input">
-                    <label for="birthdayDate">Set Your Birthday Date:</label>
-                    <input type="datetime-local" id="birthdayDate">
+
+                    <label for="birthdayDate">
+                        Set Your Birthday Date:
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="birthdayDate"
+                    >
+
                 </div>
 
-                <div class="countdown-display" id="countdownDisplay">
+
+                <div
+                    class="countdown-display"
+                    id="countdownDisplay"
+                >
+
                     <div class="time-unit">
-                        <span class="time-number" id="days">00</span>
-                        <span class="time-label">Days</span>
+
+                        <span
+                            class="time-number"
+                            id="days">
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            Days
+                        </span>
+
                     </div>
+
+
                     <div class="time-unit">
-                        <span class="time-number" id="hours">00</span>
-                        <span class="time-label">Hours</span>
+
+                        <span
+                            class="time-number"
+                            id="hours">
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            Hours
+                        </span>
+
                     </div>
+
+
                     <div class="time-unit">
-                        <span class="time-number" id="minutes">00</span>
-                        <span class="time-label">Minutes</span>
+
+                        <span
+                            class="time-number"
+                            id="minutes">
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            Minutes
+                        </span>
+
                     </div>
+
+
                     <div class="time-unit">
-                        <span class="time-number" id="seconds">00</span>
-                        <span class="time-label">Seconds</span>
+
+                        <span
+                            class="time-number"
+                            id="seconds">
+                            00
+                        </span>
+
+                        <span class="time-label">
+                            Seconds
+                        </span>
+
                     </div>
+
                 </div>
 
-                <div class="countdown-message" id="countdownMessage">
-                    <p>Set your birthday date to start the countdown!</p>
+
+                <div
+                    class="countdown-message"
+                    id="countdownMessage"
+                >
+
+                    <p>
+                        Set your birthday date to start the countdown!
+                    </p>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- Footer -->
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
     <footer class="footer">
+
         <div class="container">
-            <p>&copy; 2024 Birthday Celebration Website. Made with ❤️ for special moments!</p>
+
+            <p>
+                © 2026 Birthday Celebration Website.
+                Made with ❤️ for special moments!
+            </p>
+
+
             <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#gallery">Gallery</a>
-                <a href="#music">Music</a>
-                <a href="#game">Game</a>
-                <a href="#countdown">Countdown</a>
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#gallery">
+                    Gallery
+                </a>
+
+                <a href="#music">
+                    Music
+                </a>
+
+                <a href="#game">
+                    Game
+                </a>
+
+                <a href="#countdown">
+                    Countdown
+                </a>
+
             </div>
+
         </div>
+
     </footer>
 
-    <!-- Scripts -->
+
+    <!-- =====================================================
+         SCRIPT
+    ====================================================== -->
+
     <script src="script.js"></script>
+
 </body>
 
 </html>
+```
