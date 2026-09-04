@@ -1,33 +1,16 @@
-// =====================================================
-// BUJJI BIRTHDAY WEBSITE - UPDATED SCRIPT
-// Music completely removed
-// =====================================================
+// ===============================
+// Birthday Website - script.js
+// Music Removed
+// ===============================
 
+let currentSlide = 0;
+let puzzleTiles = [];
+let puzzleSize = 3;
+let countdownInterval;
 
-// =====================================================
-// GLOBAL VARIABLES
-// =====================================================
-
-let currentSlideIndex = 0;
-
-let gameTimer = null;
-let gameStartTime = null;
-let moveCount = 0;
-let currentDifficulty = "easy";
-
-let countdownInterval = null;
-let targetBirthday = null;
-
-let slideshowTimer = null;
-
-let selectedPuzzlePiece = null;
-let puzzleOrder = [];
-
-
-// =====================================================
-// GALLERY IMAGES
-// These files are in GitHub repository ROOT
-// =====================================================
+// ===============================
+// Gallery Images
+// ===============================
 
 const galleryImages = [
     "IMG-20240822-WA0003.jpg",
@@ -39,2312 +22,616 @@ const galleryImages = [
     "Snapchat-2018150645.jpg"
 ];
 
+// ===============================
+// DOM Loaded
+// ===============================
 
-// =====================================================
-// PAGE INITIALIZATION
-// =====================================================
-
-document.addEventListener("DOMContentLoaded", function () {
-
+document.addEventListener("DOMContentLoaded", () => {
     initializeNavigation();
-
     initializeBackgroundAnimations();
-
     initializeGallery();
-
     initializePuzzleGame();
-
     initializeCountdown();
-
     initializeEventListeners();
-
     initializeScrollAnimations();
-
     initializeImageErrors();
-
 });
 
+// ===============================
+// Navigation
+// ===============================
 
-// =====================================================
-// EVENT LISTENERS
-// =====================================================
+function initializeNavigation() {
+    const navLinks = document.querySelectorAll("nav a");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+
+            if (href && href.startsWith("#")) {
+                e.preventDefault();
+
+                const section = document.querySelector(href);
+
+                if (section) {
+                    section.scrollIntoView({
+                        behavior: "smooth"
+                    });
+                }
+            }
+        });
+    });
+}
+
+// ===============================
+// Background Animations
+// ===============================
+
+function initializeBackgroundAnimations() {
+    createBalloons();
+    createParticles();
+}
+
+function createBalloons() {
+    const container = document.querySelector(".balloons");
+
+    if (!container) return;
+
+    const emojis = ["🎈", "🎈", "🎈", "🎈", "🎈"];
+
+    emojis.forEach((emoji, index) => {
+        const balloon = document.createElement("div");
+
+        balloon.className = "balloon";
+        balloon.textContent = emoji;
+
+        balloon.style.left = `${10 + index * 20}%`;
+        balloon.style.animationDelay = `${index * 1.5}s`;
+
+        container.appendChild(balloon);
+    });
+}
+
+function createParticles() {
+    const container = document.getElementById("particles");
+
+    if (!container) return;
+
+    for (let i = 0; i < 35; i++) {
+        const particle = document.createElement("span");
+
+        particle.className = "particle";
+
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+
+        container.appendChild(particle);
+    }
+}
+
+// ===============================
+// Celebration Button
+// ===============================
+
+function celebrate() {
+    createConfetti();
+
+    const message = document.querySelector(".celebration-message");
+
+    if (message) {
+        message.classList.add("show");
+
+        setTimeout(() => {
+            message.classList.remove("show");
+        }, 4000);
+    }
+}
+
+function createConfetti() {
+    const container = document.getElementById("confettiContainer");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const confettiSymbols = ["🎉", "✨", "🎊", "💖", "⭐", "🎈"];
+
+    for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("span");
+
+        confetti.className = "confetti";
+        confetti.textContent =
+            confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
+
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        confetti.style.animationDuration = `${2 + Math.random() * 3}s`;
+
+        container.appendChild(confetti);
+    }
+
+    setTimeout(() => {
+        container.innerHTML = "";
+    }, 6000);
+}
+
+// ===============================
+// Gallery
+// ===============================
+
+function initializeGallery() {
+    const gallery = document.querySelector(".gallery-grid");
+
+    if (!gallery) return;
+
+    gallery.innerHTML = "";
+
+    galleryImages.forEach((image, index) => {
+        const item = document.createElement("div");
+
+        item.className = "gallery-item";
+
+        item.innerHTML = `
+            <img src="${image}" alt="Birthday Memory ${index + 1}">
+            <div class="gallery-caption">
+                Memory ${index + 1} ❤️
+            </div>
+        `;
+
+        gallery.appendChild(item);
+    });
+
+    initializeSlideshow();
+}
+
+// ===============================
+// Slideshow
+// ===============================
+
+function initializeSlideshow() {
+    const slideshowImage = document.querySelector(".slideshow img");
+    const indicators = document.querySelector(".slide-indicators");
+
+    if (!slideshowImage) return;
+
+    if (indicators) {
+        indicators.innerHTML = "";
+
+        galleryImages.forEach((_, index) => {
+            const indicator = document.createElement("button");
+
+            indicator.className =
+                index === 0 ? "indicator active" : "indicator";
+
+            indicator.addEventListener("click", () => {
+                currentSlide = index;
+                updateSlide();
+            });
+
+            indicators.appendChild(indicator);
+        });
+    }
+
+    updateSlide();
+}
+
+function updateSlide() {
+    const slideshowImage = document.querySelector(".slideshow img");
+
+    if (!slideshowImage) return;
+
+    slideshowImage.src = galleryImages[currentSlide];
+
+    const indicators = document.querySelectorAll(".indicator");
+
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle(
+            "active",
+            index === currentSlide
+        );
+    });
+}
+
+function nextSlide() {
+    currentSlide++;
+
+    if (currentSlide >= galleryImages.length) {
+        currentSlide = 0;
+    }
+
+    updateSlide();
+}
+
+function previousSlide() {
+    currentSlide--;
+
+    if (currentSlide < 0) {
+        currentSlide = galleryImages.length - 1;
+    }
+
+    updateSlide();
+}
+
+// ===============================
+// Puzzle Game
+// ===============================
+
+function initializePuzzleGame() {
+    const puzzleBoard = document.querySelector(".puzzle-board");
+
+    if (!puzzleBoard) return;
+
+    startNewGame();
+}
+
+function startNewGame() {
+    const board = document.querySelector(".puzzle-board");
+
+    if (!board) return;
+
+    puzzleTiles = [];
+
+    const totalTiles = puzzleSize * puzzleSize;
+
+    for (let i = 0; i < totalTiles; i++) {
+        puzzleTiles.push(i);
+    }
+
+    shuffleArray(puzzleTiles);
+
+    board.innerHTML = "";
+
+    board.style.gridTemplateColumns =
+        `repeat(${puzzleSize}, 1fr)`;
+
+    puzzleTiles.forEach((tile, index) => {
+        const tileElement = document.createElement("div");
+
+        tileElement.className = "puzzle-tile";
+        tileElement.textContent = tile + 1;
+
+        tileElement.dataset.position = index;
+        tileElement.dataset.value = tile;
+
+        tileElement.addEventListener("click", () => {
+            handleTileClick(index);
+        });
+
+        board.appendChild(tileElement);
+    });
+}
+
+function handleTileClick(index) {
+    const tiles = document.querySelectorAll(".puzzle-tile");
+
+    if (!tiles.length) return;
+
+    const clickedValue = puzzleTiles[index];
+
+    let targetIndex = puzzleTiles.indexOf(
+        clickedValue === 0
+            ? puzzleTiles.length - 1
+            : clickedValue - 1
+    );
+
+    if (targetIndex === -1) {
+        targetIndex = 0;
+    }
+
+    [puzzleTiles[index], puzzleTiles[targetIndex]] =
+        [puzzleTiles[targetIndex], puzzleTiles[index]];
+
+    updatePuzzleBoard();
+
+    checkPuzzleComplete();
+}
+
+function updatePuzzleBoard() {
+    const tiles = document.querySelectorAll(".puzzle-tile");
+
+    tiles.forEach((tile, index) => {
+        tile.textContent = puzzleTiles[index] + 1;
+        tile.dataset.position = index;
+        tile.dataset.value = puzzleTiles[index];
+    });
+}
+
+function checkPuzzleComplete() {
+    const solved = puzzleTiles.every(
+        (value, index) => value === index
+    );
+
+    if (solved) {
+        setTimeout(() => {
+            alert("🎉 Puzzle Completed! 🎂❤️");
+            createConfetti();
+        }, 200);
+    }
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] =
+            [array[j], array[i]];
+    }
+}
+
+// ===============================
+// Puzzle Difficulty
+// ===============================
+
+function setPuzzleDifficulty(size) {
+    puzzleSize = size;
+    startNewGame();
+}
+
+// ===============================
+// COUNTDOWN
+// ===============================
+
+// 🎂 NOOR Birthday
+// 05 September 2027 - 12:00 AM
+
+const birthdayDate =
+    new Date("2027-09-05T00:00:00");
+
+function initializeCountdown() {
+    updateCountdown();
+
+    countdownInterval = setInterval(
+        updateCountdown,
+        1000
+    );
+}
+
+function updateCountdown() {
+    const now = new Date();
+
+    let difference =
+        birthdayDate.getTime() - now.getTime();
+
+    // If the date has passed, automatically move
+    // to the next year
+    if (difference <= 0) {
+        birthdayDate.setFullYear(
+            birthdayDate.getFullYear() + 1
+        );
+
+        difference =
+            birthdayDate.getTime() - now.getTime();
+    }
+
+    const days = Math.floor(
+        difference / (1000 * 60 * 60 * 24)
+    );
+
+    const hours = Math.floor(
+        (difference / (1000 * 60 * 60)) % 24
+    );
+
+    const minutes = Math.floor(
+        (difference / (1000 * 60)) % 60
+    );
+
+    const seconds = Math.floor(
+        (difference / 1000) % 60
+    );
+
+    updateCountdownElement("days", days);
+    updateCountdownElement("hours", hours);
+    updateCountdownElement("minutes", minutes);
+    updateCountdownElement("seconds", seconds);
+}
+
+function updateCountdownElement(id, value) {
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    element.textContent =
+        String(value).padStart(2, "0");
+}
+
+// ===============================
+// Event Listeners
+// ===============================
 
 function initializeEventListeners() {
 
-    // -----------------------------
-    // Celebrate Button
-    // -----------------------------
+    const celebrateButton =
+        document.querySelector(".celebrate-btn");
 
-    const celebrateBtn =
-        document.getElementById("celebrateBtn");
-
-    if (celebrateBtn) {
-
-        celebrateBtn.addEventListener(
+    if (celebrateButton) {
+        celebrateButton.addEventListener(
             "click",
-            celebrateNow
+            celebrate
         );
-
     }
 
+    const nextButton =
+        document.querySelector(".next-slide");
 
-    // -----------------------------
-    // Gallery View Buttons
-    // -----------------------------
+    const previousButton =
+        document.querySelector(".prev-slide");
 
-    const gridViewBtn =
-        document.getElementById("gridViewBtn");
-
-    const slideshowViewBtn =
-        document.getElementById("slideshowViewBtn");
-
-
-    if (gridViewBtn) {
-
-        gridViewBtn.addEventListener(
+    if (nextButton) {
+        nextButton.addEventListener(
             "click",
-            function () {
-                changeView("grid");
-            }
+            nextSlide
         );
-
     }
 
-
-    if (slideshowViewBtn) {
-
-        slideshowViewBtn.addEventListener(
+    if (previousButton) {
+        previousButton.addEventListener(
             "click",
-            function () {
-                changeView("slideshow");
-            }
+            previousSlide
         );
-
     }
 
+    const newGameButton =
+        document.querySelector(".new-game");
 
-    // -----------------------------
-    // Slideshow Buttons
-    // -----------------------------
-
-    const prevSlideBtn =
-        document.getElementById("prevSlideBtn");
-
-    const nextSlideBtn =
-        document.getElementById("nextSlideBtn");
-
-
-    if (prevSlideBtn) {
-
-        prevSlideBtn.addEventListener(
-            "click",
-            function () {
-                changeSlide(-1);
-            }
-        );
-
-    }
-
-
-    if (nextSlideBtn) {
-
-        nextSlideBtn.addEventListener(
-            "click",
-            function () {
-                changeSlide(1);
-            }
-        );
-
-    }
-
-
-    // -----------------------------
-    // Game Controls
-    // -----------------------------
-
-    const difficultySelect =
-        document.getElementById("difficultySelect");
-
-    const newGameBtn =
-        document.getElementById("newGameBtn");
-
-    const showSolutionBtn =
-        document.getElementById("showSolutionBtn");
-
-    const playAgainBtn =
-        document.getElementById("playAgainBtn");
-
-
-    if (difficultySelect) {
-
-        difficultySelect.addEventListener(
-            "change",
-            changeDifficulty
-        );
-
-    }
-
-
-    if (newGameBtn) {
-
-        newGameBtn.addEventListener(
+    if (newGameButton) {
+        newGameButton.addEventListener(
             "click",
             startNewGame
         );
-
     }
 
+    const easyButton =
+        document.querySelector(".easy");
 
-    if (showSolutionBtn) {
+    const mediumButton =
+        document.querySelector(".medium");
 
-        showSolutionBtn.addEventListener(
+    const hardButton =
+        document.querySelector(".hard");
+
+    if (easyButton) {
+        easyButton.addEventListener(
             "click",
-            showSolution
+            () => setPuzzleDifficulty(3)
         );
-
     }
 
-
-    if (playAgainBtn) {
-
-        playAgainBtn.addEventListener(
+    if (mediumButton) {
+        mediumButton.addEventListener(
             "click",
-            startNewGame
+            () => setPuzzleDifficulty(4)
         );
-
     }
 
-
-    // -----------------------------
-    // Birthday Countdown
-    // -----------------------------
-
-    const birthdayInput =
-        document.getElementById("birthdayDate");
-
-
-    if (birthdayInput) {
-
-        birthdayInput.addEventListener(
-            "change",
-            updateCountdown
-        );
-
-    }
-
-
-    // -----------------------------
-    // Slideshow Indicators
-    // -----------------------------
-
-    const indicators =
-        document.querySelectorAll(".indicator");
-
-
-    indicators.forEach(
-        function (indicator, index) {
-
-            indicator.addEventListener(
-                "click",
-                function () {
-
-                    jumpToSlide(index);
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-// =====================================================
-// NAVIGATION
-// =====================================================
-
-function initializeNavigation() {
-
-    const navToggle =
-        document.getElementById("navToggle");
-
-    const navMenu =
-        document.getElementById("navMenu");
-
-    const navLinks =
-        document.querySelectorAll(".nav-link");
-
-
-    // Mobile menu
-
-    if (navToggle && navMenu) {
-
-        navToggle.addEventListener(
+    if (hardButton) {
+        hardButton.addEventListener(
             "click",
-            function () {
-
-                navMenu.classList.toggle("active");
-
-                navToggle.classList.toggle("active");
-
-            }
+            () => setPuzzleDifficulty(5)
         );
-
     }
 
+    document.addEventListener(
+        "keydown",
+        (event) => {
 
-    // Navigation links
-
-    navLinks.forEach(
-        function (link) {
-
-            link.addEventListener(
-                "click",
-                function (e) {
-
-                    e.preventDefault();
-
-                    const targetId =
-                        this.getAttribute("href");
-
-                    const targetSection =
-                        document.querySelector(targetId);
-
-
-                    if (targetSection) {
-
-                        const offsetTop =
-                            targetSection.offsetTop - 80;
-
-
-                        window.scrollTo({
-
-                            top: offsetTop,
-
-                            behavior: "smooth"
-
-                        });
-
-                    }
-
-
-                    if (navMenu) {
-
-                        navMenu.classList.remove(
-                            "active"
-                        );
-
-                    }
-
-
-                    if (navToggle) {
-
-                        navToggle.classList.remove(
-                            "active"
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    // Navbar scroll effect
-
-    window.addEventListener(
-        "scroll",
-        function () {
-
-            const navbar =
-                document.getElementById("navbar");
-
-
-            if (!navbar) return;
-
-
-            if (window.scrollY > 100) {
-
-                navbar.style.background =
-                    "rgba(255,255,255,0.98)";
-
-                navbar.style.backdropFilter =
-                    "blur(20px)";
-
-            } else {
-
-                navbar.style.background =
-                    "rgba(255,255,255,0.95)";
-
-                navbar.style.backdropFilter =
-                    "blur(10px)";
-
+            if (event.key === "ArrowRight") {
+                nextSlide();
             }
 
+            if (event.key === "ArrowLeft") {
+                previousSlide();
+            }
+
+            if (
+                event.ctrlKey &&
+                event.key.toLowerCase() === "n"
+            ) {
+                event.preventDefault();
+                startNewGame();
+            }
         }
     );
-
 }
 
+// ===============================
+// Scroll Animations
+// ===============================
 
-// =====================================================
-// BACKGROUND ANIMATIONS
-// =====================================================
-
-function initializeBackgroundAnimations() {
-
-    createConfetti();
-
-    createParticles();
-
-
-    setInterval(
-        createConfetti,
-        10000
-    );
-
-
-    setInterval(
-        createParticles,
-        15000
-    );
-
-}
-
-
-function createConfetti() {
-
-    const container =
-        document.getElementById(
-            "confettiContainer"
+function initializeScrollAnimations() {
+    const elements =
+        document.querySelectorAll(
+            ".gallery-item, .puzzle-section, .countdown-section"
         );
 
+    if (!elements.length) return;
 
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    const colors = [
-
-        "#ff6b9d",
-        "#4ecdc4",
-        "#45b7d1",
-        "#96ceb4",
-        "#ffeaa7",
-        "#fd79a8",
-        "#00cec9"
-
-    ];
-
-
-    for (let i = 0; i < 50; i++) {
-
-        const confetti =
-            document.createElement("div");
-
-
-        confetti.className =
-            "confetti";
-
-
-        confetti.style.left =
-            Math.random() * 100 + "%";
-
-
-        confetti.style.backgroundColor =
-            colors[
-                Math.floor(
-                    Math.random() *
-                    colors.length
-                )
-            ];
-
-
-        confetti.style.animationDelay =
-            Math.random() * 3 + "s";
-
-
-        confetti.style.animationDuration =
-            Math.random() * 3 + 2 + "s";
-
-
-        container.appendChild(
-            confetti
-        );
-
-    }
-
-}
-
-
-function createParticles() {
-
-    const container =
-        document.getElementById(
-            "particles"
-        );
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    for (let i = 0; i < 30; i++) {
-
-        const particle =
-            document.createElement("div");
-
-
-        particle.className =
-            "particle";
-
-
-        particle.style.left =
-            Math.random() * 100 + "%";
-
-
-        particle.style.animationDelay =
-            Math.random() * 8 + "s";
-
-
-        particle.style.animationDuration =
-            Math.random() * 4 + 6 + "s";
-
-
-        container.appendChild(
-            particle
-        );
-
-    }
-
-}
-
-
-// =====================================================
-// CELEBRATION
-// =====================================================
-
-function celebrateNow() {
-
-    triggerConfettiExplosion();
-
-    showCelebrationMessage();
-
-
-    const gallerySection =
-        document.getElementById(
-            "gallery"
-        );
-
-
-    if (gallerySection) {
-
-        const offsetTop =
-            gallerySection.offsetTop - 80;
-
-
-        setTimeout(
-            function () {
-
-                window.scrollTo({
-
-                    top: offsetTop,
-
-                    behavior: "smooth"
-
+    const observer =
+        new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(
+                            "visible"
+                        );
+                    }
                 });
-
             },
-            500
+            {
+                threshold: 0.15
+            }
         );
 
-    }
-
+    elements.forEach(element => {
+        observer.observe(element);
+    });
 }
 
+// ===============================
+// Image Error Handling
+// ===============================
 
-function triggerConfettiExplosion() {
+function initializeImageErrors() {
+    document.addEventListener(
+        "error",
+        function (event) {
 
-    const container =
-        document.getElementById(
-            "confettiContainer"
-        );
-
-
-    if (!container) return;
-
-
-    const colors = [
-
-        "#ff6b9d",
-        "#4ecdc4",
-        "#45b7d1",
-        "#96ceb4",
-        "#ffeaa7",
-        "#fd79a8",
-        "#00cec9"
-
-    ];
-
-
-    for (let i = 0; i < 100; i++) {
-
-        const confetti =
-            document.createElement("div");
-
-
-        confetti.className =
-            "confetti";
-
-
-        confetti.style.left =
-            Math.random() * 100 + "%";
-
-
-        confetti.style.backgroundColor =
-            colors[
-                Math.floor(
-                    Math.random() *
-                    colors.length
-                )
-            ];
-
-
-        confetti.style.animationDuration =
-            Math.random() * 2 + 1 + "s";
-
-
-        container.appendChild(
-            confetti
-        );
-
-
-        setTimeout(
-            function () {
-
-                if (confetti.parentNode) {
-
-                    confetti.parentNode.removeChild(
-                        confetti
-                    );
-
-                }
-
-            },
-            3000
-        );
-
-    }
-
-}
-
-
-function showCelebrationMessage() {
-
-    const message =
-        document.createElement("div");
-
-
-    message.style.cssText = `
-
-        position: fixed;
-
-        top: 50%;
-
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-
-        background:
-            linear-gradient(
-                45deg,
-                #ff6b9d,
-                #4ecdc4
-            );
-
-        color: white;
-
-        padding: 2rem;
-
-        border-radius: 20px;
-
-        font-size: 1.5rem;
-
-        font-weight: bold;
-
-        z-index: 2000;
-
-        text-align: center;
-
-        box-shadow:
-            0 15px 35px
-            rgba(0,0,0,0.3);
-
-    `;
-
-
-    message.innerHTML =
-        "🎉 Let the celebration begin! 🎉";
-
-
-    document.body.appendChild(
-        message
-    );
-
-
-    setTimeout(
-        function () {
-
-            if (message.parentNode) {
-
-                message.parentNode.removeChild(
-                    message
-                );
-
+            if (
+                event.target &&
+                event.target.tagName === "IMG"
+            ) {
+                event.target.style.display = "none";
             }
 
         },
-        2500
+        true
     );
-
 }
 
-
-// =====================================================
-// GALLERY
-// =====================================================
-
-function initializeGallery() {
-
-    const galleryItems =
-        document.querySelectorAll(
-            ".gallery-item"
-        );
-
-
-    if (!("IntersectionObserver" in window)) {
-
-        galleryItems.forEach(
-            function (item) {
-
-                item.style.opacity = "1";
-
-                item.style.transform =
-                    "translateY(0)";
-
-            }
-        );
-
-        return;
-
-    }
-
-
-    const observer =
-        new IntersectionObserver(
-            function (entries) {
-
-                entries.forEach(
-                    function (entry) {
-
-                        if (
-                            entry.isIntersecting
-                        ) {
-
-                            entry.target.style.opacity =
-                                "1";
-
-                            entry.target.style.transform =
-                                "translateY(0)";
-
-                        }
-
-                    }
-                );
-
-            },
-            {
-                threshold: 0.1
-            }
-        );
-
-
-    galleryItems.forEach(
-        function (item) {
-
-            item.style.opacity = "0";
-
-            item.style.transform =
-                "translateY(20px)";
-
-            item.style.transition =
-                "opacity 0.6s ease, transform 0.6s ease";
-
-
-            observer.observe(item);
-
-        }
-    );
-
-}
-
-
-function changeView(viewType) {
-
-    const gridView =
-        document.getElementById(
-            "galleryGrid"
-        );
-
-    const slideshowView =
-        document.getElementById(
-            "gallerySlideshow"
-        );
-
-
-    if (!gridView || !slideshowView) {
-        return;
-    }
-
-
-    if (viewType === "grid") {
-
-        gridView.style.display =
-            "grid";
-
-        slideshowView.style.display =
-            "none";
-
-        stopSlideshow();
-
-    } else {
-
-        gridView.style.display =
-            "none";
-
-        slideshowView.style.display =
-            "block";
-
-        startSlideshow();
-
-    }
-
-}
-
-
-function changeSlide(direction) {
-
-    const slides =
-        document.querySelectorAll(
-            ".slide"
-        );
-
-    const indicators =
-        document.querySelectorAll(
-            ".indicator"
-        );
-
-
-    if (!slides.length) return;
-
-
-    slides[
-        currentSlideIndex
-    ].classList.remove("active");
-
-
-    if (indicators[currentSlideIndex]) {
-
-        indicators[
-            currentSlideIndex
-        ].classList.remove("active");
-
-    }
-
-
-    currentSlideIndex += direction;
-
-
-    if (
-        currentSlideIndex >=
-        slides.length
-    ) {
-
-        currentSlideIndex = 0;
-
-    }
-
-
-    if (
-        currentSlideIndex < 0
-    ) {
-
-        currentSlideIndex =
-            slides.length - 1;
-
-    }
-
-
-    slides[
-        currentSlideIndex
-    ].classList.add("active");
-
-
-    if (indicators[currentSlideIndex]) {
-
-        indicators[
-            currentSlideIndex
-        ].classList.add("active");
-
-    }
-
-}
-
-
-function jumpToSlide(slideIndex) {
-
-    const slides =
-        document.querySelectorAll(
-            ".slide"
-        );
-
-    const indicators =
-        document.querySelectorAll(
-            ".indicator"
-        );
-
-
-    if (!slides.length) return;
-
-
-    if (
-        slideIndex < 0 ||
-        slideIndex >= slides.length
-    ) {
-        return;
-    }
-
-
-    slides[
-        currentSlideIndex
-    ].classList.remove("active");
-
-
-    if (indicators[currentSlideIndex]) {
-
-        indicators[
-            currentSlideIndex
-        ].classList.remove("active");
-
-    }
-
-
-    currentSlideIndex =
-        slideIndex;
-
-
-    slides[
-        currentSlideIndex
-    ].classList.add("active");
-
-
-    if (indicators[currentSlideIndex]) {
-
-        indicators[
-            currentSlideIndex
-        ].classList.add("active");
-
-    }
-
-}
-
-
-function startSlideshow() {
-
-    stopSlideshow();
-
-
-    slideshowTimer =
-        setInterval(
-            function () {
-
-                changeSlide(1);
-
-            },
-            5000
-        );
-
-}
-
-
-function stopSlideshow() {
-
-    if (slideshowTimer) {
-
-        clearInterval(
-            slideshowTimer
-        );
-
-        slideshowTimer = null;
-
-    }
-
-}
-
-
-// =====================================================
-// PUZZLE GAME
-// =====================================================
-
-function initializePuzzleGame() {
-
-    changeDifficulty();
-
-    startNewGame();
-
-}
-
-
-function getGridSize() {
-
-    if (
-        currentDifficulty ===
-        "medium"
-    ) {
-
-        return 4;
-
-    }
-
-
-    if (
-        currentDifficulty ===
-        "hard"
-    ) {
-
-        return 5;
-
-    }
-
-
-    return 3;
-
-}
-
-
-function changeDifficulty() {
-
-    const select =
-        document.getElementById(
-            "difficultySelect"
-        );
-
-
-    if (select) {
-
-        currentDifficulty =
-            select.value;
-
-    }
-
-
-    const puzzleBoard =
-        document.getElementById(
-            "puzzleBoard"
-        );
-
-
-    if (!puzzleBoard) return;
-
-
-    const gridSize =
-        getGridSize();
-
-
-    puzzleBoard.style.gridTemplateColumns =
-        `repeat(${gridSize}, 1fr)`;
-
-
-    puzzleBoard.style.gridTemplateRows =
-        `repeat(${gridSize}, 1fr)`;
-
-}
-
-
-function startNewGame() {
-
-    clearInterval(
-        gameTimer
-    );
-
-
-    gameStartTime =
-        Date.now();
-
-
-    moveCount = 0;
-
-    selectedPuzzlePiece = null;
-
-
-    updateGameStats();
-
-
-    const completion =
-        document.getElementById(
-            "gameCompletion"
-        );
-
-
-    if (completion) {
-
-        completion.style.display =
-            "none";
-
-    }
-
-
-    generatePuzzle();
-
-    shufflePuzzle();
-
-    startGameTimer();
-
-}
-
-
-function generatePuzzle() {
-
-    const puzzleBoard =
-        document.getElementById(
-            "puzzleBoard"
-        );
-
-
-    if (!puzzleBoard) return;
-
-
-    const gridSize =
-        getGridSize();
-
-
-    const totalPieces =
-        gridSize * gridSize;
-
-
-    puzzleBoard.innerHTML =
-        "";
-
-
-    puzzleOrder =
-        [];
-
-
-    const imageUrl =
-        galleryImages[
-            Math.floor(
-                Math.random() *
-                galleryImages.length
-            )
-        ];
-
-
-    const solutionImage =
-        document.getElementById(
-            "solutionImage"
-        );
-
-
-    if (solutionImage) {
-
-        solutionImage.src =
-            imageUrl;
-
-    }
-
-
-    for (
-        let i = 0;
-        i < totalPieces;
-        i++
-    ) {
-
-        const piece =
-            document.createElement(
-                "div"
-            );
-
-
-        piece.className =
-            "puzzle-piece";
-
-
-        piece.dataset.correctPosition =
-            i;
-
-
-        piece.dataset.index =
-            i;
-
-
-        const row =
-            Math.floor(
-                i / gridSize
-            );
-
-
-        const col =
-            i % gridSize;
-
-
-        const x =
-            gridSize === 1
-                ? 0
-                : (
-                    col /
-                    (gridSize - 1)
-                ) * 100;
-
-
-        const y =
-            gridSize === 1
-                ? 0
-                : (
-                    row /
-                    (gridSize - 1)
-                ) * 100;
-
-
-        piece.style.backgroundImage =
-            `url("${imageUrl}")`;
-
-
-        piece.style.backgroundPosition =
-            `${x}% ${y}%`;
-
-
-        piece.style.backgroundSize =
-            `${gridSize * 100}% ${gridSize * 100}%`;
-
-
-        // Desktop drag
-
-        piece.draggable = true;
-
-
-        piece.addEventListener(
-            "dragstart",
-            handleDragStart
-        );
-
-
-        piece.addEventListener(
-            "dragover",
-            handleDragOver
-        );
-
-
-        piece.addEventListener(
-            "drop",
-            handleDrop
-        );
-
-
-        piece.addEventListener(
-            "dragend",
-            handleDragEnd
-        );
-
-
-        // Mobile click
-
-        piece.addEventListener(
-            "click",
-            handlePuzzleClick
-        );
-
-
-        puzzleBoard.appendChild(
-            piece
-        );
-
-
-        puzzleOrder.push(i);
-
-    }
-
-
-    changeDifficulty();
-
-}
-
-
-function shufflePuzzle() {
-
-    for (
-        let i =
-            puzzleOrder.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
-
-
-        [
-            puzzleOrder[i],
-            puzzleOrder[j]
-        ] =
-        [
-            puzzleOrder[j],
-            puzzleOrder[i]
-        ];
-
-    }
-
-
-    // Prevent already-solved puzzle
-
-    if (
-        puzzleOrder.every(
-            function (
-                value,
-                index
-            ) {
-
-                return value === index;
-
-            }
-        )
-    ) {
-
-        [
-            puzzleOrder[0],
-            puzzleOrder[1]
-        ] =
-        [
-            puzzleOrder[1],
-            puzzleOrder[0]
-        ];
-
-    }
-
-
-    renderPuzzle();
-
-}
-
-
-function renderPuzzle() {
-
-    const puzzleBoard =
-        document.getElementById(
-            "puzzleBoard"
-        );
-
-
-    if (!puzzleBoard) return;
-
-
-    puzzleOrder.forEach(
-        function (
-            pieceIndex,
-            position
-        ) {
-
-            const piece =
-                puzzleBoard.querySelector(
-                    `[data-index="${pieceIndex}"]`
-                );
-
-
-            if (piece) {
-
-                piece.dataset.position =
-                    position;
-
-                puzzleBoard.appendChild(
-                    piece
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-function handlePuzzleClick(e) {
-
-    const piece =
-        e.currentTarget;
-
-
-    if (!selectedPuzzlePiece) {
-
-        selectedPuzzlePiece =
-            piece;
-
-        piece.classList.add(
-            "selected"
-        );
-
-        return;
-
-    }
-
-
-    if (
-        selectedPuzzlePiece ===
-        piece
-    ) {
-
-        piece.classList.remove(
-            "selected"
-        );
-
-        selectedPuzzlePiece =
-            null;
-
-        return;
-
-    }
-
-
-    swapPuzzlePieces(
-        selectedPuzzlePiece,
-        piece
-    );
-
-
-    selectedPuzzlePiece.classList.remove(
-        "selected"
-    );
-
-
-    selectedPuzzlePiece =
-        null;
-
-}
-
-
-function swapPuzzlePieces(
-    piece1,
-    piece2
-) {
-
-    const pos1 =
-        parseInt(
-            piece1.dataset.position
-        );
-
-
-    const pos2 =
-        parseInt(
-            piece2.dataset.position
-        );
-
-
-    if (
-        isNaN(pos1) ||
-        isNaN(pos2)
-    ) {
-
-        return;
-
-    }
-
-
-    [
-        puzzleOrder[pos1],
-        puzzleOrder[pos2]
-    ] =
-    [
-        puzzleOrder[pos2],
-        puzzleOrder[pos1]
-    ];
-
-
-    moveCount++;
-
-
-    renderPuzzle();
-
-    updateGameStats();
-
-    checkPuzzleCompletion();
-
-}
-
-
-let draggedElement = null;
-
-
-function handleDragStart(e) {
-
-    draggedElement =
-        e.currentTarget;
-
-
-    draggedElement.classList.add(
-        "dragging"
-    );
-
-}
-
-
-function handleDragOver(e) {
-
-    e.preventDefault();
-
-}
-
-
-function handleDrop(e) {
-
-    e.preventDefault();
-
-
-    const target =
-        e.currentTarget;
-
-
-    if (
-        draggedElement &&
-        target &&
-        draggedElement !== target
-    ) {
-
-        swapPuzzlePieces(
-            draggedElement,
-            target
-        );
-
-    }
-
-}
-
-
-function handleDragEnd() {
-
-    if (draggedElement) {
-
-        draggedElement.classList.remove(
-            "dragging"
-        );
-
-    }
-
-
-    draggedElement =
-        null;
-
-}
-
-
-function checkPuzzleCompletion() {
-
-    const isComplete =
-        puzzleOrder.every(
-            function (
-                value,
-                index
-            ) {
-
-                return value === index;
-
-            }
-        );
-
-
-    if (isComplete) {
-
-        clearInterval(
-            gameTimer
-        );
-
-
-        showCompletionMessage();
-
-        triggerConfettiExplosion();
-
-    }
-
-}
-
-
-function showCompletionMessage() {
-
-    const completionDiv =
-        document.getElementById(
-            "gameCompletion"
-        );
-
-
-    const finalTime =
-        document.getElementById(
-            "finalTime"
-        );
-
-
-    const finalMoves =
-        document.getElementById(
-            "finalMoves"
-        );
-
-
-    if (
-        !completionDiv ||
-        !finalTime ||
-        !finalMoves
-    ) {
-
-        return;
-
-    }
-
-
-    const elapsed =
-        Math.floor(
-            (
-                Date.now() -
-                gameStartTime
-            ) / 1000
-        );
-
-
-    const minutes =
-        Math.floor(
-            elapsed / 60
-        );
-
-
-    const seconds =
-        elapsed % 60;
-
-
-    finalTime.textContent =
-        `${minutes}:${seconds
-            .toString()
-            .padStart(2, "0")}`;
-
-
-    finalMoves.textContent =
-        moveCount;
-
-
-    completionDiv.style.display =
-        "flex";
-
-}
-
-
-function showSolution() {
-
-    puzzleOrder.sort(
-        function (a, b) {
-
-            return a - b;
-
-        }
-    );
-
-
-    renderPuzzle();
-
-
-    clearInterval(
-        gameTimer
-    );
-
-
-    checkPuzzleCompletion();
-
-}
-
-
-function startGameTimer() {
-
-    gameTimer =
-        setInterval(
-            function () {
-
-                const elapsed =
-                    Math.floor(
-                        (
-                            Date.now() -
-                            gameStartTime
-                        ) / 1000
-                    );
-
-
-                const minutes =
-                    Math.floor(
-                        elapsed / 60
-                    );
-
-
-                const seconds =
-                    elapsed % 60;
-
-
-                const timer =
-                    document.getElementById(
-                        "gameTimer"
-                    );
-
-
-                if (timer) {
-
-                    timer.textContent =
-                        `${minutes}:${seconds
-                            .toString()
-                            .padStart(2, "0")}`;
-
-                }
-
-            },
-            1000
-        );
-
-}
-
-
-function updateGameStats() {
-
-    const moveCounter =
-        document.getElementById(
-            "moveCounter"
-        );
-
-
-    if (moveCounter) {
-
-        moveCounter.textContent =
-            moveCount;
-
-    }
-
-}
-
-
-// =====================================================
-// COUNTDOWN
-// =====================================================
-
-function initializeCountdown() {
-
-    const birthdayInput =
-        document.getElementById(
-            "birthdayDate"
-        );
-
-
-    if (!birthdayInput) return;
-
-
-    const now =
-        new Date();
-
-
-    let year =
-        now.getFullYear();
-
-
-    let birthday =
-        new Date(
-            year,
-            7,
-            13,
-            0,
-            0,
-            0
-        );
-
-
-    if (birthday <= now) {
-
-        birthday =
-            new Date(
-                year + 1,
-                7,
-                13,
-                0,
-                0,
-                0
-            );
-
-    }
-
-
-    birthdayInput.value =
-        toDateTimeLocal(
-            birthday
-        );
-
-
-    updateCountdown();
-
-}
-
-
-function toDateTimeLocal(date) {
-
-    const year =
-        date.getFullYear();
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-
-    const hours =
-        String(
-            date.getHours()
-        ).padStart(2, "0");
-
-
-    const minutes =
-        String(
-            date.getMinutes()
-        ).padStart(2, "0");
-
-
-    return (
-        `${year}-${month}-${day}` +
-        `T${hours}:${minutes}`
-    );
-
-}
-
-
-function updateCountdown() {
-
-    const birthdayInput =
-        document.getElementById(
-            "birthdayDate"
-        );
-
-
-    if (!birthdayInput) return;
-
-
-    if (!birthdayInput.value) {
-
-        return;
-
-    }
-
-
-    targetBirthday =
-        new Date(
-            birthdayInput.value
-        );
-
-
-    if (
-        isNaN(
-            targetBirthday.getTime()
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    clearInterval(
-        countdownInterval
-    );
-
-
-    countdownInterval =
-        setInterval(
-            calculateTimeRemaining,
-            1000
-        );
-
-
-    calculateTimeRemaining();
-
-}
-
-
-function calculateTimeRemaining() {
-
-    if (!targetBirthday) return;
-
-
-    const now =
-        Date.now();
-
-
-    let difference =
-        targetBirthday.getTime() -
-        now;
-
-
-    // Automatically move to next year
-
-    if (difference <= 0) {
-
-        const nextBirthday =
-            new Date(
-                targetBirthday
-            );
-
-
-        nextBirthday.setFullYear(
-            nextBirthday.getFullYear() + 1
-        );
-
-
-        targetBirthday =
-            nextBirthday;
-
-
-        const birthdayInput =
-            document.getElementById(
-                "birthdayDate"
-            );
-
-
-        if (birthdayInput) {
-
-            birthdayInput.value =
-                toDateTimeLocal(
-                    targetBirthday
-                );
-
-        }
-
-
-        difference =
-            targetBirthday.getTime() -
-            now;
-
-    }
-
-
-    const days =
-        Math.floor(
-            difference /
-            (
-                1000 *
-                60 *
-                60 *
-                24
-            )
-        );
-
-
-    const hours =
-        Math.floor(
-            (
-                difference %
-                (
-                    1000 *
-                    60 *
-                    60 *
-                    24
-                )
-            ) /
-            (
-                1000 *
-                60 *
-                60
-            )
-        );
-
-
-    const minutes =
-        Math.floor(
-            (
-                difference %
-                (
-                    1000 *
-                    60 *
-                    60
-                )
-            ) /
-            (
-                1000 *
-                60
-            )
-        );
-
-
-    const seconds =
-        Math.floor(
-            (
-                difference %
-                (
-                    1000 *
-                    60
-                )
-            ) /
-            1000
-        );
-
-
-    const daysElement =
-        document.getElementById(
-            "days"
-        );
-
-
-    const hoursElement =
-        document.getElementById(
-            "hours"
-        );
-
-
-    const minutesElement =
-        document.getElementById(
-            "minutes"
-        );
-
-
-    const secondsElement =
-        document.getElementById(
-            "seconds"
-        );
-
-
-    const messageDiv =
-        document.getElementById(
-            "countdownMessage"
-        );
-
-
-    if (daysElement) {
-
-        daysElement.textContent =
-            String(days).padStart(
-                2,
-                "0"
-            );
-
-    }
-
-
-    if (hoursElement) {
-
-        hoursElement.textContent =
-            String(hours).padStart(
-                2,
-                "0"
-            );
-
-    }
-
-
-    if (minutesElement) {
-
-        minutesElement.textContent =
-            String(minutes).padStart(
-                2,
-                "0"
-            );
-
-    }
-
-
-    if (secondsElement) {
-
-        secondsElement.textContent =
-            String(seconds).padStart(
-                2,
-                "0"
-            );
-
-    }
-
-
-    if (messageDiv) {
-
-        messageDiv.innerHTML =
-            "<p>🎂 Counting down to BUJJI's Birthday! 🎉</p>";
-
-    }
-
-}
-
-
-// =====================================================
-// SCROLL ANIMATIONS
-// =====================================================
-
-function initializeScrollAnimations() {
-
-    if (
-        !("IntersectionObserver" in window)
-    ) {
-
-        return;
-
-    }
-
-
-    const observer =
-        new IntersectionObserver(
-            function (entries) {
-
-                entries.forEach(
-                    function (entry) {
-
-                        if (
-                            entry.isIntersecting
-                        ) {
-
-                            entry.target.classList.add(
-                                "fade-in-up"
-                            );
-
-                        }
-
-                    }
-                );
-
-            },
-            {
-                threshold: 0.1,
-                rootMargin:
-                    "0px 0px -100px 0px"
-            }
-        );
-
-
-    document
-        .querySelectorAll("section")
-        .forEach(
-            function (section) {
-
-                observer.observe(
-                    section
-                );
-
-            }
-        );
-
-}
-
-
-// =====================================================
-// IMAGE ERROR HANDLING
-// =====================================================
-
-function initializeImageErrors() {
-
-    document
-        .querySelectorAll("img")
-        .forEach(
-            function (img) {
-
-                img.addEventListener(
-                    "error",
-                    function () {
-
-                        console.log(
-                            "Image not found:",
-                            this.src
-                        );
-
-                        this.style.opacity =
-                            "0.3";
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-// =====================================================
-// KEYBOARD CONTROLS
-// =====================================================
-
-document.addEventListener(
-    "keydown",
-    function (e) {
-
-        const slideshowView =
-            document.getElementById(
-                "gallerySlideshow"
-            );
-
-
-        if (
-            slideshowView &&
-            slideshowView.style.display !==
-            "none"
-        ) {
-
-            if (
-                e.key ===
-                "ArrowLeft"
-            ) {
-
-                changeSlide(-1);
-
-            }
-
-
-            if (
-                e.key ===
-                "ArrowRight"
-            ) {
-
-                changeSlide(1);
-
-            }
-
-        }
-
-
-        // Ctrl + N = New Game
-
-        if (
-            e.key.toLowerCase() === "n" &&
-            e.ctrlKey
-        ) {
-
-            e.preventDefault();
-
-            startNewGame();
-
-        }
-
-    }
-);
-
-
-// =====================================================
-// MOBILE SWIPE
-// =====================================================
+// ===============================
+// Touch Swipe
+// ===============================
 
 let touchStartX = 0;
 let touchEndX = 0;
 
-
 document.addEventListener(
     "touchstart",
-    function (e) {
-
+    event => {
         touchStartX =
-            e.changedTouches[0].screenX;
-
+            event.changedTouches[0].screenX;
     },
-    {
-        passive: true
-    }
+    { passive: true }
 );
-
 
 document.addEventListener(
     "touchend",
-    function (e) {
+    event => {
 
         touchEndX =
-            e.changedTouches[0].screenX;
+            event.changedTouches[0].screenX;
 
-        handleSwipe();
+        const difference =
+            touchStartX - touchEndX;
 
-    },
-    {
-        passive: true
-    }
-);
-
-
-function handleSwipe() {
-
-    const difference =
-        touchStartX -
-        touchEndX;
-
-
-    if (
-        Math.abs(difference) < 50
-    ) {
-
-        return;
-
-    }
-
-
-    const slideshowView =
-        document.getElementById(
-            "gallerySlideshow"
-        );
-
-
-    if (
-        slideshowView &&
-        slideshowView.style.display !==
-        "none"
-    ) {
+        if (Math.abs(difference) < 50) return;
 
         if (difference > 0) {
-
-            changeSlide(1);
-
+            nextSlide();
         } else {
-
-            changeSlide(-1);
-
+            previousSlide();
         }
-
-    }
-
-}
-
-
-// =====================================================
-// PAGE VISIBILITY
-// =====================================================
-
-document.addEventListener(
-    "visibilitychange",
-    function () {
-
-        // Nothing to pause because
-        // Music has been completely removed.
-
-    }
+    },
+    { passive: true }
 );
 
-
-// =====================================================
-// RESIZE
-// =====================================================
+// ===============================
+// Window Resize
+// ===============================
 
 window.addEventListener(
     "resize",
-    function () {
-
-        changeDifficulty();
-
+    () => {
+        updateSlide();
     }
 );
