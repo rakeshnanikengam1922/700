@@ -1,16 +1,17 @@
-// ===============================
-// Birthday Website - script.js
-// Music Removed
-// ===============================
+```javascript
+// =====================================================
+// BUJJI BIRTHDAY WEBSITE - script.js
+// =====================================================
 
 let currentSlide = 0;
-let puzzleTiles = [];
 let puzzleSize = 3;
-let countdownInterval;
+let puzzleTiles = [];
+let puzzleImage = "IMG-20240822-WA0003.jpg";
 
-// ===============================
-// Gallery Images
-// ===============================
+let gameTimerInterval = null;
+let gameStartTime = null;
+let gameSeconds = 0;
+let moves = 0;
 
 const galleryImages = [
     "IMG-20240822-WA0003.jpg",
@@ -22,498 +23,971 @@ const galleryImages = [
     "Snapchat-2018150645.jpg"
 ];
 
-// ===============================
-// DOM Loaded
-// ===============================
+const galleryCaptions = [
+    "Happy Birthday, my love ❤️ You make every day brighter!",
+    "Wishing you a day filled with smiles, happiness and beautiful memories 🎂",
+    "Happy Birthday to a very special person ✨",
+    "May your year ahead be full of happiness and beautiful moments 🌸",
+    "Keep smiling and keep shining ✨",
+    "Another beautiful memory to remember forever 💖",
+    "Wishing you endless happiness and smiles 🥰"
+];
+
+
+// =====================================================
+// PAGE LOAD
+// =====================================================
 
 document.addEventListener("DOMContentLoaded", () => {
+
     initializeNavigation();
     initializeBackgroundAnimations();
     initializeGallery();
+    initializeSlideshow();
     initializePuzzleGame();
     initializeCountdown();
     initializeEventListeners();
-    initializeScrollAnimations();
     initializeImageErrors();
+
 });
 
-// ===============================
-// Navigation
-// ===============================
+
+// =====================================================
+// NAVIGATION
+// =====================================================
 
 function initializeNavigation() {
-    const navLinks = document.querySelectorAll("nav a");
 
-    navLinks.forEach(link => {
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    if (navToggle && navMenu) {
+
+        navToggle.addEventListener("click", () => {
+
+            navToggle.classList.toggle("active");
+            navMenu.classList.toggle("active");
+
+        });
+
+        document.querySelectorAll(".nav-link").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navToggle.classList.remove("active");
+                navMenu.classList.remove("active");
+
+            });
+
+        });
+    }
+
+    document.querySelectorAll("a[href^='#']").forEach(link => {
+
         link.addEventListener("click", function (e) {
-            const href = this.getAttribute("href");
 
-            if (href && href.startsWith("#")) {
+            const target = document.querySelector(
+                this.getAttribute("href")
+            );
+
+            if (target) {
+
                 e.preventDefault();
 
-                const section = document.querySelector(href);
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
 
-                if (section) {
-                    section.scrollIntoView({
-                        behavior: "smooth"
-                    });
-                }
             }
+
         });
+
     });
+
 }
 
-// ===============================
-// Background Animations
-// ===============================
+
+// =====================================================
+// BACKGROUND
+// =====================================================
 
 function initializeBackgroundAnimations() {
-    createBalloons();
-    createParticles();
-}
 
-function createBalloons() {
-    const container = document.querySelector(".balloons");
+    const particles = document.getElementById("particles");
 
-    if (!container) return;
+    if (!particles) return;
 
-    const emojis = ["🎈", "🎈", "🎈", "🎈", "🎈"];
-
-    emojis.forEach((emoji, index) => {
-        const balloon = document.createElement("div");
-
-        balloon.className = "balloon";
-        balloon.textContent = emoji;
-
-        balloon.style.left = `${10 + index * 20}%`;
-        balloon.style.animationDelay = `${index * 1.5}s`;
-
-        container.appendChild(balloon);
-    });
-}
-
-function createParticles() {
-    const container = document.getElementById("particles");
-
-    if (!container) return;
+    particles.innerHTML = "";
 
     for (let i = 0; i < 35; i++) {
+
         const particle = document.createElement("span");
 
         particle.className = "particle";
 
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particle.style.left =
+            Math.random() * 100 + "%";
 
-        container.appendChild(particle);
+        particle.style.top =
+            Math.random() * 100 + "%";
+
+        particle.style.animationDelay =
+            Math.random() * 5 + "s";
+
+        particles.appendChild(particle);
+
     }
+
 }
 
-// ===============================
-// Celebration Button
-// ===============================
+
+// =====================================================
+// CELEBRATION
+// =====================================================
 
 function celebrate() {
+
     createConfetti();
 
-    const message = document.querySelector(".celebration-message");
-
-    if (message) {
-        message.classList.add("show");
-
-        setTimeout(() => {
-            message.classList.remove("show");
-        }, 4000);
-    }
 }
 
 function createConfetti() {
-    const container = document.getElementById("confettiContainer");
+
+    const container =
+        document.getElementById("confettiContainer");
 
     if (!container) return;
 
     container.innerHTML = "";
 
-    const confettiSymbols = ["🎉", "✨", "🎊", "💖", "⭐", "🎈"];
+    const symbols = [
+        "🎉",
+        "🎊",
+        "✨",
+        "💖",
+        "⭐",
+        "🎈",
+        "❤️"
+    ];
 
     for (let i = 0; i < 80; i++) {
-        const confetti = document.createElement("span");
 
-        confetti.className = "confetti";
-        confetti.textContent =
-            confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
+        const item = document.createElement("span");
 
-        confetti.style.left = `${Math.random() * 100}%`;
-        confetti.style.animationDelay = `${Math.random() * 2}s`;
-        confetti.style.animationDuration = `${2 + Math.random() * 3}s`;
+        item.className = "confetti";
 
-        container.appendChild(confetti);
+        item.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+        item.style.left =
+            Math.random() * 100 + "%";
+
+        item.style.animationDelay =
+            Math.random() * 2 + "s";
+
+        item.style.animationDuration =
+            2 + Math.random() * 3 + "s";
+
+        container.appendChild(item);
+
     }
 
     setTimeout(() => {
         container.innerHTML = "";
     }, 6000);
+
 }
 
-// ===============================
-// Gallery
-// ===============================
+
+// =====================================================
+// GALLERY
+// =====================================================
 
 function initializeGallery() {
-    const gallery = document.querySelector(".gallery-grid");
+
+    const gallery =
+        document.getElementById("galleryGrid");
 
     if (!gallery) return;
 
-    gallery.innerHTML = "";
+    // Keep the HTML captions.
+    // Do NOT overwrite the gallery here.
 
-    galleryImages.forEach((image, index) => {
-        const item = document.createElement("div");
+    const items =
+        gallery.querySelectorAll(".gallery-item");
 
-        item.className = "gallery-item";
+    items.forEach((item, index) => {
 
-        item.innerHTML = `
-            <img src="${image}" alt="Birthday Memory ${index + 1}">
-            <div class="gallery-caption">
-                Memory ${index + 1} ❤️
-            </div>
-        `;
+        const img = item.querySelector("img");
 
-        gallery.appendChild(item);
+        if (img && galleryImages[index]) {
+            img.src = galleryImages[index];
+        }
+
+        const caption =
+            item.querySelector(".gallery-overlay p");
+
+        if (caption && galleryCaptions[index]) {
+            caption.textContent =
+                galleryCaptions[index];
+        }
+
     });
 
-    initializeSlideshow();
+    const gridButton =
+        document.getElementById("gridViewBtn");
+
+    const slideshowButton =
+        document.getElementById("slideshowViewBtn");
+
+    const grid =
+        document.getElementById("galleryGrid");
+
+    const slideshow =
+        document.getElementById("gallerySlideshow");
+
+    if (gridButton) {
+
+        gridButton.addEventListener("click", () => {
+
+            grid.style.display = "grid";
+            slideshow.style.display = "none";
+
+        });
+
+    }
+
+    if (slideshowButton) {
+
+        slideshowButton.addEventListener("click", () => {
+
+            grid.style.display = "none";
+            slideshow.style.display = "block";
+
+            showSlide(currentSlide);
+
+        });
+
+    }
+
 }
 
-// ===============================
-// Slideshow
-// ===============================
+
+// =====================================================
+// SLIDESHOW
+// =====================================================
 
 function initializeSlideshow() {
-    const slideshowImage = document.querySelector(".slideshow img");
-    const indicators = document.querySelector(".slide-indicators");
 
-    if (!slideshowImage) return;
+    const slides =
+        document.querySelectorAll(".slide");
 
-    if (indicators) {
-        indicators.innerHTML = "";
+    const indicators =
+        document.querySelectorAll(".indicator");
 
-        galleryImages.forEach((_, index) => {
-            const indicator = document.createElement("button");
+    if (!slides.length) return;
 
-            indicator.className =
-                index === 0 ? "indicator active" : "indicator";
-
-            indicator.addEventListener("click", () => {
-                currentSlide = index;
-                updateSlide();
-            });
-
-            indicators.appendChild(indicator);
-        });
-    }
-
-    updateSlide();
-}
-
-function updateSlide() {
-    const slideshowImage = document.querySelector(".slideshow img");
-
-    if (!slideshowImage) return;
-
-    slideshowImage.src = galleryImages[currentSlide];
-
-    const indicators = document.querySelectorAll(".indicator");
+    showSlide(0);
 
     indicators.forEach((indicator, index) => {
+
+        indicator.addEventListener("click", () => {
+
+            showSlide(index);
+
+        });
+
+    });
+
+}
+
+
+function showSlide(index) {
+
+    const slides =
+        document.querySelectorAll(".slide");
+
+    const indicators =
+        document.querySelectorAll(".indicator");
+
+    if (!slides.length) return;
+
+    if (index >= slides.length) {
+        index = 0;
+    }
+
+    if (index < 0) {
+        index = slides.length - 1;
+    }
+
+    currentSlide = index;
+
+    slides.forEach((slide, i) => {
+
+        slide.classList.toggle(
+            "active",
+            i === currentSlide
+        );
+
+    });
+
+    indicators.forEach((indicator, i) => {
+
         indicator.classList.toggle(
             "active",
-            index === currentSlide
+            i === currentSlide
         );
+
     });
+
 }
+
 
 function nextSlide() {
-    currentSlide++;
 
-    if (currentSlide >= galleryImages.length) {
-        currentSlide = 0;
-    }
+    showSlide(currentSlide + 1);
 
-    updateSlide();
 }
+
 
 function previousSlide() {
-    currentSlide--;
 
-    if (currentSlide < 0) {
-        currentSlide = galleryImages.length - 1;
-    }
+    showSlide(currentSlide - 1);
 
-    updateSlide();
 }
 
-// ===============================
-// Puzzle Game
-// ===============================
+
+// =====================================================
+// PUZZLE GAME
+// =====================================================
 
 function initializePuzzleGame() {
-    const puzzleBoard = document.querySelector(".puzzle-board");
 
-    if (!puzzleBoard) return;
+    const difficulty =
+        document.getElementById("difficultySelect");
 
-    startNewGame();
-}
+    const newGame =
+        document.getElementById("newGameBtn");
 
-function startNewGame() {
-    const board = document.querySelector(".puzzle-board");
+    const solution =
+        document.getElementById("showSolutionBtn");
 
-    if (!board) return;
+    const playAgain =
+        document.getElementById("playAgainBtn");
 
-    puzzleTiles = [];
+    if (difficulty) {
 
-    const totalTiles = puzzleSize * puzzleSize;
+        difficulty.addEventListener("change", () => {
 
-    for (let i = 0; i < totalTiles; i++) {
-        puzzleTiles.push(i);
+            if (difficulty.value === "easy") {
+                puzzleSize = 3;
+            }
+
+            if (difficulty.value === "medium") {
+                puzzleSize = 4;
+            }
+
+            if (difficulty.value === "hard") {
+                puzzleSize = 5;
+            }
+
+            startNewGame();
+
+        });
+
     }
 
-    shuffleArray(puzzleTiles);
+    if (newGame) {
+        newGame.addEventListener(
+            "click",
+            startNewGame
+        );
+    }
+
+    if (solution) {
+
+        solution.addEventListener(
+            "click",
+            showSolution
+        );
+
+    }
+
+    if (playAgain) {
+
+        playAgain.addEventListener(
+            "click",
+            startNewGame
+        );
+
+    }
+
+    startNewGame();
+
+}
+
+
+// =====================================================
+// START NEW GAME
+// =====================================================
+
+function startNewGame() {
+
+    stopGameTimer();
+
+    moves = 0;
+    gameSeconds = 0;
+
+    updateGameStats();
+
+    const completion =
+        document.getElementById("gameCompletion");
+
+    if (completion) {
+        completion.style.display = "none";
+    }
+
+    const solution =
+        document.getElementById("solutionPreview");
+
+    if (solution) {
+        solution.style.display = "block";
+    }
+
+    const solutionImage =
+        document.getElementById("solutionImage");
+
+    if (solutionImage) {
+
+        solutionImage.src =
+            puzzleImage;
+
+    }
+
+    createPuzzle();
+
+}
+
+
+// =====================================================
+// CREATE IMAGE PUZZLE
+// =====================================================
+
+function createPuzzle() {
+
+    const board =
+        document.getElementById("puzzleBoard");
+
+    if (!board) return;
 
     board.innerHTML = "";
 
     board.style.gridTemplateColumns =
         `repeat(${puzzleSize}, 1fr)`;
 
-    puzzleTiles.forEach((tile, index) => {
-        const tileElement = document.createElement("div");
+    puzzleTiles = [];
 
-        tileElement.className = "puzzle-tile";
-        tileElement.textContent = tile + 1;
+    const total =
+        puzzleSize * puzzleSize;
 
-        tileElement.dataset.position = index;
-        tileElement.dataset.value = tile;
-
-        tileElement.addEventListener("click", () => {
-            handleTileClick(index);
-        });
-
-        board.appendChild(tileElement);
-    });
-}
-
-function handleTileClick(index) {
-    const tiles = document.querySelectorAll(".puzzle-tile");
-
-    if (!tiles.length) return;
-
-    const clickedValue = puzzleTiles[index];
-
-    let targetIndex = puzzleTiles.indexOf(
-        clickedValue === 0
-            ? puzzleTiles.length - 1
-            : clickedValue - 1
-    );
-
-    if (targetIndex === -1) {
-        targetIndex = 0;
+    for (let i = 0; i < total; i++) {
+        puzzleTiles.push(i);
     }
 
-    [puzzleTiles[index], puzzleTiles[targetIndex]] =
-        [puzzleTiles[targetIndex], puzzleTiles[index]];
+    // Shuffle until not solved
+    do {
+        shuffleArray(puzzleTiles);
+    } while (isSolved());
 
-    updatePuzzleBoard();
+    puzzleTiles.forEach((tileNumber, position) => {
 
-    checkPuzzleComplete();
-}
+        const tile =
+            document.createElement("div");
 
-function updatePuzzleBoard() {
-    const tiles = document.querySelectorAll(".puzzle-tile");
+        tile.className = "puzzle-piece";
 
-    tiles.forEach((tile, index) => {
-        tile.textContent = puzzleTiles[index] + 1;
-        tile.dataset.position = index;
-        tile.dataset.value = puzzleTiles[index];
+        tile.dataset.position = position;
+        tile.dataset.tile = tileNumber;
+
+        const row =
+            Math.floor(tileNumber / puzzleSize);
+
+        const col =
+            tileNumber % puzzleSize;
+
+        tile.style.backgroundImage =
+            `url("${puzzleImage}")`;
+
+        tile.style.backgroundSize =
+            `${puzzleSize * 100}% ${puzzleSize * 100}%`;
+
+        tile.style.backgroundPosition =
+            `${(col * 100) / (puzzleSize - 1)}% ` +
+            `${(row * 100) / (puzzleSize - 1)}%`;
+
+        tile.addEventListener(
+            "click",
+            () => moveTile(position)
+        );
+
+        board.appendChild(tile);
+
     });
+
+    startGameTimer();
+
 }
 
-function checkPuzzleComplete() {
-    const solved = puzzleTiles.every(
-        (value, index) => value === index
+
+// =====================================================
+// MOVE PUZZLE TILE
+// =====================================================
+
+function moveTile(position) {
+
+    if (!puzzleTiles.length) return;
+
+    // Simple swap puzzle
+    const targetPosition =
+        findBestSwap(position);
+
+    if (targetPosition === -1) return;
+
+    [
+        puzzleTiles[position],
+        puzzleTiles[targetPosition]
+    ] = [
+        puzzleTiles[targetPosition],
+        puzzleTiles[position]
+    ];
+
+    moves++;
+
+    updatePuzzle();
+
+    updateGameStats();
+
+    if (isSolved()) {
+        completeGame();
+    }
+
+}
+
+
+function findBestSwap(position) {
+
+    const current =
+        puzzleTiles[position];
+
+    // Move tile toward its correct position.
+    const correctPosition =
+        current;
+
+    if (
+        correctPosition >= 0 &&
+        correctPosition < puzzleTiles.length &&
+        correctPosition !== position
+    ) {
+
+        return correctPosition;
+
+    }
+
+    return -1;
+
+}
+
+
+// =====================================================
+// UPDATE PUZZLE
+// =====================================================
+
+function updatePuzzle() {
+
+    const tiles =
+        document.querySelectorAll(".puzzle-piece");
+
+    tiles.forEach((tile, position) => {
+
+        const tileNumber =
+            puzzleTiles[position];
+
+        const row =
+            Math.floor(tileNumber / puzzleSize);
+
+        const col =
+            tileNumber % puzzleSize;
+
+        tile.dataset.position = position;
+        tile.dataset.tile = tileNumber;
+
+        tile.style.backgroundImage =
+            `url("${puzzleImage}")`;
+
+        tile.style.backgroundSize =
+            `${puzzleSize * 100}% ${puzzleSize * 100}%`;
+
+        tile.style.backgroundPosition =
+            `${(col * 100) / (puzzleSize - 1)}% ` +
+            `${(row * 100) / (puzzleSize - 1)}%`;
+
+    });
+
+}
+
+
+// =====================================================
+// CHECK SOLVED
+// =====================================================
+
+function isSolved() {
+
+    return puzzleTiles.every(
+        (value, index) =>
+            value === index
     );
 
-    if (solved) {
-        setTimeout(() => {
-            alert("🎉 Puzzle Completed! 🎂❤️");
-            createConfetti();
-        }, 200);
-    }
 }
+
+
+// =====================================================
+// COMPLETE GAME
+// =====================================================
+
+function completeGame() {
+
+    stopGameTimer();
+
+    const completion =
+        document.getElementById("gameCompletion");
+
+    const finalTime =
+        document.getElementById("finalTime");
+
+    const finalMoves =
+        document.getElementById("finalMoves");
+
+    if (finalTime) {
+        finalTime.textContent =
+            formatGameTime(gameSeconds);
+    }
+
+    if (finalMoves) {
+        finalMoves.textContent =
+            moves;
+    }
+
+    if (completion) {
+        completion.style.display = "flex";
+    }
+
+    createConfetti();
+
+}
+
+
+// =====================================================
+// SOLUTION
+// =====================================================
+
+function showSolution() {
+
+    const preview =
+        document.getElementById("solutionPreview");
+
+    const image =
+        document.getElementById("solutionImage");
+
+    if (!preview || !image) return;
+
+    image.src = puzzleImage;
+
+    preview.style.display = "block";
+
+}
+
+
+// =====================================================
+// GAME TIMER
+// =====================================================
+
+function startGameTimer() {
+
+    stopGameTimer();
+
+    gameStartTime = Date.now();
+
+    gameTimerInterval =
+        setInterval(() => {
+
+            gameSeconds =
+                Math.floor(
+                    (Date.now() - gameStartTime) / 1000
+                );
+
+            updateGameStats();
+
+        }, 1000);
+
+}
+
+
+function stopGameTimer() {
+
+    if (gameTimerInterval) {
+
+        clearInterval(gameTimerInterval);
+
+        gameTimerInterval = null;
+
+    }
+
+}
+
+
+function formatGameTime(seconds) {
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secs =
+        seconds % 60;
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(secs).padStart(2, "0")
+    );
+
+}
+
+
+function updateGameStats() {
+
+    const timer =
+        document.getElementById("gameTimer");
+
+    const moveCounter =
+        document.getElementById("moveCounter");
+
+    if (timer) {
+        timer.textContent =
+            formatGameTime(gameSeconds);
+    }
+
+    if (moveCounter) {
+        moveCounter.textContent =
+            moves;
+    }
+
+}
+
+
+// =====================================================
+// SHUFFLE
+// =====================================================
 
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
 
-        [array[i], array[j]] =
-            [array[j], array[i]];
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+        [
+            array[i],
+            array[j]
+        ] = [
+            array[j],
+            array[i]
+        ];
+
     }
+
 }
 
-// ===============================
-// Puzzle Difficulty
-// ===============================
 
-function setPuzzleDifficulty(size) {
-    puzzleSize = size;
-    startNewGame();
-}
-
-// ===============================
+// =====================================================
 // COUNTDOWN
-// ===============================
+// =====================================================
 
-// 🎂 NOOR Birthday
+// 🎂 BUJJI Birthday
 // 05 September 2027 - 12:00 AM
 
-const birthdayDate =
+let birthdayDate =
     new Date("2027-09-05T00:00:00");
 
+
 function initializeCountdown() {
+
+    const input =
+        document.getElementById("birthdayDate");
+
+    // Show the selected birthday in the input
+    if (input) {
+
+        input.value =
+            "2027-09-05T00:00";
+
+        input.addEventListener(
+            "change",
+            () => {
+
+                if (!input.value) return;
+
+                birthdayDate =
+                    new Date(input.value);
+
+                updateCountdown();
+
+            }
+        );
+
+    }
+
     updateCountdown();
 
-    countdownInterval = setInterval(
+    setInterval(
         updateCountdown,
         1000
     );
+
 }
+
 
 function updateCountdown() {
-    const now = new Date();
+
+    const now =
+        new Date();
 
     let difference =
-        birthdayDate.getTime() - now.getTime();
+        birthdayDate.getTime() -
+        now.getTime();
 
-    // If the date has passed, automatically move
-    // to the next year
     if (difference <= 0) {
-        birthdayDate.setFullYear(
-            birthdayDate.getFullYear() + 1
-        );
+
+        birthdayDate =
+            new Date(
+                `${birthdayDate.getFullYear() + 1}-09-05T00:00:00`
+            );
 
         difference =
-            birthdayDate.getTime() - now.getTime();
+            birthdayDate.getTime() -
+            now.getTime();
+
     }
 
-    const days = Math.floor(
-        difference / (1000 * 60 * 60 * 24)
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+    const hours =
+        Math.floor(
+            (difference /
+                (1000 * 60 * 60)) % 24
+        );
+
+    const minutes =
+        Math.floor(
+            (difference /
+                (1000 * 60)) % 60
+        );
+
+    const seconds =
+        Math.floor(
+            (difference / 1000) % 60
+        );
+
+    setCountdownValue(
+        "days",
+        days
     );
 
-    const hours = Math.floor(
-        (difference / (1000 * 60 * 60)) % 24
+    setCountdownValue(
+        "hours",
+        hours
     );
 
-    const minutes = Math.floor(
-        (difference / (1000 * 60)) % 60
+    setCountdownValue(
+        "minutes",
+        minutes
     );
 
-    const seconds = Math.floor(
-        (difference / 1000) % 60
+    setCountdownValue(
+        "seconds",
+        seconds
     );
 
-    updateCountdownElement("days", days);
-    updateCountdownElement("hours", hours);
-    updateCountdownElement("minutes", minutes);
-    updateCountdownElement("seconds", seconds);
 }
 
-function updateCountdownElement(id, value) {
-    const element = document.getElementById(id);
+
+function setCountdownValue(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
 
     if (!element) return;
 
     element.textContent =
         String(value).padStart(2, "0");
+
 }
 
-// ===============================
-// Event Listeners
-// ===============================
+
+// =====================================================
+// EVENT LISTENERS
+// =====================================================
 
 function initializeEventListeners() {
 
     const celebrateButton =
-        document.querySelector(".celebrate-btn");
+        document.getElementById("celebrateBtn");
 
     if (celebrateButton) {
+
         celebrateButton.addEventListener(
             "click",
             celebrate
         );
+
     }
 
     const nextButton =
-        document.querySelector(".next-slide");
+        document.getElementById("nextSlideBtn");
 
     const previousButton =
-        document.querySelector(".prev-slide");
+        document.getElementById("prevSlideBtn");
 
     if (nextButton) {
+
         nextButton.addEventListener(
             "click",
             nextSlide
         );
+
     }
 
     if (previousButton) {
+
         previousButton.addEventListener(
             "click",
             previousSlide
         );
-    }
 
-    const newGameButton =
-        document.querySelector(".new-game");
-
-    if (newGameButton) {
-        newGameButton.addEventListener(
-            "click",
-            startNewGame
-        );
-    }
-
-    const easyButton =
-        document.querySelector(".easy");
-
-    const mediumButton =
-        document.querySelector(".medium");
-
-    const hardButton =
-        document.querySelector(".hard");
-
-    if (easyButton) {
-        easyButton.addEventListener(
-            "click",
-            () => setPuzzleDifficulty(3)
-        );
-    }
-
-    if (mediumButton) {
-        mediumButton.addEventListener(
-            "click",
-            () => setPuzzleDifficulty(4)
-        );
-    }
-
-    if (hardButton) {
-        hardButton.addEventListener(
-            "click",
-            () => setPuzzleDifficulty(5)
-        );
     }
 
     document.addEventListener(
         "keydown",
-        (event) => {
+        event => {
 
             if (event.key === "ArrowRight") {
                 nextSlide();
@@ -523,115 +997,80 @@ function initializeEventListeners() {
                 previousSlide();
             }
 
-            if (
-                event.ctrlKey &&
-                event.key.toLowerCase() === "n"
-            ) {
-                event.preventDefault();
-                startNewGame();
-            }
         }
     );
+
 }
 
-// ===============================
-// Scroll Animations
-// ===============================
 
-function initializeScrollAnimations() {
-    const elements =
-        document.querySelectorAll(
-            ".gallery-item, .puzzle-section, .countdown-section"
-        );
-
-    if (!elements.length) return;
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add(
-                            "visible"
-                        );
-                    }
-                });
-            },
-            {
-                threshold: 0.15
-            }
-        );
-
-    elements.forEach(element => {
-        observer.observe(element);
-    });
-}
-
-// ===============================
-// Image Error Handling
-// ===============================
+// =====================================================
+// IMAGE ERROR HANDLING
+// =====================================================
 
 function initializeImageErrors() {
+
     document.addEventListener(
         "error",
-        function (event) {
+        event => {
 
             if (
                 event.target &&
                 event.target.tagName === "IMG"
             ) {
-                event.target.style.display = "none";
+
+                console.log(
+                    "Image failed:",
+                    event.target.src
+                );
+
             }
 
         },
         true
     );
+
 }
 
-// ===============================
-// Touch Swipe
-// ===============================
+
+// =====================================================
+// MOBILE SWIPE
+// =====================================================
 
 let touchStartX = 0;
-let touchEndX = 0;
 
 document.addEventListener(
     "touchstart",
     event => {
+
         touchStartX =
             event.changedTouches[0].screenX;
+
     },
     { passive: true }
 );
+
 
 document.addEventListener(
     "touchend",
     event => {
 
-        touchEndX =
+        const touchEndX =
             event.changedTouches[0].screenX;
 
         const difference =
             touchStartX - touchEndX;
 
-        if (Math.abs(difference) < 50) return;
+        if (Math.abs(difference) < 50) {
+            return;
+        }
 
         if (difference > 0) {
             nextSlide();
         } else {
             previousSlide();
         }
+
     },
     { passive: true }
 );
-
-// ===============================
-// Window Resize
-// ===============================
-
-window.addEventListener(
-    "resize",
-    () => {
-        updateSlide();
-    }
-);
+```
