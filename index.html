@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,61 +14,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- ================= BACKGROUND ================= -->
-
-    <div class="background-animation">
-
-        <div class="floating-balloons">
-            <div class="balloon balloon-1">🎈</div>
-            <div class="balloon balloon-2">🎈</div>
-            <div class="balloon balloon-3">🎈</div>
-            <div class="balloon balloon-4">🎈</div>
-            <div class="balloon balloon-5">🎈</div>
+    <!-- Background -->
+    <div class="background-effects">
+        <div class="particles"></div>
+        <div class="balloons">
+            <span>🎈</span>
+            <span>🎈</span>
+            <span>🎈</span>
+            <span>🎈</span>
+            <span>🎈</span>
         </div>
-
-        <div id="confettiContainer"></div>
-        <div id="particles"></div>
-
     </div>
 
+    <!-- Navbar -->
+    <nav class="navbar">
 
-    <!-- ================= NAVBAR ================= -->
-
-    <header class="navbar">
-
-        <div class="nav-container">
-
-            <a href="#home" class="logo">
-                🎂 BUJJI
-            </a>
-
-            <button class="nav-toggle" id="navToggle" aria-label="Open menu">
-                ☰
-            </button>
-
-            <nav class="nav-menu" id="navMenu">
-
-                <a href="#home">🏠 Home</a>
-                <a href="#gallery">📸 Gallery</a>
-                <a href="#game">🎮 Game</a>
-                <a href="#countdown">⏳ Countdown</a>
-
-            </nav>
-
+        <div class="nav-logo">
+            🎂 BUJJI
         </div>
 
-    </header>
+        <div class="nav-links" id="navLinks">
+            <a href="#home">🏠 Home</a>
+            <a href="#gallery">📸 Gallery</a>
+            <a href="#message">💌 Message</a>
+            <a href="#game">🎮 Game</a>
+            <a href="#countdown">⏳ Countdown</a>
+        </div>
 
+        <button class="menu-toggle" id="menuToggle" type="button">
+            ☰
+        </button>
 
-    <!-- ================= HOME ================= -->
+    </nav>
+
 
     <main>
 
+        <!-- HERO -->
         <section id="home" class="hero-section">
 
             <div class="hero-content">
@@ -77,268 +66,196 @@
                 </div>
 
                 <h1 class="hero-title">
-                    Happy Birthday BUJJI 🎂
+                    Happy Birthday <span>BUJJI</span> 🎂
                 </h1>
 
                 <p class="hero-subtitle">
-                    Wishing you a day filled with happiness, smiles,
-                    beautiful memories and lots of love! 💖
+                    Wishing you a day filled with happiness, smiles and beautiful memories ✨
                 </p>
 
-                <div class="birthday-cake">
-                    <div class="cake-emoji">🎂</div>
 
-                    <div class="candles">
+                <!-- Premium Cake -->
+                <div class="birthday-cake">
+
+                    <div class="cake-glow"></div>
+
+                    <div class="cake-emoji" id="cakeEmoji">
+                        🎂
+                    </div>
+
+                    <div class="candles" id="cakeCandles">
                         <span>🕯️</span>
                         <span>🕯️</span>
                         <span>🕯️</span>
                     </div>
+
                 </div>
 
-                <button class="cta-button" id="celebrateBtn">
-                    Start the Celebration! 🎊
-                </button>
 
-                <p class="scroll-hint">
-                    ↓ Scroll down for more surprises ↓
-                </p>
+                <div class="hero-buttons">
+
+                    <button class="celebrate-button" id="celebrateBtn" type="button">
+                        🎉 Celebrate
+                    </button>
+
+                    <button class="surprise-button" id="surpriseBtn" type="button">
+                        🎁 Open Your Surprise
+                    </button>
+
+                </div>
+
+
+                <div class="scroll-hint">
+                    <span>↓</span>
+                    Explore the memories
+                    <span>↓</span>
+                </div>
 
             </div>
 
         </section>
 
 
-        <!-- ================= GALLERY ================= -->
-
+        <!-- GALLERY -->
         <section id="gallery" class="section gallery-section">
 
             <div class="section-heading">
 
                 <span class="section-icon">📸</span>
 
-                <h2>
-                    Beautiful Memories
-                </h2>
+                <h2>Beautiful Memories</h2>
 
-                <p>
-                    Some special moments captured forever ❤️
-                </p>
+                <p>Some special moments to remember forever ✨</p>
 
             </div>
 
 
+            <p class="gallery-hint">
+                ✨ Tap any photo to view it fullscreen ✨
+            </p>
+
+
             <div class="gallery-controls">
 
-                <button id="gridViewBtn" class="view-btn active">
-                    ▦ Gallery
+                <button id="gridViewBtn" class="active" type="button">
+                    ▦ Grid
                 </button>
 
-                <button id="slideshowViewBtn" class="view-btn">
+                <button id="slideshowViewBtn" type="button">
                     ▶ Slideshow
                 </button>
 
             </div>
 
 
-            <!-- Gallery Grid -->
-
+            <!-- Grid -->
             <div class="gallery-grid" id="galleryGrid">
 
                 <div class="gallery-item">
-
-                    <img
-                        src="IMG-20240822-WA0003.jpg"
-                        alt="Birthday Memory 1"
-                    >
-
+                    <img src="IMG-20240822-WA0003.jpg" alt="Memory 1">
                     <div class="gallery-overlay">
-                        <h3>Beautiful Memory ❤️</h3>
-                        <p>A special moment to remember forever ✨</p>
+                        <span>💖 Beautiful Memory</span>
                     </div>
-
                 </div>
 
-
                 <div class="gallery-item">
-
-                    <img
-                        src="IMG-20240904-WA0003.jpg"
-                        alt="Birthday Memory 2"
-                    >
-
+                    <img src="IMG-20240904-WA0003.jpg" alt="Memory 2">
                     <div class="gallery-overlay">
-                        <h3>Sweet Memory 💕</h3>
-                        <p>One more beautiful memory 🥰</p>
+                        <span>✨ Special Moment</span>
                     </div>
-
                 </div>
 
-
                 <div class="gallery-item">
-
-                    <img
-                        src="IMG_2647.jpg"
-                        alt="Birthday Memory 3"
-                    >
-
+                    <img src="IMG_2647.jpg" alt="Memory 3">
                     <div class="gallery-overlay">
-                        <h3>Happy Moment 😊</h3>
-                        <p>Keep smiling always ✨</p>
+                        <span>🥰 Sweet Memory</span>
                     </div>
-
                 </div>
 
-
                 <div class="gallery-item">
-
-                    <img
-                        src="NPTL3186.JPG"
-                        alt="Birthday Memory 4"
-                    >
-
+                    <img src="NPTL3186.JPG" alt="Memory 4">
                     <div class="gallery-overlay">
-                        <h3>Precious Moment 💖</h3>
-                        <p>A memory worth keeping forever</p>
+                        <span>🌸 Precious Moment</span>
                     </div>
-
                 </div>
 
-
                 <div class="gallery-item">
-
-                    <img
-                        src="OLSB4991.JPG"
-                        alt="Birthday Memory 5"
-                    >
-
+                    <img src="OLSB4991.JPG" alt="Memory 5">
                     <div class="gallery-overlay">
-                        <h3>Special Memory 🌸</h3>
-                        <p>Beautiful memories never fade</p>
+                        <span>💫 Amazing Memory</span>
                     </div>
-
                 </div>
 
-
                 <div class="gallery-item">
-
-                    <img
-                        src="Snapchat-1779683539.jpg"
-                        alt="Birthday Memory 6"
-                    >
-
+                    <img src="Snapchat-1779683539.jpg" alt="Memory 6">
                     <div class="gallery-overlay">
-                        <h3>Fun Memory 😍</h3>
-                        <p>Smile, laugh and enjoy every moment</p>
+                        <span>📸 Fun Memory</span>
                     </div>
-
                 </div>
 
-
                 <div class="gallery-item">
-
-                    <img
-                        src="Snapchat-2018150645.jpg"
-                        alt="Birthday Memory 7"
-                    >
-
+                    <img src="Snapchat-2018150645.jpg" alt="Memory 7">
                     <div class="gallery-overlay">
-                        <h3>Forever Memory 🥳</h3>
-                        <p>Another beautiful page in your memories</p>
+                        <span>❤️ Forever Memory</span>
                     </div>
-
                 </div>
 
             </div>
 
 
             <!-- Slideshow -->
+            <div class="gallery-slideshow" id="gallerySlideshow">
 
-            <div
-                class="gallery-slideshow"
-                id="gallerySlideshow"
-                style="display: none;"
-            >
+                <button class="slide-arrow prev" id="prevSlide" type="button">
+                    ❮
+                </button>
 
-                <div class="slideshow-container">
+                <div class="slide-container">
 
                     <div class="slide active">
                         <img src="IMG-20240822-WA0003.jpg" alt="Memory 1">
-                        <div class="slide-caption">
-                            Beautiful Memory ❤️
-                        </div>
                     </div>
 
                     <div class="slide">
                         <img src="IMG-20240904-WA0003.jpg" alt="Memory 2">
-                        <div class="slide-caption">
-                            Sweet Memory 💕
-                        </div>
                     </div>
 
                     <div class="slide">
                         <img src="IMG_2647.jpg" alt="Memory 3">
-                        <div class="slide-caption">
-                            Happy Moment 😊
-                        </div>
                     </div>
 
                     <div class="slide">
                         <img src="NPTL3186.JPG" alt="Memory 4">
-                        <div class="slide-caption">
-                            Precious Moment 💖
-                        </div>
                     </div>
 
                     <div class="slide">
                         <img src="OLSB4991.JPG" alt="Memory 5">
-                        <div class="slide-caption">
-                            Special Memory 🌸
-                        </div>
                     </div>
 
                     <div class="slide">
                         <img src="Snapchat-1779683539.jpg" alt="Memory 6">
-                        <div class="slide-caption">
-                            Fun Memory 😍
-                        </div>
                     </div>
 
                     <div class="slide">
                         <img src="Snapchat-2018150645.jpg" alt="Memory 7">
-                        <div class="slide-caption">
-                            Forever Memory 🥳
-                        </div>
                     </div>
 
-
-                    <button
-                        class="slide-btn prev"
-                        id="prevSlideBtn"
-                        aria-label="Previous image"
-                    >
-                        ❮
-                    </button>
-
-                    <button
-                        class="slide-btn next"
-                        id="nextSlideBtn"
-                        aria-label="Next image"
-                    >
-                        ❯
-                    </button>
-
                 </div>
+
+                <button class="slide-arrow next" id="nextSlide" type="button">
+                    ❯
+                </button>
 
 
                 <div class="slide-indicators">
 
-                    <button class="indicator active" data-slide="0"></button>
-                    <button class="indicator" data-slide="1"></button>
-                    <button class="indicator" data-slide="2"></button>
-                    <button class="indicator" data-slide="3"></button>
-                    <button class="indicator" data-slide="4"></button>
-                    <button class="indicator" data-slide="5"></button>
-                    <button class="indicator" data-slide="6"></button>
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
 
                 </div>
 
@@ -347,289 +264,363 @@
         </section>
 
 
-        <!-- ================= PUZZLE GAME ================= -->
+        <!-- BIRTHDAY MESSAGE -->
+        <section id="message" class="section message-section">
 
+            <div class="section-heading">
+
+                <span class="section-icon">💌</span>
+
+                <h2>A Special Message For You</h2>
+
+                <p>From the heart ❤️</p>
+
+            </div>
+
+
+            <div class="birthday-letter">
+
+                <div class="letter-decoration">
+                    💖 ✨ 💖
+                </div>
+
+                <h2>Dear BUJJI ❤️</h2>
+
+                <p>
+                    Today is a very special day because it is the day
+                    a very special person was born. 🎂
+                </p>
+
+                <p>
+                    I hope your birthday is filled with beautiful smiles,
+                    happy moments and memories that stay forever. ✨
+                </p>
+
+                <p>
+                    May every new day bring you more happiness,
+                    more reasons to smile and lots of wonderful moments. 🌸
+                </p>
+
+                <p class="letter-highlight">
+                    Keep smiling, keep shining and always stay special. 💖
+                </p>
+
+                <div class="letter-signature">
+
+                    Wishing you lots of happiness ❤️<br>
+
+                    <strong>
+                        Happy Birthday BUJJI! 🎂🥳
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- GAME -->
         <section id="game" class="section game-section">
 
             <div class="section-heading">
 
-                <span class="section-icon">🎮</span>
+                <span class="section-icon">🧩</span>
 
-                <h2>
-                    Birthday Puzzle
-                </h2>
+                <h2>Birthday Puzzle</h2>
 
-                <p>
-                    Can you complete the birthday picture? 🧩
-                </p>
+                <p>Can you complete the memory? 🎮</p>
 
             </div>
 
 
-            <div class="game-controls">
+            <div class="game-card">
 
-                <label for="difficultySelect">
-                    Difficulty:
-                </label>
+                <div class="difficulty-section">
 
-                <select id="difficultySelect">
+                    <label for="difficulty">
+                        Difficulty
+                    </label>
 
-                    <option value="3">
-                        Easy - 3 × 3
-                    </option>
+                    <select id="difficulty">
 
-                    <option value="4">
-                        Medium - 4 × 4
-                    </option>
+                        <option value="3">
+                            Easy - 3 × 3
+                        </option>
 
-                    <option value="5">
-                        Hard - 5 × 5
-                    </option>
+                        <option value="4" selected>
+                            Medium - 4 × 4
+                        </option>
 
-                </select>
+                        <option value="5">
+                            Hard - 5 × 5
+                        </option>
+
+                    </select>
+
+                </div>
 
 
                 <div class="game-stats">
 
-                    <div class="stat-box">
-                        ⏱️
-                        <span>Time</span>
-                        <strong id="gameTimer">00:00</strong>
+                    <div>
+                        <span>⏱️</span>
+                        <strong id="timer">00:00</strong>
                     </div>
 
-                    <div class="stat-box">
-                        👆
-                        <span>Moves</span>
-                        <strong id="moveCounter">0</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="puzzle-container">
-
-
-                <div class="puzzle-game-area">
-
-                    <div
-                        class="puzzle-board"
-                        id="puzzleBoard"
-                    ></div>
-
-
-                    <div class="game-buttons">
-
-                        <button
-                            class="game-btn primary"
-                            id="newGameBtn"
-                        >
-                            🔄 New Game
-                        </button>
-
-                        <button
-                            class="game-btn"
-                            id="showSolutionBtn"
-                        >
-                            👀 Show Solution
-                        </button>
-
+                    <div>
+                        <span>👣</span>
+                        <strong id="moves">0</strong>
                     </div>
 
                 </div>
 
 
-                <div class="solution-preview">
-
-                    <h3>
-                        🖼️ Solution
-                    </h3>
-
-                    <img
-                        src="IMG-20240822-WA0003.jpg"
-                        alt="Puzzle Solution"
-                        id="solutionImage"
-                    >
-
-                    <p>
-                        Click two pieces to swap them and complete the picture.
-                    </p>
-
+                <div class="puzzle-container" id="puzzleContainer">
                 </div>
 
-            </div>
 
+                <div class="game-buttons">
 
-            <!-- Game Completed -->
+                    <button id="newGameBtn" type="button">
+                        🔄 New Game
+                    </button>
 
-            <div
-                class="game-completion"
-                id="gameCompletion"
-                style="display: none;"
-            >
+                    <button id="showSolutionBtn" type="button">
+                        👀 Show Solution
+                    </button>
 
-                <div class="completion-card">
-
-                    <div class="completion-icon">
-                        🎉
-                    </div>
-
-                    <h2>
-                        Puzzle Completed! 🥳
-                    </h2>
-
-                    <p>
-                        You did it! Great job! ❤️
-                    </p>
-
-                    <div class="completion-stats">
-
-                        <div>
-                            <span>Time</span>
-                            <strong id="finalTime">
-                                00:00
-                            </strong>
-                        </div>
-
-                        <div>
-                            <span>Moves</span>
-                            <strong id="finalMoves">
-                                0
-                            </strong>
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="game-btn primary"
-                        id="playAgainBtn"
-                    >
+                    <button id="playAgainBtn" type="button">
                         🎮 Play Again
                     </button>
 
                 </div>
 
+
+                <div class="solution-preview" id="solutionPreview">
+
+                    <img
+                        id="solutionImage"
+                        src="IMG-20240822-WA0003.jpg"
+                        alt="Puzzle Solution"
+                    >
+
+                </div>
+
             </div>
 
         </section>
 
 
-        <!-- ================= COUNTDOWN ================= -->
-
-        <section
-            id="countdown"
-            class="section countdown-section"
-        >
+        <!-- COUNTDOWN -->
+        <section id="countdown" class="section countdown-section">
 
             <div class="section-heading">
 
                 <span class="section-icon">⏳</span>
 
-                <h2>
-                    Birthday Countdown
-                </h2>
+                <h2>Birthday Countdown</h2>
 
-                <p>
-                    Waiting for the special day... 🎂
-                </p>
+                <p>Let's count down to the special moment 🎉</p>
 
             </div>
 
 
             <div class="countdown-card">
 
+                <label for="birthdayDate">
+                    Choose Date & Time
+                </label>
 
-                <div class="date-selector">
-
-                    <label for="birthdayDate">
-                        🎂 Set Your Birthday Date:
-                    </label>
-
-                    <input
-                        type="datetime-local"
-                        id="birthdayDate"
-                    >
-
-                </div>
-
-
-                <div
-                    class="countdown-display"
-                    id="countdownDisplay"
+                <input
+                    type="datetime-local"
+                    id="birthdayDate"
                 >
 
-                    <div class="countdown-box">
 
-                        <strong id="days">
-                            0
-                        </strong>
+                <div class="countdown-display">
 
-                        <span>
-                            Days
-                        </span>
-
+                    <div class="count-box">
+                        <span id="days">00</span>
+                        <small>Days</small>
                     </div>
 
-
-                    <div class="countdown-box">
-
-                        <strong id="hours">
-                            0
-                        </strong>
-
-                        <span>
-                            Hours
-                        </span>
-
+                    <div class="count-box">
+                        <span id="hours">00</span>
+                        <small>Hours</small>
                     </div>
 
-
-                    <div class="countdown-box">
-
-                        <strong id="minutes">
-                            0
-                        </strong>
-
-                        <span>
-                            Minutes
-                        </span>
-
+                    <div class="count-box">
+                        <span id="minutes">00</span>
+                        <small>Minutes</small>
                     </div>
 
-
-                    <div class="countdown-box">
-
-                        <strong id="seconds">
-                            0
-                        </strong>
-
-                        <span>
-                            Seconds
-                        </span>
-
+                    <div class="count-box">
+                        <span id="seconds">00</span>
+                        <small>Seconds</small>
                     </div>
 
-                </div>
-
-
-                <div
-                    class="countdown-message"
-                    id="countdownMessage"
-                >
-                    🎂 Next Birthday: 05 September 2027, 12:00 AM
                 </div>
 
             </div>
 
         </section>
 
+
+        <!-- FULLSCREEN GALLERY -->
+        <div
+            class="gallery-lightbox"
+            id="galleryLightbox"
+            aria-hidden="true"
+        >
+
+            <button
+                class="lightbox-close"
+                id="lightboxClose"
+                type="button"
+                aria-label="Close fullscreen gallery"
+            >
+                ✕
+            </button>
+
+
+            <button
+                class="lightbox-btn lightbox-prev"
+                id="lightboxPrev"
+                type="button"
+                aria-label="Previous photo"
+            >
+                ❮
+            </button>
+
+
+            <div class="lightbox-content">
+
+                <img
+                    id="lightboxImage"
+                    src=""
+                    alt="Fullscreen Memory"
+                >
+
+                <div
+                    class="lightbox-caption"
+                    id="lightboxCaption"
+                ></div>
+
+                <div
+                    class="lightbox-counter"
+                    id="lightboxCounter"
+                >
+                    1 / 7
+                </div>
+
+            </div>
+
+
+            <button
+                class="lightbox-btn lightbox-next"
+                id="lightboxNext"
+                type="button"
+                aria-label="Next photo"
+            >
+                ❯
+            </button>
+
+        </div>
+
+
+        <!-- SURPRISE MODAL -->
+        <div
+            class="surprise-modal"
+            id="surpriseModal"
+            aria-hidden="true"
+        >
+
+            <div class="surprise-card">
+
+                <button
+                    class="surprise-close"
+                    id="surpriseClose"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+                <div class="surprise-icon">
+                    🎁
+                </div>
+
+                <h2>
+                    Surprise! 🥳
+                </h2>
+
+                <div class="surprise-cake">
+                    🎂
+                </div>
+
+                <p>
+                    Today is all about YOU! 💖
+                </p>
+
+                <p>
+                    May your life always be filled with happiness,
+                    beautiful memories and countless reasons to smile. ✨
+                </p>
+
+                <h3>
+                    Happy Birthday BUJJI! 🎉❤️
+                </h3>
+
+                <button
+                    class="surprise-celebrate"
+                    id="surpriseCelebrate"
+                    type="button"
+                >
+                    🎊 Celebrate!
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPLETION MODAL -->
+        <div
+            class="completion-modal"
+            id="completionModal"
+            aria-hidden="true"
+        >
+
+            <div class="completion-card">
+
+                <div class="completion-icon">
+                    🎉
+                </div>
+
+                <h2>
+                    Puzzle Completed!
+                </h2>
+
+                <p>
+                    Amazing! You completed the birthday puzzle! 🥳
+                </p>
+
+                <button
+                    id="completionClose"
+                    type="button"
+                >
+                    ❤️ Continue
+                </button>
+
+            </div>
+
+        </div>
+
     </main>
 
 
-    <!-- ================= FOOTER ================= -->
-
-    <footer class="footer">
+    <!-- FOOTER -->
+    <footer>
 
         <div class="footer-content">
 
@@ -637,31 +628,27 @@
                 🎂 BUJJI
             </div>
 
-            <p>
-                Made with ❤️ specially for BUJJI
-            </p>
-
             <div class="footer-links">
 
                 <a href="#home">Home</a>
                 <a href="#gallery">Gallery</a>
+                <a href="#message">Message</a>
                 <a href="#game">Game</a>
                 <a href="#countdown">Countdown</a>
 
             </div>
 
-            <p class="copyright">
-                © 2026 Birthday Celebration
-            </p>
+            <div class="copyright">
+                Made with ❤️ specially for BUJJI
+            </div>
 
         </div>
 
     </footer>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
-
     <script src="script.js"></script>
 
 </body>
+
 </html>
