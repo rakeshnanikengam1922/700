@@ -1,62 +1,18 @@
 alert("SCRIPT STARTED ✅");
 
+document.addEventListener("DOMContentLoaded", function () {
 
-/* =====================================================
-   START WEBSITE
-===================================================== */
+    console.log("DOM LOADED");
 
-document.addEventListener("DOMContentLoaded", () => {
+    initializeNavigation();
+    initializeCelebration();
+    initializeGallery();
+    initializeFullscreenGallery();
+    initializeSurprise();
+    initializePuzzle();
+    initializeJournal();
 
-    console.log("1 - DOM LOADED");
-
-    try {
-        initializeNavigation();
-        console.log("2 - Navigation OK");
-    } catch (error) {
-        console.error("NAVIGATION ERROR:", error);
-    }
-
-    try {
-        initializeCelebration();
-        console.log("3 - Celebration OK");
-    } catch (error) {
-        console.error("CELEBRATION ERROR:", error);
-    }
-
-    try {
-        initializeGallery();
-        console.log("4 - Gallery OK");
-    } catch (error) {
-        console.error("GALLERY ERROR:", error);
-    }
-
-    try {
-        initializeFullscreenGallery();
-        console.log("5 - Fullscreen Gallery OK");
-    } catch (error) {
-        console.error("FULLSCREEN GALLERY ERROR:", error);
-    }
-
-    try {
-        initializeSurprise();
-        console.log("6 - Surprise OK");
-    } catch (error) {
-        console.error("SURPRISE ERROR:", error);
-    }
-
-    try {
-        initializePuzzle();
-        console.log("7 - Puzzle OK");
-    } catch (error) {
-        console.error("PUZZLE ERROR:", error);
-    }
-
-    try {
-        initializeJournal();
-        console.log("8 - Journal OK");
-    } catch (error) {
-        console.error("JOURNAL ERROR:", error);
-    }
+    console.log("ALL FEATURES INITIALIZED ✅");
 
 });
 
@@ -67,44 +23,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initializeNavigation() {
 
-    const menuToggle =
-        document.getElementById("menuToggle");
-
-    const navLinks =
-        document.getElementById("navLinks");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
 
     if (menuToggle && navLinks) {
 
-        menuToggle.addEventListener("click", () => {
+        menuToggle.addEventListener("click", function () {
             navLinks.classList.toggle("active");
         });
 
     }
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 
         anchor.addEventListener("click", function (e) {
 
-            const targetId =
-                this.getAttribute("href");
+            const targetId = this.getAttribute("href");
 
             if (!targetId || targetId === "#") {
                 return;
             }
 
-            let target = null;
-
-            try {
-                target =
-                    document.querySelector(targetId);
-            } catch (error) {
-                console.error(
-                    "Navigation target error:",
-                    targetId,
-                    error
-                );
-                return;
-            }
+            const target = document.querySelector(targetId);
 
             if (target) {
 
@@ -123,59 +63,48 @@ function initializeNavigation() {
 
         });
 
-    }
+    });
 
 }
 
 
 /* =====================================================
-   CELEBRATION BUTTON
+   CELEBRATE
 ===================================================== */
 
 function initializeCelebration() {
 
-    const celebrateBtn =
-        document.getElementById("celebrateBtn");
+    const button = document.getElementById("celebrateBtn");
 
-    if (!celebrateBtn) {
-
-        console.warn(
-            "Celebrate button not found"
-        );
-
+    if (!button) {
+        console.error("Celebrate button NOT FOUND");
         return;
-
     }
 
-    celebrateBtn.addEventListener("click", () => {
+    console.log("Celebrate initialized");
 
-        console.log("CELEBRATE BUTTON CLICKED");
+    button.addEventListener("click", function () {
+
+        console.log("CELEBRATE CLICKED 🎉");
 
         createConfetti(120);
 
-        const cake =
-            document.getElementById("cakeEmoji");
+        const cake = document.getElementById("cakeEmoji");
 
         if (cake) {
 
             cake.classList.add("cake-pop");
 
-            setTimeout(() => {
-
+            setTimeout(function () {
                 cake.classList.remove("cake-pop");
-
             }, 700);
 
         }
 
-        celebrateBtn.textContent =
-            "🎉 Celebration Started! 🎉";
+        button.textContent = "🎉 Celebration Started! 🎉";
 
-        setTimeout(() => {
-
-            celebrateBtn.textContent =
-                "🎉 Celebrate";
-
+        setTimeout(function () {
+            button.textContent = "🎉 Celebrate";
         }, 2000);
 
     });
@@ -187,16 +116,15 @@ function initializeCelebration() {
    CONFETTI
 ===================================================== */
 
-function createConfetti(amount = 50) {
+function createConfetti(amount) {
 
-    const container =
-        document.createElement("div");
+    amount = amount || 60;
 
-    container.className =
-        "confetti-container";
+    const container = document.createElement("div");
+
+    container.className = "confetti-container";
 
     document.body.appendChild(container);
-
 
     const symbols = [
         "🎉",
@@ -204,47 +132,38 @@ function createConfetti(amount = 50) {
         "✨",
         "💖",
         "🌸",
-        "🥳"
+        "🥳",
+        "❤️"
     ];
-
 
     for (let i = 0; i < amount; i++) {
 
-        const piece =
-            document.createElement("span");
+        const piece = document.createElement("span");
 
-        piece.className =
-            "confetti-piece";
+        piece.className = "confetti-piece";
 
         piece.textContent =
-            symbols[
-                Math.floor(
-                    Math.random() *
-                    symbols.length
-                )
-            ];
+            symbols[Math.floor(Math.random() * symbols.length)];
 
-        piece.style.left =
-            Math.random() * 100 + "%";
+        piece.style.left = Math.random() * 100 + "vw";
 
         piece.style.animationDelay =
-            Math.random() * 0.5 + "s";
+            Math.random() * 0.6 + "s";
 
-        piece.style.transform =
-            `rotate(${Math.random() * 360}deg)`;
+        piece.style.fontSize =
+            (16 + Math.random() * 18) + "px";
 
         container.appendChild(piece);
 
     }
 
-
-    setTimeout(() => {
+    setTimeout(function () {
 
         if (container) {
             container.remove();
         }
 
-    }, 4000);
+    }, 4500);
 
 }
 
@@ -254,7 +173,6 @@ function createConfetti(amount = 50) {
 ===================================================== */
 
 const galleryImages = [
-
     "IMG-20240822-WA0003.jpg",
     "IMG-20240904-WA0003.jpg",
     "IMG_2647.jpg",
@@ -262,12 +180,9 @@ const galleryImages = [
     "OLSB4991.JPG",
     "Snapchat-1779683539.jpg",
     "Snapchat-2018150645.jpg"
-
 ];
 
-
 const galleryCaptions = [
-
     "A beautiful birthday memory ✨",
     "A special moment to remember 💖",
     "Sweet memories 🥰",
@@ -275,60 +190,142 @@ const galleryCaptions = [
     "An amazing memory 💫",
     "A fun memory 📸",
     "A memory to keep forever ❤️"
-
 ];
 
 
 function initializeGallery() {
 
-    const gridViewBtn =
+    const gridButton =
         document.getElementById("gridViewBtn");
 
-    const slideshowViewBtn =
+    const slideshowButton =
         document.getElementById("slideshowViewBtn");
 
-    const galleryGrid =
+    const grid =
         document.getElementById("galleryGrid");
 
-    const gallerySlideshow =
+    const slideshow =
         document.getElementById("gallerySlideshow");
 
-
-    if (!gridViewBtn || !slideshowViewBtn) {
+    if (!gridButton || !slideshowButton) {
         return;
     }
 
 
-    gridViewBtn.addEventListener("click", () => {
+    gridButton.addEventListener("click", function () {
 
-        if (galleryGrid) {
-            galleryGrid.style.display = "grid";
+        if (grid) {
+            grid.style.display = "grid";
         }
 
-        if (gallerySlideshow) {
-            gallerySlideshow.style.display = "none";
+        if (slideshow) {
+            slideshow.style.display = "none";
         }
 
-        gridViewBtn.classList.add("active");
-
-        slideshowViewBtn.classList.remove("active");
+        gridButton.classList.add("active");
+        slideshowButton.classList.remove("active");
 
     });
 
 
-    slideshowViewBtn.addEventListener("click", () => {
+    slideshowButton.addEventListener("click", function () {
 
-        if (galleryGrid) {
-            galleryGrid.style.display = "none";
+        if (grid) {
+            grid.style.display = "none";
         }
 
-        if (gallerySlideshow) {
-            gallerySlideshow.style.display = "block";
+        if (slideshow) {
+            slideshow.style.display = "block";
         }
 
-        slideshowViewBtn.classList.add("active");
+        slideshowButton.classList.add("active");
+        gridButton.classList.remove("active");
 
-        gridViewBtn.classList.remove("active");
+    });
+
+
+    initializeSlideshow();
+
+}
+
+
+/* =====================================================
+   SLIDESHOW
+===================================================== */
+
+let currentSlide = 0;
+
+
+function initializeSlideshow() {
+
+    const slides =
+        document.querySelectorAll(".slide");
+
+    const indicators =
+        document.querySelectorAll(".indicator");
+
+    const previous =
+        document.getElementById("prevSlide");
+
+    const next =
+        document.getElementById("nextSlide");
+
+
+    function showSlide(index) {
+
+        if (!slides.length) {
+            return;
+        }
+
+        currentSlide =
+            (index + slides.length) % slides.length;
+
+
+        slides.forEach(function (slide, i) {
+
+            slide.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+
+        });
+
+
+        indicators.forEach(function (indicator, i) {
+
+            indicator.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+
+        });
+
+    }
+
+
+    if (previous) {
+
+        previous.addEventListener("click", function () {
+            showSlide(currentSlide - 1);
+        });
+
+    }
+
+
+    if (next) {
+
+        next.addEventListener("click", function () {
+            showSlide(currentSlide + 1);
+        });
+
+    }
+
+
+    indicators.forEach(function (indicator, index) {
+
+        indicator.addEventListener("click", function () {
+            showSlide(index);
+        });
 
     });
 
@@ -344,40 +341,32 @@ let lightboxIndex = 0;
 
 function initializeFullscreenGallery() {
 
-    const galleryLightbox =
+    const lightbox =
         document.getElementById("galleryLightbox");
 
-    const lightboxClose =
+    const close =
         document.getElementById("lightboxClose");
 
-    const lightboxPrev =
+    const previous =
         document.getElementById("lightboxPrev");
 
-    const lightboxNext =
+    const next =
         document.getElementById("lightboxNext");
 
 
-    if (!galleryLightbox) {
-        return;
-    }
+    document.querySelectorAll(".gallery-item")
+        .forEach(function (item, index) {
 
-
-    document
-        .querySelectorAll(".gallery-item")
-        .forEach((item, index) => {
-
-            item.addEventListener("click", () => {
-
+            item.addEventListener("click", function () {
                 openLightbox(index);
-
             });
 
         });
 
 
-    if (lightboxClose) {
+    if (close) {
 
-        lightboxClose.addEventListener(
+        close.addEventListener(
             "click",
             closeLightbox
         );
@@ -385,82 +374,63 @@ function initializeFullscreenGallery() {
     }
 
 
-    if (lightboxPrev) {
+    if (previous) {
 
-        lightboxPrev.addEventListener(
-            "click",
-            () => {
-
-                changeLightboxImage(-1);
-
-            }
-        );
+        previous.addEventListener("click", function () {
+            changeLightboxImage(-1);
+        });
 
     }
 
 
-    if (lightboxNext) {
+    if (next) {
 
-        lightboxNext.addEventListener(
-            "click",
-            () => {
-
-                changeLightboxImage(1);
-
-            }
-        );
+        next.addEventListener("click", function () {
+            changeLightboxImage(1);
+        });
 
     }
 
 
-    galleryLightbox.addEventListener(
-        "click",
-        (e) => {
+    if (lightbox) {
 
-            if (e.target === galleryLightbox) {
+        lightbox.addEventListener("click", function (e) {
+
+            if (e.target === lightbox) {
                 closeLightbox();
             }
 
+        });
+
+    }
+
+
+    document.addEventListener("keydown", function (e) {
+
+        if (!lightbox) {
+            return;
         }
-    );
 
-
-    document.addEventListener(
-        "keydown",
-        (e) => {
-
-            if (
-                galleryLightbox.getAttribute(
-                    "aria-hidden"
-                ) === "true"
-            ) {
-                return;
-            }
-
-
-            if (e.key === "Escape") {
-                closeLightbox();
-            }
-
-
-            if (e.key === "ArrowLeft") {
-                changeLightboxImage(-1);
-            }
-
-
-            if (e.key === "ArrowRight") {
-                changeLightboxImage(1);
-            }
-
+        if (lightbox.getAttribute("aria-hidden") === "true") {
+            return;
         }
-    );
+
+        if (e.key === "Escape") {
+            closeLightbox();
+        }
+
+        if (e.key === "ArrowLeft") {
+            changeLightboxImage(-1);
+        }
+
+        if (e.key === "ArrowRight") {
+            changeLightboxImage(1);
+        }
+
+    });
 
 }
 
-
-/* =====================================================
-   OPEN LIGHTBOX
-===================================================== */
 
 function openLightbox(index) {
 
@@ -468,17 +438,12 @@ function openLightbox(index) {
 
     updateLightbox();
 
-
     const lightbox =
-        document.getElementById(
-            "galleryLightbox"
-        );
-
+        document.getElementById("galleryLightbox");
 
     if (!lightbox) {
         return;
     }
-
 
     lightbox.classList.add("active");
 
@@ -487,41 +452,30 @@ function openLightbox(index) {
         "false"
     );
 
-    document.body.style.overflow =
-        "hidden";
+    document.body.style.overflow = "hidden";
 
 }
 
 
-/* =====================================================
-   UPDATE LIGHTBOX
-===================================================== */
-
 function updateLightbox() {
 
     const image =
-        document.getElementById(
-            "lightboxImage"
-        );
+        document.getElementById("lightboxImage");
 
     const caption =
-        document.getElementById(
-            "lightboxCaption"
-        );
+        document.getElementById("lightboxCaption");
 
     const counter =
-        document.getElementById(
-            "lightboxCounter"
-        );
+        document.getElementById("lightboxCounter");
 
 
     if (image) {
 
         image.src =
-            `./${galleryImages[lightboxIndex]}`;
+            "./" + galleryImages[lightboxIndex];
 
         image.alt =
-            `Memory ${lightboxIndex + 1}`;
+            "Memory " + (lightboxIndex + 1);
 
     }
 
@@ -537,16 +491,14 @@ function updateLightbox() {
     if (counter) {
 
         counter.textContent =
-            `${lightboxIndex + 1} / ${galleryImages.length}`;
+            (lightboxIndex + 1) +
+            " / " +
+            galleryImages.length;
 
     }
 
 }
 
-
-/* =====================================================
-   CHANGE LIGHTBOX IMAGE
-===================================================== */
 
 function changeLightboxImage(direction) {
 
@@ -563,22 +515,14 @@ function changeLightboxImage(direction) {
 }
 
 
-/* =====================================================
-   CLOSE LIGHTBOX
-===================================================== */
-
 function closeLightbox() {
 
     const lightbox =
-        document.getElementById(
-            "galleryLightbox"
-        );
-
+        document.getElementById("galleryLightbox");
 
     if (!lightbox) {
         return;
     }
-
 
     lightbox.classList.remove("active");
 
@@ -587,68 +531,58 @@ function closeLightbox() {
         "true"
     );
 
-    document.body.style.overflow =
-        "";
+    document.body.style.overflow = "";
 
 }
 
 
 /* =====================================================
-   SURPRISE MODAL
+   SURPRISE / SECRET MESSAGE
 ===================================================== */
 
 function initializeSurprise() {
 
-    const surpriseBtn =
-        document.getElementById(
-            "surpriseBtn"
-        );
+    const button =
+        document.getElementById("surpriseBtn");
 
-    const surpriseModal =
-        document.getElementById(
-            "surpriseModal"
-        );
+    const modal =
+        document.getElementById("surpriseModal");
 
-    const surpriseClose =
-        document.getElementById(
-            "surpriseClose"
-        );
+    const close =
+        document.getElementById("surpriseClose");
 
-    const surpriseCelebrate =
-        document.getElementById(
-            "surpriseCelebrate"
-        );
+    const celebrate =
+        document.getElementById("surpriseCelebrate");
 
 
-    if (surpriseBtn && surpriseModal) {
-
-        surpriseBtn.addEventListener(
-            "click",
-            () => {
-
-                surpriseModal.classList.add(
-                    "active"
-                );
-
-                surpriseModal.setAttribute(
-                    "aria-hidden",
-                    "false"
-                );
-
-                document.body.style.overflow =
-                    "hidden";
-
-                createConfetti(80);
-
-            }
-        );
-
+    if (!button || !modal) {
+        console.error("Surprise elements NOT FOUND");
+        return;
     }
 
 
-    if (surpriseClose) {
+    console.log("Surprise initialized");
 
-        surpriseClose.addEventListener(
+
+    button.addEventListener("click", function () {
+
+        modal.classList.add("active");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow = "hidden";
+
+        createConfetti(80);
+
+    });
+
+
+    if (close) {
+
+        close.addEventListener(
             "click",
             closeSurprise
         );
@@ -656,68 +590,47 @@ function initializeSurprise() {
     }
 
 
-    if (surpriseCelebrate) {
+    if (celebrate) {
 
-        surpriseCelebrate.addEventListener(
-            "click",
-            () => {
+        celebrate.addEventListener("click", function () {
 
-                closeSurprise();
+            closeSurprise();
 
-                createConfetti(120);
+            createConfetti(120);
 
-            }
-        );
+        });
 
     }
 
 
-    if (surpriseModal) {
+    modal.addEventListener("click", function (e) {
 
-        surpriseModal.addEventListener(
-            "click",
-            (e) => {
+        if (e.target === modal) {
+            closeSurprise();
+        }
 
-                if (e.target === surpriseModal) {
-                    closeSurprise();
-                }
-
-            }
-        );
-
-    }
+    });
 
 }
 
 
-/* =====================================================
-   CLOSE SURPRISE
-===================================================== */
-
 function closeSurprise() {
 
     const modal =
-        document.getElementById(
-            "surpriseModal"
-        );
-
+        document.getElementById("surpriseModal");
 
     if (!modal) {
         return;
     }
 
-
-    modal.classList.remove(
-        "active"
-    );
+    modal.classList.remove("active");
 
     modal.setAttribute(
         "aria-hidden",
         "true"
     );
 
-    document.body.style.overflow =
-        "";
+    document.body.style.overflow = "";
 
 }
 
@@ -727,7 +640,6 @@ function closeSurprise() {
 ===================================================== */
 
 const puzzleImages = [
-
     "IMG-20240822-WA0003.jpg",
     "IMG-20240904-WA0003.jpg",
     "IMG_2647.jpg",
@@ -735,95 +647,60 @@ const puzzleImages = [
     "OLSB4991.JPG",
     "Snapchat-1779683539.jpg",
     "Snapchat-2018150645.jpg"
-
 ];
 
 
-let puzzleImage =
-    puzzleImages[0];
+let puzzleImage = puzzleImages[0];
+let puzzleSize = 4;
+let puzzleTiles = [];
+let emptyIndex = 0;
+let moves = 0;
+let timerSeconds = 0;
+let timerInterval = null;
+let puzzleStarted = false;
 
-let puzzleSize =
-    4;
-
-let puzzleTiles =
-    [];
-
-let emptyIndex =
-    0;
-
-let moves =
-    0;
-
-let timerSeconds =
-    0;
-
-let timerInterval =
-    null;
-
-let puzzleStarted =
-    false;
-
-
-/* =====================================================
-   INITIALIZE PUZZLE
-===================================================== */
 
 function initializePuzzle() {
 
-    const puzzleContainer =
-        document.getElementById(
-            "puzzleContainer"
-        );
+    const container =
+        document.getElementById("puzzleContainer");
 
     const difficulty =
-        document.getElementById(
-            "difficulty"
-        );
+        document.getElementById("difficulty");
 
-    const newGameBtn =
-        document.getElementById(
-            "newGameBtn"
-        );
+    const newGame =
+        document.getElementById("newGameBtn");
 
-    const showSolutionBtn =
-        document.getElementById(
-            "showSolutionBtn"
-        );
+    const solution =
+        document.getElementById("showSolutionBtn");
 
-    const playAgainBtn =
-        document.getElementById(
-            "playAgainBtn"
-        );
+    const playAgain =
+        document.getElementById("playAgainBtn");
 
     const completionClose =
-        document.getElementById(
-            "completionClose"
-        );
+        document.getElementById("completionClose");
 
 
-    if (!puzzleContainer) {
+    if (!container) {
+        console.error("Puzzle container NOT FOUND");
         return;
     }
+
+
+    console.log("Puzzle initialized");
 
 
     if (difficulty) {
 
         puzzleSize =
-            parseInt(
-                difficulty.value || "4",
-                10
-            );
-
+            parseInt(difficulty.value, 10) || 4;
 
         difficulty.addEventListener(
             "change",
-            () => {
+            function () {
 
                 puzzleSize =
-                    parseInt(
-                        difficulty.value || "4",
-                        10
-                    );
+                    parseInt(difficulty.value, 10) || 4;
 
                 startNewGame();
 
@@ -833,43 +710,35 @@ function initializePuzzle() {
     }
 
 
-    if (newGameBtn) {
-
-        newGameBtn.addEventListener(
+    if (newGame) {
+        newGame.addEventListener(
             "click",
             startNewGame
         );
-
     }
 
 
-    if (playAgainBtn) {
-
-        playAgainBtn.addEventListener(
+    if (playAgain) {
+        playAgain.addEventListener(
             "click",
             startNewGame
         );
-
     }
 
 
-    if (showSolutionBtn) {
-
-        showSolutionBtn.addEventListener(
+    if (solution) {
+        solution.addEventListener(
             "click",
             showSolution
         );
-
     }
 
 
     if (completionClose) {
-
         completionClose.addEventListener(
             "click",
             closeCompletion
         );
-
     }
 
 
@@ -878,20 +747,13 @@ function initializePuzzle() {
 }
 
 
-/* =====================================================
-   START NEW GAME
-===================================================== */
-
 function startNewGame() {
 
     stopPuzzleTimer();
 
     moves = 0;
-
     timerSeconds = 0;
-
     puzzleStarted = false;
-
 
     selectPuzzleImage();
 
@@ -902,33 +764,22 @@ function startNewGame() {
 }
 
 
-/* =====================================================
-   SELECT RANDOM IMAGE
-===================================================== */
-
 function selectPuzzleImage() {
 
     if (puzzleImages.length === 0) {
         return;
     }
 
-
     if (puzzleImages.length === 1) {
-
-        puzzleImage =
-            puzzleImages[0];
-
+        puzzleImage = puzzleImages[0];
         return;
-
     }
 
-
-    let newImage;
-
+    let selected;
 
     do {
 
-        newImage =
+        selected =
             puzzleImages[
                 Math.floor(
                     Math.random() *
@@ -937,29 +788,20 @@ function selectPuzzleImage() {
             ];
 
     } while (
-        newImage === puzzleImage
+        selected === puzzleImage
     );
 
-
-    puzzleImage =
-        newImage;
+    puzzleImage = selected;
 
 }
 
 
-/* =====================================================
-   CREATE PUZZLE
-===================================================== */
-
 function createPuzzle() {
 
-    const puzzleContainer =
-        document.getElementById(
-            "puzzleContainer"
-        );
+    const container =
+        document.getElementById("puzzleContainer");
 
-
-    if (!puzzleContainer) {
+    if (!container) {
         return;
     }
 
@@ -968,55 +810,35 @@ function createPuzzle() {
         puzzleSize * puzzleSize;
 
 
-    if (puzzleSize < 2) {
-
-        console.error(
-            "Puzzle size must be at least 2"
-        );
-
-        return;
-
-    }
-
-
     puzzleTiles =
         Array.from(
-            {
-                length: total
-            },
-            (_, index) => index
+            { length: total },
+            function (_, index) {
+                return index;
+            }
         );
 
 
-    puzzleTiles[total - 1] =
-        null;
+    puzzleTiles[total - 1] = null;
 
-
-    emptyIndex =
-        total - 1;
+    emptyIndex = total - 1;
 
 
     /*
-       Shuffle with legal moves.
+       Shuffle by making legal moves.
+       This guarantees the puzzle is solvable.
     */
 
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 250; i++) {
 
         const possibleMoves = [];
 
 
-        for (
-            let j = 0;
-            j < total;
-            j++
-        ) {
+        for (let j = 0; j < total; j++) {
 
             if (
                 puzzleTiles[j] !== null &&
-                isAdjacent(
-                    j,
-                    emptyIndex
-                )
+                isAdjacent(j, emptyIndex)
             ) {
 
                 possibleMoves.push(j);
@@ -1026,9 +848,7 @@ function createPuzzle() {
         }
 
 
-        if (
-            possibleMoves.length === 0
-        ) {
+        if (!possibleMoves.length) {
             break;
         }
 
@@ -1055,25 +875,18 @@ function createPuzzle() {
 
 
     /*
-       If somehow solved, make one legal move.
+       Make sure it isn't already solved.
     */
 
     if (isPuzzleSolved()) {
 
         const possibleMoves = [];
 
-        for (
-            let j = 0;
-            j < total;
-            j++
-        ) {
+        for (let j = 0; j < total; j++) {
 
             if (
                 puzzleTiles[j] !== null &&
-                isAdjacent(
-                    j,
-                    emptyIndex
-                )
+                isAdjacent(j, emptyIndex)
             ) {
 
                 possibleMoves.push(j);
@@ -1083,7 +896,7 @@ function createPuzzle() {
         }
 
 
-        if (possibleMoves.length > 0) {
+        if (possibleMoves.length) {
 
             const randomIndex =
                 possibleMoves[
@@ -1112,15 +925,12 @@ function createPuzzle() {
 
 
     const solutionImage =
-        document.getElementById(
-            "solutionImage"
-        );
-
+        document.getElementById("solutionImage");
 
     if (solutionImage) {
 
         solutionImage.src =
-            `./${puzzleImage}`;
+            "./" + puzzleImage;
 
         solutionImage.alt =
             "Puzzle solution";
@@ -1128,125 +938,111 @@ function createPuzzle() {
     }
 
 
-    const solutionPreview =
-        document.getElementById(
-            "solutionPreview"
-        );
+    const preview =
+        document.getElementById("solutionPreview");
 
-
-    if (solutionPreview) {
-
-        solutionPreview.style.display =
-            "none";
-
+    if (preview) {
+        preview.style.display = "none";
     }
 
 }
 
 
-/* =====================================================
-   RENDER PUZZLE
-===================================================== */
-
 function renderPuzzle() {
 
-    const puzzleContainer =
-        document.getElementById(
-            "puzzleContainer"
-        );
+    const container =
+        document.getElementById("puzzleContainer");
 
-
-    if (!puzzleContainer) {
+    if (!container) {
         return;
     }
 
 
-    puzzleContainer.innerHTML =
-        "";
+    container.innerHTML = "";
 
-
-    puzzleContainer.style.gridTemplateColumns =
-        `repeat(${puzzleSize}, 1fr)`;
+    container.style.gridTemplateColumns =
+        "repeat(" + puzzleSize + ", 1fr)";
 
 
     puzzleTiles.forEach(
-        (tileValue, index) => {
+        function (tileValue, index) {
 
             const tile =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
+            tile.type = "button";
 
-            tile.type =
-                "button";
-
-
-            tile.className =
-                "puzzle-tile";
+            tile.className = "puzzle-tile";
 
 
             if (tileValue === null) {
 
-                tile.classList.add(
-                    "empty"
-                );
+                tile.classList.add("empty");
 
             } else {
 
                 const row =
                     Math.floor(
-                        tileValue /
-                        puzzleSize
+                        tileValue / puzzleSize
                     );
 
-
                 const col =
-                    tileValue %
-                    puzzleSize;
+                    tileValue % puzzleSize;
 
+
+                /*
+                   IMPORTANT:
+                   Images are in the repository root.
+                */
 
                 tile.style.backgroundImage =
-                    `url("./${puzzleImage}")`;
-
+                    'url("./' + puzzleImage + '")';
 
                 tile.style.backgroundRepeat =
                     "no-repeat";
 
-
                 tile.style.backgroundSize =
-                    `${puzzleSize * 100}% ${puzzleSize * 100}%`;
+                    (puzzleSize * 100) +
+                    "% " +
+                    (puzzleSize * 100) +
+                    "%";
 
 
                 if (puzzleSize > 1) {
 
                     tile.style.backgroundPosition =
-                        `${(col * 100) / (puzzleSize - 1)}% ${(row * 100) / (puzzleSize - 1)}%`;
+                        (
+                            (col * 100) /
+                            (puzzleSize - 1)
+                        ) +
+                        "% " +
+                        (
+                            (row * 100) /
+                            (puzzleSize - 1)
+                        ) +
+                        "%";
 
                 }
 
 
                 tile.setAttribute(
                     "aria-label",
-                    `Puzzle piece ${tileValue + 1}`
+                    "Puzzle piece " +
+                    (tileValue + 1)
                 );
 
 
                 tile.addEventListener(
                     "click",
-                    () => {
-
+                    function () {
                         movePuzzleTile(index);
-
                     }
                 );
 
             }
 
 
-            puzzleContainer.appendChild(
-                tile
-            );
+            container.appendChild(tile);
 
         }
     );
@@ -1254,21 +1050,10 @@ function renderPuzzle() {
 }
 
 
-/* =====================================================
-   MOVE PUZZLE TILE
-===================================================== */
-
 function movePuzzleTile(index) {
 
-    if (
-        !isAdjacent(
-            index,
-            emptyIndex
-        )
-    ) {
-
+    if (!isAdjacent(index, emptyIndex)) {
         return;
-
     }
 
 
@@ -1284,17 +1069,13 @@ function movePuzzleTile(index) {
     puzzleTiles[emptyIndex] =
         puzzleTiles[index];
 
-
     puzzleTiles[index] =
         null;
-
 
     emptyIndex =
         index;
 
-
     moves++;
-
 
     updatePuzzleStats();
 
@@ -1312,37 +1093,19 @@ function movePuzzleTile(index) {
 }
 
 
-/* =====================================================
-   CHECK ADJACENT
-===================================================== */
-
-function isAdjacent(
-    index1,
-    index2
-) {
+function isAdjacent(index1, index2) {
 
     const row1 =
-        Math.floor(
-            index1 /
-            puzzleSize
-        );
-
+        Math.floor(index1 / puzzleSize);
 
     const col1 =
-        index1 %
-        puzzleSize;
-
+        index1 % puzzleSize;
 
     const row2 =
-        Math.floor(
-            index2 /
-            puzzleSize
-        );
-
+        Math.floor(index2 / puzzleSize);
 
     const col2 =
-        index2 %
-        puzzleSize;
+        index2 % puzzleSize;
 
 
     return (
@@ -1353,60 +1116,38 @@ function isAdjacent(
 }
 
 
-/* =====================================================
-   CHECK SOLVED
-===================================================== */
-
 function isPuzzleSolved() {
 
     const last =
         puzzleTiles.length - 1;
 
 
-    for (
-        let i = 0;
-        i < last;
-        i++
-    ) {
+    for (let i = 0; i < last; i++) {
 
-        if (
-            puzzleTiles[i] !== i
-        ) {
-
+        if (puzzleTiles[i] !== i) {
             return false;
-
         }
 
     }
 
 
-    return (
-        puzzleTiles[last] === null
-    );
+    return puzzleTiles[last] === null;
 
 }
 
-
-/* =====================================================
-   PUZZLE TIMER
-===================================================== */
 
 function startPuzzleTimer() {
 
     stopPuzzleTimer();
 
-
     timerInterval =
-        setInterval(
-            () => {
+        setInterval(function () {
 
-                timerSeconds++;
+            timerSeconds++;
 
-                updatePuzzleStats();
+            updatePuzzleStats();
 
-            },
-            1000
-        );
+        }, 1000);
 
 }
 
@@ -1415,153 +1156,100 @@ function stopPuzzleTimer() {
 
     if (timerInterval !== null) {
 
-        clearInterval(
-            timerInterval
-        );
+        clearInterval(timerInterval);
 
-        timerInterval =
-            null;
+        timerInterval = null;
 
     }
 
 }
 
 
-/* =====================================================
-   UPDATE PUZZLE STATS
-===================================================== */
-
 function updatePuzzleStats() {
 
     const timer =
-        document.getElementById(
-            "timer"
-        );
+        document.getElementById("timer");
 
     const movesDisplay =
-        document.getElementById(
-            "moves"
-        );
+        document.getElementById("moves");
 
 
     if (movesDisplay) {
-
-        movesDisplay.textContent =
-            moves;
-
+        movesDisplay.textContent = moves;
     }
 
 
     if (timer) {
 
         const minutes =
-            Math.floor(
-                timerSeconds / 60
-            );
-
+            Math.floor(timerSeconds / 60);
 
         const seconds =
             timerSeconds % 60;
 
 
         timer.textContent =
-            `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
 
     }
 
 }
 
 
-/* =====================================================
-   SHOW SOLUTION
-===================================================== */
-
 function showSolution() {
 
-    const solutionPreview =
-        document.getElementById(
-            "solutionPreview"
-        );
+    const preview =
+        document.getElementById("solutionPreview");
 
-
-    if (!solutionPreview) {
+    if (!preview) {
         return;
     }
 
 
-    if (
-        solutionPreview.style.display ===
-        "block"
-    ) {
-
-        solutionPreview.style.display =
-            "none";
-
+    if (preview.style.display === "block") {
+        preview.style.display = "none";
     } else {
-
-        solutionPreview.style.display =
-            "block";
-
+        preview.style.display = "block";
     }
 
 }
 
-
-/* =====================================================
-   PUZZLE COMPLETION
-===================================================== */
 
 function showPuzzleCompletion() {
 
     createConfetti(100);
 
+    const modal =
+        document.getElementById("completionModal");
 
-    const completionModal =
-        document.getElementById(
-            "completionModal"
-        );
-
-
-    if (completionModal) {
-
-        completionModal.classList.add(
-            "active"
-        );
-
-
-        completionModal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
+    if (!modal) {
+        return;
     }
+
+    modal.classList.add("active");
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
 
 }
 
 
-/* =====================================================
-   CLOSE COMPLETION
-===================================================== */
-
 function closeCompletion() {
 
-    const completionModal =
-        document.getElementById(
-            "completionModal"
-        );
+    const modal =
+        document.getElementById("completionModal");
 
-
-    if (!completionModal) {
+    if (!modal) {
         return;
     }
 
+    modal.classList.remove("active");
 
-    completionModal.classList.remove(
-        "active"
-    );
-
-
-    completionModal.setAttribute(
+    modal.setAttribute(
         "aria-hidden",
         "true"
     );
@@ -1570,7 +1258,7 @@ function closeCompletion() {
 
 
 /* =====================================================
-   BIRTHDAY JOURNAL
+   JOURNAL
 ===================================================== */
 
 const journalQuestions = [
@@ -1602,62 +1290,43 @@ const journalQuestions = [
 ];
 
 
-let currentQuestionIndex =
-    0;
+let currentQuestionIndex = 0;
+let journalAnswers = [];
 
-let journalAnswers =
-    [];
-
-
-/* =====================================================
-   INITIALIZE JOURNAL
-===================================================== */
 
 function initializeJournal() {
 
-    const nextQuestionBtn =
-        document.getElementById(
-            "nextQuestionBtn"
-        );
+    const nextButton =
+        document.getElementById("nextQuestionBtn");
 
-    const addAnswerBtn =
-        document.getElementById(
-            "addAnswerBtn"
-        );
+    const addButton =
+        document.getElementById("addAnswerBtn");
 
-    const sendJournalBtn =
-        document.getElementById(
-            "sendJournalBtn"
-        );
+    const sendButton =
+        document.getElementById("sendJournalBtn");
 
 
-    if (
-        !nextQuestionBtn ||
-        !addAnswerBtn ||
-        !sendJournalBtn
-    ) {
-
+    if (!nextButton || !addButton || !sendButton) {
         return;
-
     }
 
 
-    showRandomQuestion();
+    showInitialQuestion();
 
 
-    nextQuestionBtn.addEventListener(
+    nextButton.addEventListener(
         "click",
         showRandomQuestion
     );
 
 
-    addAnswerBtn.addEventListener(
+    addButton.addEventListener(
         "click",
         addCurrentAnswer
     );
 
 
-    sendJournalBtn.addEventListener(
+    sendButton.addEventListener(
         "click",
         sendJournalAnswers
     );
@@ -1665,9 +1334,33 @@ function initializeJournal() {
 }
 
 
-/* =====================================================
-   RANDOM QUESTION
-===================================================== */
+function showInitialQuestion() {
+
+    const questionText =
+        document.getElementById("questionText");
+
+    const questionNumber =
+        document.getElementById("questionNumber");
+
+
+    if (questionText) {
+
+        questionText.textContent =
+            journalQuestions[currentQuestionIndex];
+
+    }
+
+
+    if (questionNumber) {
+
+        questionNumber.textContent =
+            "Question " +
+            (currentQuestionIndex + 1);
+
+    }
+
+}
+
 
 function showRandomQuestion() {
 
@@ -1693,27 +1386,19 @@ function showRandomQuestion() {
 
 
     const questionText =
-        document.getElementById(
-            "questionText"
-        );
+        document.getElementById("questionText");
 
     const questionNumber =
-        document.getElementById(
-            "questionNumber"
-        );
+        document.getElementById("questionNumber");
 
     const answerBox =
-        document.getElementById(
-            "questionAnswer"
-        );
+        document.getElementById("questionAnswer");
 
 
     if (questionText) {
 
         questionText.textContent =
-            journalQuestions[
-                currentQuestionIndex
-            ];
+            journalQuestions[currentQuestionIndex];
 
     }
 
@@ -1721,15 +1406,15 @@ function showRandomQuestion() {
     if (questionNumber) {
 
         questionNumber.textContent =
-            `Question ${currentQuestionIndex + 1}`;
+            "Question " +
+            (currentQuestionIndex + 1);
 
     }
 
 
     if (answerBox) {
 
-        answerBox.value =
-            "";
+        answerBox.value = "";
 
         answerBox.focus();
 
@@ -1739,20 +1424,16 @@ function showRandomQuestion() {
 
 
 /* =====================================================
-   ADD CURRENT ANSWER
+   ADD ANSWER + EMAIL
 ===================================================== */
 
 async function addCurrentAnswer() {
 
     const answerBox =
-        document.getElementById(
-            "questionAnswer"
-        );
+        document.getElementById("questionAnswer");
 
-    const addButton =
-        document.getElementById(
-            "addAnswerBtn"
-        );
+    const button =
+        document.getElementById("addAnswerBtn");
 
 
     if (!answerBox) {
@@ -1779,26 +1460,17 @@ async function addCurrentAnswer() {
 
 
     const question =
-        journalQuestions[
-            currentQuestionIndex
-        ];
+        journalQuestions[currentQuestionIndex];
 
 
-    if (addButton) {
+    if (button) {
 
-        addButton.disabled =
-            true;
+        button.disabled = true;
 
-        addButton.textContent =
+        button.textContent =
             "📨 Sending...";
 
     }
-
-
-    showJournalStatus(
-        "📨 Sending your answer...",
-        "success"
-    );
 
 
     const sent =
@@ -1811,21 +1483,14 @@ async function addCurrentAnswer() {
     if (sent) {
 
         journalAnswers.push({
-
-            question:
-                question,
-
-            answer:
-                answer
-
+            question: question,
+            answer: answer
         });
 
 
         renderJournalAnswers();
 
-
-        answerBox.value =
-            "";
+        answerBox.value = "";
 
 
         showJournalStatus(
@@ -1835,7 +1500,6 @@ async function addCurrentAnswer() {
 
 
         createConfetti(20);
-
 
         showRandomQuestion();
 
@@ -1849,12 +1513,11 @@ async function addCurrentAnswer() {
     }
 
 
-    if (addButton) {
+    if (button) {
 
-        addButton.disabled =
-            false;
+        button.disabled = false;
 
-        addButton.textContent =
+        button.textContent =
             "➕ Add This Answer";
 
     }
@@ -1862,49 +1525,31 @@ async function addCurrentAnswer() {
 }
 
 
-/* =====================================================
-   RENDER JOURNAL ANSWERS
-===================================================== */
-
 function renderJournalAnswers() {
 
-    const answerList =
-        document.getElementById(
-            "answerList"
-        );
+    const list =
+        document.getElementById("answerList");
 
-
-    if (!answerList) {
+    if (!list) {
         return;
     }
 
 
-    answerList.innerHTML =
-        "";
+    list.innerHTML = "";
 
 
-    if (
-        journalAnswers.length === 0
-    ) {
+    if (journalAnswers.length === 0) {
 
         const empty =
-            document.createElement(
-                "p"
-            );
-
+            document.createElement("p");
 
         empty.className =
             "empty-answer";
 
-
         empty.textContent =
             "Your answers will appear here...";
 
-
-        answerList.appendChild(
-            empty
-        );
-
+        list.appendChild(empty);
 
         return;
 
@@ -1912,72 +1557,52 @@ function renderJournalAnswers() {
 
 
     journalAnswers.forEach(
-        (item, index) => {
+        function (item, index) {
 
             const card =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             card.className =
                 "answer-card";
 
 
             const question =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             question.className =
                 "answer-question";
-
 
             question.textContent =
                 item.question;
 
 
             const answer =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             answer.className =
                 "answer-value";
-
 
             answer.textContent =
                 item.answer;
 
 
-            const removeButton =
-                document.createElement(
-                    "button"
-                );
+            const remove =
+                document.createElement("button");
 
+            remove.type = "button";
 
-            removeButton.type =
-                "button";
-
-
-            removeButton.className =
+            remove.className =
                 "remove-answer";
 
-
-            removeButton.textContent =
+            remove.textContent =
                 "✕ Remove";
 
 
-            removeButton.addEventListener(
+            remove.addEventListener(
                 "click",
-                () => {
+                function () {
 
-                    journalAnswers.splice(
-                        index,
-                        1
-                    );
+                    journalAnswers.splice(index, 1);
 
                     renderJournalAnswers();
 
@@ -1985,22 +1610,11 @@ function renderJournalAnswers() {
             );
 
 
-            card.appendChild(
-                question
-            );
+            card.appendChild(question);
+            card.appendChild(answer);
+            card.appendChild(remove);
 
-            card.appendChild(
-                answer
-            );
-
-            card.appendChild(
-                removeButton
-            );
-
-
-            answerList.appendChild(
-                card
-            );
+            list.appendChild(card);
 
         }
     );
@@ -2009,7 +1623,7 @@ function renderJournalAnswers() {
 
 
 /* =====================================================
-   SEND SINGLE ANSWER
+   FORM SUBMIT
 ===================================================== */
 
 async function sendSingleJournalAnswer(
@@ -2030,24 +1644,20 @@ async function sendSingleJournalAnswer(
         "💖 BUJJI Birthday Journal - New Answer"
     );
 
-
     formData.append(
         "_captcha",
         "false"
     );
-
 
     formData.append(
         "_template",
         "table"
     );
 
-
     formData.append(
         "Question",
         question
     );
-
 
     formData.append(
         "Answer",
@@ -2059,36 +1669,24 @@ async function sendSingleJournalAnswer(
 
         const response =
             await fetch(
-                `https://formsubmit.co/ajax/${receiverEmail}`,
+                "https://formsubmit.co/ajax/" +
+                receiverEmail,
                 {
                     method: "POST",
-
                     body: formData,
-
                     headers: {
-                        "Accept":
-                            "application/json"
+                        "Accept": "application/json"
                     }
-
                 }
             );
 
 
-        if (!response.ok) {
-
-            throw new Error(
-                "Email sending failed"
-            );
-
-        }
-
-
-        return true;
+        return response.ok;
 
     } catch (error) {
 
         console.error(
-            "Email sending error:",
+            "Email error:",
             error
         );
 
@@ -2099,29 +1697,22 @@ async function sendSingleJournalAnswer(
 }
 
 
-/* =====================================================
-   SEND COMPLETE JOURNAL
-===================================================== */
-
 async function sendJournalAnswers() {
 
-    const sendButton =
-        document.getElementById(
-            "sendJournalBtn"
-        );
+    const button =
+        document.getElementById("sendJournalBtn");
 
-    const journalMessage =
-        document.getElementById(
-            "journalMessage"
-        );
+    const messageBox =
+        document.getElementById("journalMessage");
+
 
     const receiverEmail =
         "rakeshnanikengam1922@gmail.com";
 
 
     const personalMessage =
-        journalMessage
-            ? journalMessage.value.trim()
+        messageBox
+            ? messageBox.value.trim()
             : "";
 
 
@@ -2140,21 +1731,14 @@ async function sendJournalAnswers() {
     }
 
 
-    if (sendButton) {
+    if (button) {
 
-        sendButton.disabled =
-            true;
+        button.disabled = true;
 
-        sendButton.textContent =
+        button.textContent =
             "📨 Sending...";
 
     }
-
-
-    showJournalStatus(
-        "📨 Sending your journal...",
-        "success"
-    );
 
 
     const formData =
@@ -2166,12 +1750,10 @@ async function sendJournalAnswers() {
         "🎂 BUJJI Birthday Journal - Complete Journal"
     );
 
-
     formData.append(
         "_captcha",
         "false"
     );
-
 
     formData.append(
         "_template",
@@ -2180,15 +1762,15 @@ async function sendJournalAnswers() {
 
 
     journalAnswers.forEach(
-        (item, index) => {
+        function (item, index) {
 
             formData.append(
-                `Question ${index + 1}`,
+                "Question " + (index + 1),
                 item.question
             );
 
             formData.append(
-                `Answer ${index + 1}`,
+                "Answer " + (index + 1),
                 item.answer
             );
 
@@ -2210,27 +1792,20 @@ async function sendJournalAnswers() {
 
         const response =
             await fetch(
-                `https://formsubmit.co/ajax/${receiverEmail}`,
+                "https://formsubmit.co/ajax/" +
+                receiverEmail,
                 {
                     method: "POST",
-
                     body: formData,
-
                     headers: {
-                        "Accept":
-                            "application/json"
+                        "Accept": "application/json"
                     }
-
                 }
             );
 
 
         if (!response.ok) {
-
-            throw new Error(
-                "Journal sending failed"
-            );
-
+            throw new Error("Sending failed");
         }
 
 
@@ -2239,17 +1814,15 @@ async function sendJournalAnswers() {
             "success"
         );
 
-
         createConfetti(50);
 
 
     } catch (error) {
 
         console.error(
-            "Journal send error:",
+            "Journal error:",
             error
         );
-
 
         showJournalStatus(
             "⚠️ Unable to send journal. Please try again.",
@@ -2259,12 +1832,11 @@ async function sendJournalAnswers() {
     }
 
 
-    if (sendButton) {
+    if (button) {
 
-        sendButton.disabled =
-            false;
+        button.disabled = false;
 
-        sendButton.textContent =
+        button.textContent =
             "💌 Send My Answers";
 
     }
@@ -2272,32 +1844,23 @@ async function sendJournalAnswers() {
 }
 
 
-/* =====================================================
-   JOURNAL STATUS
-===================================================== */
-
 function showJournalStatus(
     message,
-    type = "success"
+    type
 ) {
 
     const status =
-        document.getElementById(
-            "journalStatus"
-        );
-
+        document.getElementById("journalStatus");
 
     if (!status) {
         return;
     }
 
 
-    status.textContent =
-        message;
-
+    status.textContent = message;
 
     status.className =
-        `journal-status ${type}`;
+        "journal-status " + type;
 
 
     clearTimeout(
@@ -2306,17 +1869,13 @@ function showJournalStatus(
 
 
     showJournalStatus.timer =
-        setTimeout(
-            () => {
+        setTimeout(function () {
 
-                status.textContent =
-                    "";
+            status.textContent = "";
 
-                status.className =
-                    "journal-status";
+            status.className =
+                "journal-status";
 
-            },
-            5000
-        );
+        }, 5000);
 
 }
