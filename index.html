@@ -1,2099 +1,993 @@
-document.addEventListener("DOMContentLoaded", () => {
+<!DOCTYPE html>
+<html lang="en">
 
-    initializeNavigation();
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    initializeCelebration();
+    <title>🎉 Happy Birthday BUJJI 🎂</title>
 
-    initializeGallery();
+    <link rel="stylesheet" href="style.css">
 
-    initializePuzzle();
+    <link rel="icon" type="image/jpeg" href="IMG-20240822-WA0003.jpg">
 
-    initializeFullscreenGallery();
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    initializeSurprise();
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
 
-    initializeJournal();
+<body>
 
-});
+    <!-- BACKGROUND -->
+    <div class="background-effects">
+        <div class="particles"></div>
 
+        <div class="balloons">
+            <span>🎈</span>
+            <span>🎈</span>
+            <span>🎈</span>
+            <span>🎈</span>
+            <span>🎈</span>
+        </div>
+    </div>
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
 
-function initializeNavigation() {
+    <!-- NAVBAR -->
+    <nav class="navbar">
 
-    const menuToggle =
-        document.getElementById("menuToggle");
+        <div class="nav-logo">
+            🎂 BUJJI
+        </div>
 
-    const navLinks =
-        document.getElementById("navLinks");
+        <div class="nav-links" id="navLinks">
 
-    if (!menuToggle || !navLinks) return;
+            <a href="#home">🏠 Home</a>
 
+            <a href="#gallery">📸 Gallery</a>
 
-    menuToggle.addEventListener("click", () => {
+            <a href="#message">💌 Message</a>
 
-        navLinks.classList.toggle("active");
+            <a href="#game">🎮 Game</a>
 
-    });
+            <a href="#journal">📖 Journal</a>
 
+        </div>
 
-    navLinks.querySelectorAll("a").forEach(link => {
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+        >
+            ☰
+        </button>
 
-        link.addEventListener("click", () => {
+    </nav>
 
-            navLinks.classList.remove("active");
 
-        });
+    <main>
 
-    });
+        <!-- =========================
+             HERO
+        ========================== -->
 
-}
+        <section
+            id="home"
+            class="hero-section"
+        >
 
+            <div class="hero-content">
 
-/* =====================================================
-   CELEBRATION
-===================================================== */
+                <div class="birthday-badge">
+                    🎉 SPECIAL DAY 🎉
+                </div>
 
-function initializeCelebration() {
+                <h1 class="hero-title">
+                    Happy Birthday <span>BUJJI</span> 🎂
+                </h1>
 
-    const celebrateBtn =
-        document.getElementById("celebrateBtn");
+                <p class="hero-subtitle">
+                    Wishing you a day filled with happiness,
+                    smiles and beautiful memories ✨
+                </p>
 
-    if (!celebrateBtn) return;
 
+                <!-- CAKE -->
 
-    celebrateBtn.addEventListener("click", () => {
+                <div class="birthday-cake">
 
-        createConfetti(80);
+                    <div class="cake-glow"></div>
 
+                    <div
+                        class="cake-emoji"
+                        id="cakeEmoji"
+                    >
+                        🎂
+                    </div>
 
-        const cake =
-            document.getElementById("cakeEmoji");
+                    <div
+                        class="candles"
+                        id="cakeCandles"
+                    >
+                        <span>🕯️</span>
+                        <span>🕯️</span>
+                        <span>🕯️</span>
+                    </div>
 
+                </div>
 
-        if (cake) {
 
-            cake.animate(
-                [
-                    {
-                        transform: "scale(1)"
-                    },
+                <div class="hero-buttons">
 
-                    {
-                        transform:
-                            "scale(1.3) rotate(-8deg)"
-                    },
+                    <button
+                        class="celebrate-button"
+                        id="celebrateBtn"
+                        type="button"
+                    >
+                        🎉 Celebrate
+                    </button>
 
-                    {
-                        transform:
-                            "scale(1.15) rotate(8deg)"
-                    },
+                    <button
+                        class="surprise-button"
+                        id="surpriseBtn"
+                        type="button"
+                    >
+                        🎁 Open Your Surprise
+                    </button>
 
-                    {
-                        transform: "scale(1)"
-                    }
-                ],
-                {
-                    duration: 900,
-                    easing: "ease-out"
-                }
-            );
+                </div>
 
-        }
 
-    });
+                <div class="scroll-hint">
+                    <span>↓</span>
+                    Explore the memories
+                    <span>↓</span>
+                </div>
 
-}
+            </div>
 
+        </section>
 
-/* =====================================================
-   CONFETTI
-===================================================== */
 
-function createConfetti(amount = 60) {
+        <!-- =========================
+             GALLERY
+        ========================== -->
 
-    const emojis = [
-        "🎉",
-        "✨",
-        "🎊",
-        "💖",
-        "⭐",
-        "🌸",
-        "🥳"
-    ];
+        <section
+            id="gallery"
+            class="section gallery-section"
+        >
 
+            <div class="section-heading">
 
-    for (let i = 0; i < amount; i++) {
+                <span class="section-icon">
+                    📸
+                </span>
 
-        const item =
-            document.createElement("div");
+                <h2>
+                    Beautiful Memories
+                </h2>
 
+                <p>
+                    Some special moments to remember forever ✨
+                </p>
 
-        item.className =
-            "confetti-piece";
+            </div>
 
 
-        item.textContent =
-            emojis[
-                Math.floor(
-                    Math.random() *
-                    emojis.length
-                )
-            ];
-
-
-        item.style.left =
-            Math.random() * 100 + "vw";
-
-
-        item.style.animationDelay =
-            Math.random() * 1.5 + "s";
-
-
-        item.style.fontSize =
-            14 +
-            Math.random() * 16 +
-            "px";
-
-
-        document.body.appendChild(item);
-
-
-        setTimeout(() => {
-
-            item.remove();
-
-        }, 4500);
-
-    }
-
-}
-
-
-/* =====================================================
-   GALLERY
-===================================================== */
-
-const galleryImages = [
-
-    "IMG-20240822-WA0003.jpg",
-
-    "IMG-20240904-WA0003.jpg",
-
-    "IMG_2647.jpg",
-
-    "NPTL3186.JPG",
-
-    "OLSB4991.JPG",
-
-    "Snapchat-1779683539.jpg",
-
-    "Snapchat-2018150645.jpg"
-
-];
-
-
-const galleryCaptions = [
-
-    "A beautiful birthday memory ✨",
-
-    "A special moment to remember 💖",
-
-    "Sweet memories 🥰",
-
-    "A precious moment 🌸",
-
-    "An amazing memory 💫",
-
-    "A fun memory 📸",
-
-    "A memory to keep forever ❤️"
-
-];
-
-
-function initializeGallery() {
-
-    const gridBtn =
-        document.getElementById("gridViewBtn");
-
-    const slideshowBtn =
-        document.getElementById("slideshowViewBtn");
-
-    const grid =
-        document.getElementById("galleryGrid");
-
-    const slideshow =
-        document.getElementById("gallerySlideshow");
-
-
-    if (
-        !gridBtn ||
-        !slideshowBtn ||
-        !grid ||
-        !slideshow
-    ) {
-        return;
-    }
-
-
-    gridBtn.addEventListener("click", () => {
-
-        grid.style.display = "grid";
-
-        slideshow.style.display = "none";
-
-        gridBtn.classList.add("active");
-
-        slideshowBtn.classList.remove("active");
-
-    });
-
-
-    slideshowBtn.addEventListener("click", () => {
-
-        grid.style.display = "none";
-
-        slideshow.style.display = "block";
-
-        slideshowBtn.classList.add("active");
-
-        gridBtn.classList.remove("active");
-
-    });
-
-
-    initializeSlideshow();
-
-}
-
-
-let currentSlide = 0;
-
-
-function initializeSlideshow() {
-
-    const slides =
-        document.querySelectorAll(".slide");
-
-    const indicators =
-        document.querySelectorAll(".indicator");
-
-    const prev =
-        document.getElementById("prevSlide");
-
-    const next =
-        document.getElementById("nextSlide");
-
-
-    if (!slides.length) return;
-
-
-    function showSlide(index) {
-
-        currentSlide =
-            (index + slides.length) %
-            slides.length;
-
-
-        slides.forEach((slide, i) => {
-
-            slide.classList.toggle(
-                "active",
-                i === currentSlide
-            );
-
-        });
-
-
-        indicators.forEach((indicator, i) => {
-
-            indicator.classList.toggle(
-                "active",
-                i === currentSlide
-            );
-
-        });
-
-    }
-
-
-    if (prev) {
-
-        prev.addEventListener("click", () => {
-
-            showSlide(currentSlide - 1);
-
-        });
-
-    }
-
-
-    if (next) {
-
-        next.addEventListener("click", () => {
-
-            showSlide(currentSlide + 1);
-
-        });
-
-    }
-
-
-    indicators.forEach((indicator, index) => {
-
-        indicator.addEventListener("click", () => {
-
-            showSlide(index);
-
-        });
-
-    });
-
-}
-
-
-/* =====================================================
-   FULLSCREEN GALLERY
-===================================================== */
-
-let lightboxIndex = 0;
-
-
-function initializeFullscreenGallery() {
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-    const lightboxClose =
-        document.getElementById("lightboxClose");
-
-    const lightboxNext =
-        document.getElementById("lightboxNext");
-
-    const lightboxPrev =
-        document.getElementById("lightboxPrev");
-
-
-    if (!lightbox) return;
-
-
-    const images =
-        document.querySelectorAll(
-            ".gallery-item img, .slide img"
-        );
-
-
-    images.forEach((image, index) => {
-
-        image.addEventListener("click", () => {
-
-            let realIndex =
-                galleryImages.indexOf(
-                    image.getAttribute("src")
-                );
-
-
-            if (realIndex === -1) {
-
-                realIndex =
-                    index %
-                    galleryImages.length;
-
-            }
-
-
-            openLightbox(realIndex);
-
-        });
-
-    });
-
-
-    if (lightboxClose) {
-
-        lightboxClose.addEventListener(
-            "click",
-            closeLightbox
-        );
-
-    }
-
-
-    if (lightboxNext) {
-
-        lightboxNext.addEventListener("click", () => {
-
-            changeLightboxImage(1);
-
-        });
-
-    }
-
-
-    if (lightboxPrev) {
-
-        lightboxPrev.addEventListener("click", () => {
-
-            changeLightboxImage(-1);
-
-        });
-
-    }
-
-
-    lightbox.addEventListener("click", event => {
-
-        if (event.target === lightbox) {
-
-            closeLightbox();
-
-        }
-
-    });
-
-
-    document.addEventListener("keydown", event => {
-
-        if (
-            !lightbox.classList.contains("active")
-        ) {
-            return;
-        }
-
-
-        if (event.key === "Escape") {
-
-            closeLightbox();
-
-        }
-
-
-        if (event.key === "ArrowRight") {
-
-            changeLightboxImage(1);
-
-        }
-
-
-        if (event.key === "ArrowLeft") {
-
-            changeLightboxImage(-1);
-
-        }
-
-    });
-
-}
-
-
-function openLightbox(index) {
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-
-    if (!lightbox) return;
-
-
-    lightboxIndex = index;
-
-    updateLightbox();
-
-    lightbox.classList.add("active");
-
-    lightbox.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-function updateLightbox() {
-
-    const image =
-        document.getElementById("lightboxImage");
-
-    const caption =
-        document.getElementById("lightboxCaption");
-
-    const counter =
-        document.getElementById("lightboxCounter");
-
-
-    if (!image) return;
-
-
-    image.src =
-        galleryImages[lightboxIndex];
-
-
-    caption.textContent =
-        galleryCaptions[lightboxIndex];
-
-
-    counter.textContent =
-        `${lightboxIndex + 1} / ${galleryImages.length}`;
-
-}
-
-
-function changeLightboxImage(direction) {
-
-    lightboxIndex =
-        (
-            lightboxIndex +
-            direction +
-            galleryImages.length
-        ) %
-        galleryImages.length;
-
-
-    updateLightbox();
-
-}
-
-
-function closeLightbox() {
-
-    const lightbox =
-        document.getElementById("galleryLightbox");
-
-
-    if (!lightbox) return;
-
-
-    lightbox.classList.remove("active");
-
-    lightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* =====================================================
-   SURPRISE
-===================================================== */
-
-function initializeSurprise() {
-
-    const surpriseBtn =
-        document.getElementById("surpriseBtn");
-
-    const surpriseModal =
-        document.getElementById("surpriseModal");
-
-    const surpriseClose =
-        document.getElementById("surpriseClose");
-
-    const surpriseCelebrate =
-        document.getElementById("surpriseCelebrate");
-
-
-    if (!surpriseBtn || !surpriseModal) {
-        return;
-    }
-
-
-    surpriseBtn.addEventListener("click", () => {
-
-        surpriseModal.classList.add("active");
-
-        surpriseModal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow =
-            "hidden";
-
-        createConfetti(45);
-
-    });
-
-
-    if (surpriseClose) {
-
-        surpriseClose.addEventListener(
-            "click",
-            closeSurprise
-        );
-
-    }
-
-
-    if (surpriseCelebrate) {
-
-        surpriseCelebrate.addEventListener(
-            "click",
-            () => {
-
-                createConfetti(100);
-
-                setTimeout(() => {
-
-                    closeSurprise();
-
-                }, 500);
-
-            }
-        );
-
-    }
-
-
-    surpriseModal.addEventListener(
-        "click",
-        event => {
-
-            if (
-                event.target ===
-                surpriseModal
-            ) {
-
-                closeSurprise();
-
-            }
-
-        }
-    );
-
-
-    document.addEventListener("keydown", event => {
-
-        if (
-            event.key === "Escape" &&
-            surpriseModal.classList.contains("active")
-        ) {
-
-            closeSurprise();
-
-        }
-
-    });
-
-}
-
-
-function closeSurprise() {
-
-    const surpriseModal =
-        document.getElementById("surpriseModal");
-
-
-    if (!surpriseModal) return;
-
-
-    surpriseModal.classList.remove("active");
-
-    surpriseModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* =====================================================
-   PUZZLE
-===================================================== */
-
-const puzzleImages = [
-
-    "IMG-20240822-WA0003.jpg",
-
-    "IMG-20240904-WA0003.jpg",
-
-    "IMG_2647.jpg",
-
-    "NPTL3186.JPG",
-
-    "OLSB4991.JPG",
-
-    "Snapchat-1779683539.jpg",
-
-    "Snapchat-2018150645.jpg"
-
-];
-
-
-let puzzleImage =
-    puzzleImages[0];
-
-let puzzleSize = 4;
-
-let puzzleTiles = [];
-
-let emptyIndex = 0;
-
-let moves = 0;
-
-let timerSeconds = 0;
-
-let timerInterval = null;
-
-let puzzleStarted = false;
-
-
-function initializePuzzle() {
-
-    const difficulty =
-        document.getElementById("difficulty");
-
-    const newGameBtn =
-        document.getElementById("newGameBtn");
-
-    const showSolutionBtn =
-        document.getElementById("showSolutionBtn");
-
-    const playAgainBtn =
-        document.getElementById("playAgainBtn");
-
-    const completionClose =
-        document.getElementById("completionClose");
-
-
-    if (!difficulty) return;
-
-
-    difficulty.addEventListener("change", () => {
-
-        puzzleSize =
-            parseInt(
-                difficulty.value
-            );
-
-        startNewGame();
-
-    });
-
-
-    if (newGameBtn) {
-
-        newGameBtn.addEventListener(
-            "click",
-            startNewGame
-        );
-
-    }
-
-
-    if (showSolutionBtn) {
-
-        showSolutionBtn.addEventListener(
-            "click",
-            showSolution
-        );
-
-    }
-
-
-    if (playAgainBtn) {
-
-        playAgainBtn.addEventListener(
-            "click",
-            startNewGame
-        );
-
-    }
-
-
-    if (completionClose) {
-
-        completionClose.addEventListener(
-            "click",
-            closeCompletionModal
-        );
-
-    }
-
-
-    startNewGame();
-
-}
-
-
-function selectNewPuzzleImage() {
-
-    if (puzzleImages.length <= 1) {
-
-        puzzleImage =
-            puzzleImages[0];
-
-        return;
-
-    }
-
-
-    const oldImage =
-        puzzleImage;
-
-    let newImage;
-
-
-    do {
-
-        newImage =
-            puzzleImages[
-                Math.floor(
-                    Math.random() *
-                    puzzleImages.length
-                )
-            ];
-
-    } while (
-        newImage === oldImage
-    );
-
-
-    puzzleImage =
-        newImage;
-
-}
-
-
-function startNewGame() {
-
-    selectNewPuzzleImage();
-
-    stopTimer();
-
-    moves = 0;
-
-    timerSeconds = 0;
-
-    puzzleStarted = false;
-
-    updateMoves();
-
-    updateTimer();
-
-    hideSolution();
-
-    closeCompletionModal();
-
-
-    const solutionImage =
-        document.getElementById(
-            "solutionImage"
-        );
-
-
-    if (solutionImage) {
-
-        solutionImage.src =
-            puzzleImage;
-
-    }
-
-
-    createPuzzle();
-
-}
-
-
-function createPuzzle() {
-
-    const container =
-        document.getElementById(
-            "puzzleContainer"
-        );
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-    container.style.gridTemplateColumns =
-        `repeat(${puzzleSize}, 1fr)`;
-
-
-    puzzleTiles = [];
-
-
-    const totalTiles =
-        puzzleSize *
-        puzzleSize;
-
-
-    for (
-        let i = 0;
-        i < totalTiles;
-        i++
-    ) {
-
-        puzzleTiles.push(i);
-
-    }
-
-
-    emptyIndex =
-        totalTiles - 1;
-
-
-    shufflePuzzle();
-
-    renderPuzzle();
-
-}
-
-
-function shufflePuzzle() {
-
-    for (let i = 0; i < 200; i++) {
-
-        const neighbors =
-            getNeighbors(emptyIndex);
-
-
-        const randomNeighbor =
-            neighbors[
-                Math.floor(
-                    Math.random() *
-                    neighbors.length
-                )
-            ];
-
-
-        [
-            puzzleTiles[emptyIndex],
-            puzzleTiles[randomNeighbor]
-        ] = [
-            puzzleTiles[randomNeighbor],
-            puzzleTiles[emptyIndex]
-        ];
-
-
-        emptyIndex =
-            randomNeighbor;
-
-    }
-
-
-    if (isSolved()) {
-
-        shufflePuzzle();
-
-    }
-
-}
-
-
-function getNeighbors(index) {
-
-    const neighbors = [];
-
-
-    const row =
-        Math.floor(
-            index / puzzleSize
-        );
-
-
-    const col =
-        index %
-        puzzleSize;
-
-
-    if (row > 0) {
-
-        neighbors.push(
-            index - puzzleSize
-        );
-
-    }
-
-
-    if (
-        row <
-        puzzleSize - 1
-    ) {
-
-        neighbors.push(
-            index + puzzleSize
-        );
-
-    }
-
-
-    if (col > 0) {
-
-        neighbors.push(
-            index - 1
-        );
-
-    }
-
-
-    if (
-        col <
-        puzzleSize - 1
-    ) {
-
-        neighbors.push(
-            index + 1
-        );
-
-    }
-
-
-    return neighbors;
-
-}
-
-
-function renderPuzzle() {
-
-    const container =
-        document.getElementById(
-            "puzzleContainer"
-        );
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    puzzleTiles.forEach(
-        (tileValue, index) => {
-
-            const tile =
-                document.createElement(
-                    "div"
-                );
-
-
-            tile.className =
-                "puzzle-tile";
-
-
-            if (
-                tileValue ===
-                puzzleSize *
-                puzzleSize -
-                1
-            ) {
-
-                tile.style.visibility =
-                    "hidden";
-
-            } else {
-
-                const row =
-                    Math.floor(
-                        tileValue /
-                        puzzleSize
-                    );
-
-
-                const col =
-                    tileValue %
-                    puzzleSize;
-
-
-                tile.style.backgroundImage =
-                    `url("${puzzleImage}")`;
-
-
-                tile.style.backgroundSize =
-                    `${puzzleSize * 100}% ${puzzleSize * 100}%`;
-
-
-                tile.style.backgroundPosition =
-                    `${(col * 100) / (puzzleSize - 1)}% ` +
-                    `${(row * 100) / (puzzleSize - 1)}%`;
-
-
-                tile.addEventListener(
-                    "click",
-                    () => {
-
-                        moveTile(index);
-
-                    }
-                );
-
-            }
-
-
-            container.appendChild(tile);
-
-        }
-    );
-
-}
-
-
-function moveTile(index) {
-
-    if (
-        !getNeighbors(emptyIndex)
-            .includes(index)
-    ) {
-
-        return;
-
-    }
-
-
-    if (!puzzleStarted) {
-
-        puzzleStarted = true;
-
-        startTimer();
-
-    }
-
-
-    [
-        puzzleTiles[emptyIndex],
-        puzzleTiles[index]
-    ] = [
-        puzzleTiles[index],
-        puzzleTiles[emptyIndex]
-    ];
-
-
-    emptyIndex =
-        index;
-
-
-    moves++;
-
-
-    updateMoves();
-
-    renderPuzzle();
-
-
-    if (isSolved()) {
-
-        stopTimer();
-
-
-        setTimeout(() => {
-
-            showCompletionModal();
-
-            createConfetti(100);
-
-        }, 300);
-
-    }
-
-}
-
-
-function isSolved() {
-
-    for (
-        let i = 0;
-        i < puzzleTiles.length;
-        i++
-    ) {
-
-        if (
-            puzzleTiles[i] !== i
-        ) {
-
-            return false;
-
-        }
-
-    }
-
-
-    return true;
-
-}
-
-
-function startTimer() {
-
-    stopTimer();
-
-
-    timerInterval =
-        setInterval(() => {
-
-            timerSeconds++;
-
-            updateTimer();
-
-        }, 1000);
-
-}
-
-
-function stopTimer() {
-
-    if (timerInterval) {
-
-        clearInterval(
-            timerInterval
-        );
-
-        timerInterval =
-            null;
-
-    }
-
-}
-
-
-function updateTimer() {
-
-    const timer =
-        document.getElementById(
-            "timer"
-        );
-
-
-    if (!timer) return;
-
-
-    const minutes =
-        Math.floor(
-            timerSeconds / 60
-        );
-
-
-    const seconds =
-        timerSeconds %
-        60;
-
-
-    timer.textContent =
-        `${String(minutes).padStart(2, "0")}:` +
-        `${String(seconds).padStart(2, "0")}`;
-
-}
-
-
-function updateMoves() {
-
-    const movesElement =
-        document.getElementById(
-            "moves"
-        );
-
-
-    if (movesElement) {
-
-        movesElement.textContent =
-            moves;
-
-    }
-
-}
-
-
-function showSolution() {
-
-    const preview =
-        document.getElementById(
-            "solutionPreview"
-        );
-
-
-    if (!preview) return;
-
-
-    preview.style.display =
-        "block";
-
-}
-
-
-function hideSolution() {
-
-    const preview =
-        document.getElementById(
-            "solutionPreview"
-        );
-
-
-    if (!preview) return;
-
-
-    preview.style.display =
-        "none";
-
-}
-
-
-function showCompletionModal() {
-
-    const modal =
-        document.getElementById(
-            "completionModal"
-        );
-
-
-    if (!modal) return;
-
-
-    modal.classList.add("active");
-
-    modal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-}
-
-
-function closeCompletionModal() {
-
-    const modal =
-        document.getElementById(
-            "completionModal"
-        );
-
-
-    if (!modal) return;
-
-
-    modal.classList.remove(
-        "active"
-    );
-
-    modal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-}
-
-
-/* =====================================================
-   BIRTHDAY JOURNAL
-===================================================== */
-
-const journalQuestions = [
-
-    "What is one memory you never want to forget? 💭",
-
-    "What is one thing that always makes you smile? 😊",
-
-    "What is one place you would love to visit someday? ✈️",
-
-    "What is one thing you want to achieve this year? 🎯",
-
-    "What would make this birthday really special for you? 🎂",
-
-    "What is something you are looking forward to? ✨",
-
-    "If you could make one wish for the coming year, what would it be? 🌟",
-
-    "What is one thing you are grateful for today? 🌸",
-
-    "Write a small message to your future self. 💌",
-
-    "What is one moment from this year that made you really happy? 🥰",
-
-    "What is something new you would like to try? 🎉",
-
-    "Describe your perfect happy day. ☀️"
-
-];
-
-
-let currentQuestionIndex = 0;
-
-let journalAnswers = [];
-
-
-function initializeJournal() {
-
-    const nextQuestionBtn =
-        document.getElementById(
-            "nextQuestionBtn"
-        );
-
-    const addAnswerBtn =
-        document.getElementById(
-            "addAnswerBtn"
-        );
-
-    const sendJournalBtn =
-        document.getElementById(
-            "sendJournalBtn"
-        );
-
-
-    if (
-        !nextQuestionBtn ||
-        !addAnswerBtn ||
-        !sendJournalBtn
-    ) {
-
-        return;
-
-    }
-
-
-    showRandomQuestion();
-
-
-    nextQuestionBtn.addEventListener(
-        "click",
-        () => {
-
-            showRandomQuestion();
-
-        }
-    );
-
-
-    addAnswerBtn.addEventListener(
-        "click",
-        addCurrentAnswer
-    );
-
-
-    sendJournalBtn.addEventListener(
-        "click",
-        sendJournalAnswers
-    );
-
-}
-
-
-/* =====================================================
-   RANDOM QUESTION
-===================================================== */
-
-function showRandomQuestion() {
-
-    if (
-        journalQuestions.length <= 1
-    ) {
-
-        currentQuestionIndex = 0;
-
-    } else {
-
-        let newIndex;
-
-
-        do {
-
-            newIndex =
-                Math.floor(
-                    Math.random() *
-                    journalQuestions.length
-                );
-
-        } while (
-            newIndex ===
-            currentQuestionIndex
-        );
-
-
-        currentQuestionIndex =
-            newIndex;
-
-    }
-
-
-    const questionText =
-        document.getElementById(
-            "questionText"
-        );
-
-    const questionNumber =
-        document.getElementById(
-            "questionNumber"
-        );
-
-
-    if (questionText) {
-
-        questionText.textContent =
-            journalQuestions[
-                currentQuestionIndex
-            ];
-
-    }
-
-
-    if (questionNumber) {
-
-        questionNumber.textContent =
-            `Question ${currentQuestionIndex + 1}`;
-
-    }
-
-
-    const answerBox =
-        document.getElementById(
-            "questionAnswer"
-        );
-
-
-    if (answerBox) {
-
-        answerBox.value = "";
-
-        answerBox.focus();
-
-    }
-
-}
-
-
-/* =====================================================
-   ADD ANSWER
-===================================================== */
-
-function addCurrentAnswer() {
-
-    const answerBox =
-        document.getElementById(
-            "questionAnswer"
-        );
-
-
-    if (!answerBox) return;
-
-
-    const answer =
-        answerBox.value.trim();
-
-
-    if (!answer) {
-
-        showJournalStatus(
-            "Please write an answer first ✍️",
-            "error"
-        );
-
-        answerBox.focus();
-
-        return;
-
-    }
-
-
-    const question =
-        journalQuestions[
-            currentQuestionIndex
-        ];
-
-
-    // Save answer on the page
-    journalAnswers.push({
-        question: question,
-        answer: answer
-    });
-
-
-    // Show answer in the journal
-    renderJournalAnswers();
-
-
-    // Clear answer box
-    answerBox.value = "";
-
-
-    // Automatically send this answer by email
-    sendSingleJournalAnswer(
-        question,
-        answer
-    );
-
-
-    showJournalStatus(
-        "💖 Answer saved and sent! ✨",
-        "success"
-    );
-
-
-    createConfetti(20);
-
-
-    // Pick another random question
-    showRandomQuestion();
-
-}
-
-
-/* =====================================================
-   RENDER SAVED ANSWERS
-===================================================== */
-
-function renderJournalAnswers() {
-
-    const answerList =
-        document.getElementById(
-            "answerList"
-        );
-
-
-    if (!answerList) return;
-
-
-    if (!journalAnswers.length) {
-
-        answerList.innerHTML =
-            `
-            <p class="empty-answer">
-                Your answers will appear here...
+            <p class="gallery-hint">
+                ✨ Tap any photo to view it fullscreen ✨
             </p>
-            `;
 
-        return;
 
-    }
+            <div class="gallery-controls">
 
+                <button
+                    id="gridViewBtn"
+                    class="active"
+                    type="button"
+                >
+                    ▦ Grid
+                </button>
 
-    answerList.innerHTML = "";
+                <button
+                    id="slideshowViewBtn"
+                    type="button"
+                >
+                    ▶ Slideshow
+                </button>
 
+            </div>
 
-    journalAnswers.forEach(
-        (entry, index) => {
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+            <!-- GRID -->
 
+            <div
+                class="gallery-grid"
+                id="galleryGrid"
+            >
 
-            card.className =
-                "answer-card";
+                <div class="gallery-item">
 
+                    <img
+                        src="IMG-20240822-WA0003.jpg"
+                        alt="Memory 1"
+                    >
 
-            const question =
-                document.createElement(
-                    "div"
-                );
+                    <div class="gallery-overlay">
+                        <span>
+                            💖 Beautiful Memory
+                        </span>
+                    </div>
 
+                </div>
 
-            question.className =
-                "answer-question";
 
+                <div class="gallery-item">
 
-            question.textContent =
-                entry.question;
+                    <img
+                        src="IMG-20240904-WA0003.jpg"
+                        alt="Memory 2"
+                    >
 
+                    <div class="gallery-overlay">
+                        <span>
+                            ✨ Special Moment
+                        </span>
+                    </div>
 
-            const answer =
-                document.createElement(
-                    "div"
-                );
+                </div>
 
 
-            answer.className =
-                "answer-value";
+                <div class="gallery-item">
 
+                    <img
+                        src="IMG_2647.jpg"
+                        alt="Memory 3"
+                    >
 
-            answer.textContent =
-                entry.answer;
+                    <div class="gallery-overlay">
+                        <span>
+                            🥰 Sweet Memory
+                        </span>
+                    </div>
 
+                </div>
 
-            const remove =
-                document.createElement(
-                    "button"
-                );
 
+                <div class="gallery-item">
 
-            remove.className =
-                "remove-answer";
+                    <img
+                        src="NPTL3186.JPG"
+                        alt="Memory 4"
+                    >
 
+                    <div class="gallery-overlay">
+                        <span>
+                            🌸 Precious Moment
+                        </span>
+                    </div>
 
-            remove.type =
-                "button";
+                </div>
 
 
-            remove.textContent =
-                "✕";
+                <div class="gallery-item">
 
+                    <img
+                        src="OLSB4991.JPG"
+                        alt="Memory 5"
+                    >
 
-            remove.setAttribute(
-                "aria-label",
-                "Remove answer"
-            );
+                    <div class="gallery-overlay">
+                        <span>
+                            💫 Amazing Memory
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="Snapchat-1779683539.jpg"
+                        alt="Memory 6"
+                    >
+
+                    <div class="gallery-overlay">
+                        <span>
+                            📸 Fun Memory
+                        </span>
+                    </div>
+
+                </div>
+
 
+                <div class="gallery-item">
+
+                    <img
+                        src="Snapchat-2018150645.jpg"
+                        alt="Memory 7"
+                    >
+
+                    <div class="gallery-overlay">
+                        <span>
+                            ❤️ Forever Memory
+                        </span>
+                    </div>
+
+                </div>
 
-            remove.addEventListener(
-                "click",
-                () => {
+            </div>
 
-                    journalAnswers.splice(
-                        index,
-                        1
-                    );
 
-                    renderJournalAnswers();
+            <!-- SLIDESHOW -->
 
-                }
-            );
+            <div
+                class="gallery-slideshow"
+                id="gallerySlideshow"
+            >
 
+                <button
+                    class="slide-arrow prev"
+                    id="prevSlide"
+                    type="button"
+                >
+                    ❮
+                </button>
 
-            card.appendChild(question);
 
-            card.appendChild(answer);
+                <div class="slide-container">
 
-            card.appendChild(remove);
+                    <div class="slide active">
+                        <img
+                            src="IMG-20240822-WA0003.jpg"
+                            alt="Memory 1"
+                        >
+                    </div>
 
+                    <div class="slide">
+                        <img
+                            src="IMG-20240904-WA0003.jpg"
+                            alt="Memory 2"
+                        >
+                    </div>
 
-            answerList.appendChild(card);
+                    <div class="slide">
+                        <img
+                            src="IMG_2647.jpg"
+                            alt="Memory 3"
+                        >
+                    </div>
 
-        }
-    );
+                    <div class="slide">
+                        <img
+                            src="NPTL3186.JPG"
+                            alt="Memory 4"
+                        >
+                    </div>
 
-}
+                    <div class="slide">
+                        <img
+                            src="OLSB4991.JPG"
+                            alt="Memory 5"
+                        >
+                    </div>
 
+                    <div class="slide">
+                        <img
+                            src="Snapchat-1779683539.jpg"
+                            alt="Memory 6"
+                        >
+                    </div>
 
-/* =====================================================
-   AUTO SEND EACH ANSWER
-===================================================== */
+                    <div class="slide">
+                        <img
+                            src="Snapchat-2018150645.jpg"
+                            alt="Memory 7"
+                        >
+                    </div>
 
-async function sendSingleJournalAnswer(
-    question,
-    answer
-) {
+                </div>
 
-    const receiverEmail =
-        "rakeshnanikengam1922@gmail.com";
 
+                <button
+                    class="slide-arrow next"
+                    id="nextSlide"
+                    type="button"
+                >
+                    ❯
+                </button>
 
-    const formData =
-        new FormData();
 
+                <div class="slide-indicators">
 
-    formData.append(
-        "_subject",
-        "💖 BUJJI Birthday Journal - New Answer"
-    );
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
 
+                </div>
 
-    formData.append(
-        "_captcha",
-        "false"
-    );
+            </div>
 
+        </section>
 
-    formData.append(
-        "_template",
-        "table"
-    );
 
+        <!-- =========================
+             MESSAGE
+        ========================== -->
 
-    formData.append(
-        "Question",
-        question
-    );
+        <section
+            id="message"
+            class="section message-section"
+        >
 
+            <div class="section-heading">
 
-    formData.append(
-        "Answer",
-        answer
-    );
+                <span class="section-icon">
+                    💌
+                </span>
 
+                <h2>
+                    A Special Message For You
+                </h2>
 
-    try {
+                <p>
+                    From the heart ❤️
+                </p>
 
-        const response =
-            await fetch(
-                `https://formsubmit.co/ajax/${receiverEmail}`,
-                {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    }
-                }
-            );
+            </div>
 
 
-        if (!response.ok) {
+            <div class="birthday-letter">
 
-            throw new Error(
-                "Unable to send answer"
-            );
+                <div class="letter-decoration">
+                    💖 ✨ 💖
+                </div>
 
-        }
+                <h2>
+                    Dear BUJJI ❤️
+                </h2>
 
+                <p>
+                    Today is a very special day because it is the day
+                    a very special person was born. 🎂
+                </p>
 
-        console.log(
-            "Journal answer sent successfully"
-        );
+                <p>
+                    I hope your birthday is filled with beautiful smiles,
+                    happy moments and memories that stay forever. ✨
+                </p>
 
+                <p>
+                    May every new day bring you more happiness,
+                    more reasons to smile and lots of wonderful moments. 🌸
+                </p>
 
-    } catch (error) {
+                <p class="letter-highlight">
+                    Keep smiling, keep shining and always stay special. 💖
+                </p>
 
-        console.error(
-            "Auto send error:",
-            error
-        );
+                <div class="letter-signature">
 
+                    Wishing you lots of happiness ❤️
+                    <br>
 
-        showJournalStatus(
-            "Answer saved, but email sending failed. Please try again.",
-            "error"
-        );
+                    <strong>
+                        Happy Birthday BUJJI! 🎂🥳
+                    </strong>
 
-    }
+                </div>
 
-}
+            </div>
 
+        </section>
 
-/* =====================================================
-   SEND ALL JOURNAL ANSWERS
-===================================================== */
 
-async function sendJournalAnswers() {
+        <!-- =========================
+             PUZZLE GAME
+        ========================== -->
 
-    const sendButton =
-        document.getElementById(
-            "sendJournalBtn"
-        );
+        <section
+            id="game"
+            class="section game-section"
+        >
 
-    const journalMessage =
-        document.getElementById(
-            "journalMessage"
-        );
+            <div class="section-heading">
 
+                <span class="section-icon">
+                    🧩
+                </span>
 
-    if (
-        !sendButton ||
-        !journalMessage
-    ) {
-        return;
-    }
+                <h2>
+                    Birthday Puzzle
+                </h2>
 
+                <p>
+                    Can you complete the memory? 🎮
+                </p>
 
-    const freeJournal =
-        journalMessage.value.trim();
+            </div>
 
 
-    if (
-        journalAnswers.length === 0 &&
-        !freeJournal
-    ) {
+            <div class="game-card">
 
-        showJournalStatus(
-            "Please answer at least one question or write something in your journal 💌",
-            "error"
-        );
+                <div class="difficulty-section">
 
-        return;
+                    <label for="difficulty">
+                        Difficulty
+                    </label>
 
-    }
+                    <select id="difficulty">
 
+                        <option value="3">
+                            Easy - 3 × 3
+                        </option>
 
-    const receiverEmail =
-        "rakeshnanikengam1922@gmail.com";
+                        <option
+                            value="4"
+                            selected
+                        >
+                            Medium - 4 × 4
+                        </option>
 
+                        <option value="5">
+                            Hard - 5 × 5
+                        </option>
 
-    let answersText = "";
+                    </select>
 
+                </div>
 
-    journalAnswers.forEach(
-        (entry, index) => {
 
-            answersText +=
-                `Question ${index + 1}: ${entry.question}\n`;
+                <div class="game-stats">
 
-            answersText +=
-                `Answer: ${entry.answer}\n\n`;
+                    <div>
+                        <span>⏱️</span>
+                        <strong id="timer">
+                            00:00
+                        </strong>
+                    </div>
 
-        }
-    );
+                    <div>
+                        <span>👣</span>
+                        <strong id="moves">
+                            0
+                        </strong>
+                    </div>
 
+                </div>
 
-    if (!answersText) {
 
-        answersText =
-            "No question answers were added.\n\n";
+                <div
+                    class="puzzle-container"
+                    id="puzzleContainer"
+                ></div>
 
-    }
 
+                <div class="game-buttons">
 
-    const formData =
-        new FormData();
+                    <button
+                        id="newGameBtn"
+                        type="button"
+                    >
+                        🔄 New Game
+                    </button>
 
+                    <button
+                        id="showSolutionBtn"
+                        type="button"
+                    >
+                        👀 Show Solution
+                    </button>
 
-    formData.append(
-        "_subject",
-        "🎂 BUJJI Birthday Journal - Complete Journal"
-    );
+                    <button
+                        id="playAgainBtn"
+                        type="button"
+                    >
+                        🎮 Play Again
+                    </button>
 
+                </div>
 
-    formData.append(
-        "_captcha",
-        "false"
-    );
 
+                <div
+                    class="solution-preview"
+                    id="solutionPreview"
+                >
 
-    formData.append(
-        "_template",
-        "table"
-    );
+                    <img
+                        id="solutionImage"
+                        src="IMG-20240822-WA0003.jpg"
+                        alt="Puzzle Solution"
+                    >
 
+                </div>
 
-    formData.append(
-        "Birthday Journal Answers",
-        answersText
-    );
+            </div>
 
+        </section>
 
-    formData.append(
-        "Free Journal Message",
-        freeJournal ||
-        "No additional journal message."
-    );
 
+        <!-- =========================
+             RANDOM QUESTION + JOURNAL
+        ========================== -->
 
-    sendButton.disabled =
-        true;
+        <section
+            id="journal"
+            class="section journal-section"
+        >
 
+            <div class="section-heading">
 
-    sendButton.textContent =
-        "📩 Sending...";
+                <span class="section-icon">
+                    📖
+                </span>
 
+                <h2>
+                    Birthday Journal
+                </h2>
 
-    try {
+                <p>
+                    A little place to write your thoughts ✨
+                </p>
 
-        const response =
-            await fetch(
-                `https://formsubmit.co/ajax/${receiverEmail}`,
-                {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    }
-                }
-            );
+            </div>
 
 
-        if (!response.ok) {
+            <div class="journal-card">
 
-            throw new Error(
-                "Unable to send"
-            );
+                <!-- RANDOM QUESTION -->
 
-        }
+                <div class="question-box">
 
+                    <div class="question-top">
 
-        showJournalStatus(
-            "💖 Your journal was sent successfully! ✨",
-            "success"
-        );
+                        <span class="question-label">
+                            🎡 RANDOM QUESTION
+                        </span>
 
+                        <span
+                            class="question-number"
+                            id="questionNumber"
+                        >
+                            Question 1
+                        </span>
 
-        createConfetti(100);
+                    </div>
 
 
-        journalAnswers = [];
+                    <div
+                        class="question-text"
+                        id="questionText"
+                    >
+                        What is one memory you never want to forget? 💭
+                    </div>
 
 
-        renderJournalAnswers();
+                    <button
+                        class="next-question-btn"
+                        id="nextQuestionBtn"
+                        type="button"
+                    >
+                        🎡 Pick Another Question
+                    </button>
 
+                </div>
 
-        journalMessage.value = "";
 
+                <!-- ANSWER -->
 
-        const answerBox =
-            document.getElementById(
-                "questionAnswer"
-            );
+                <div class="journal-answer">
 
+                    <label for="questionAnswer">
+                        💭 Your Answer
+                    </label>
 
-        if (answerBox) {
+                    <textarea
+                        id="questionAnswer"
+                        rows="4"
+                        placeholder="Write your answer here..."
+                    ></textarea>
 
-            answerBox.value = "";
 
-        }
+                    <button
+                        class="add-answer-btn"
+                        id="addAnswerBtn"
+                        type="button"
+                    >
+                        ➕ Add This Answer
+                    </button>
 
+                </div>
 
-    } catch (error) {
 
-        console.error(
-            "Journal send error:",
-            error
-        );
+                <!-- SAVED ANSWERS -->
 
+                <div
+                    class="saved-answers"
+                    id="savedAnswers"
+                >
 
-        showJournalStatus(
-            "Something went wrong while sending. Please try again.",
-            "error"
-        );
+                    <div class="saved-title">
+                        💖 Your Answers
+                    </div>
 
-    } finally {
+                    <div
+                        id="answerList"
+                        class="answer-list"
+                    >
 
-        sendButton.disabled =
-            false;
+                        <p class="empty-answer">
+                            Your answers will appear here...
+                        </p>
 
+                    </div>
 
-        sendButton.textContent =
-            "💌 Send My Answers";
+                </div>
 
-    }
 
-}
+                <!-- FREE JOURNAL -->
 
+                <div class="free-journal">
 
-/* =====================================================
-   JOURNAL STATUS
-===================================================== */
+                    <label for="journalMessage">
+                        📖 Write Anything You Want To Remember
+                    </label>
 
-function showJournalStatus(
-    message,
-    type
-) {
+                    <textarea
+                        id="journalMessage"
+                        rows="6"
+                        placeholder="Write a memory, a thought, a wish, or anything you want to remember about today..."
+                    ></textarea>
 
-    const status =
-        document.getElementById(
-            "journalStatus"
-        );
+                </div>
 
 
-    if (!status) return;
+                <!-- SEND -->
 
+                <div class="journal-submit">
 
-    status.textContent =
-        message;
+                    <button
+                        class="send-journal-btn"
+                        id="sendJournalBtn"
+                        type="button"
+                    >
+                        💌 Send My Answers
+                    </button>
 
+                    <p class="send-note">
+                        ✨ Your answers will be sent privately.
+                    </p>
 
-    status.className =
-        `journal-status ${type}`;
+                </div>
 
 
-    clearTimeout(
-        showJournalStatus.timer
-    );
+                <!-- STATUS -->
 
+                <div
+                    class="journal-status"
+                    id="journalStatus"
+                ></div>
 
-    showJournalStatus.timer =
-        setTimeout(() => {
+            </div>
 
-            status.className =
-                "journal-status";
+        </section>
 
-            status.textContent =
-                "";
 
-        }, 5000);
+        <!-- =========================
+             FULLSCREEN GALLERY
+        ========================== -->
 
-}
+        <div
+            class="gallery-lightbox"
+            id="galleryLightbox"
+            aria-hidden="true"
+        >
+
+            <button
+                class="lightbox-close"
+                id="lightboxClose"
+                type="button"
+                aria-label="Close fullscreen gallery"
+            >
+                ✕
+            </button>
+
+
+            <button
+                class="lightbox-btn lightbox-prev"
+                id="lightboxPrev"
+                type="button"
+                aria-label="Previous photo"
+            >
+                ❮
+            </button>
+
+
+            <div class="lightbox-content">
+
+                <img
+                    id="lightboxImage"
+                    src=""
+                    alt="Fullscreen Memory"
+                >
+
+                <div
+                    class="lightbox-caption"
+                    id="lightboxCaption"
+                ></div>
+
+                <div
+                    class="lightbox-counter"
+                    id="lightboxCounter"
+                >
+                    1 / 7
+                </div>
+
+            </div>
+
+
+            <button
+                class="lightbox-btn lightbox-next"
+                id="lightboxNext"
+                type="button"
+                aria-label="Next photo"
+            >
+                ❯
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             SURPRISE MODAL
+        ========================== -->
+
+        <div
+            class="surprise-modal"
+            id="surpriseModal"
+            aria-hidden="true"
+        >
+
+            <div class="surprise-card">
+
+                <button
+                    class="surprise-close"
+                    id="surpriseClose"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+                <div class="surprise-icon">
+                    🎁
+                </div>
+
+                <h2>
+                    Surprise! 🥳
+                </h2>
+
+                <div class="surprise-cake">
+                    🎂
+                </div>
+
+                <p>
+                    Today is all about YOU! 💖
+                </p>
+
+                <p>
+                    May your life always be filled with happiness,
+                    beautiful memories and countless reasons to smile. ✨
+                </p>
+
+                <h3>
+                    Happy Birthday BUJJI! 🎉❤️
+                </h3>
+
+                <button
+                    class="surprise-celebrate"
+                    id="surpriseCelebrate"
+                    type="button"
+                >
+                    🎊 Celebrate!
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             PUZZLE COMPLETION
+        ========================== -->
+
+        <div
+            class="completion-modal"
+            id="completionModal"
+            aria-hidden="true"
+        >
+
+            <div class="completion-card">
+
+                <div class="completion-icon">
+                    🎉
+                </div>
+
+                <h2>
+                    Puzzle Completed!
+                </h2>
+
+                <p>
+                    Amazing! You completed the birthday puzzle! 🥳
+                </p>
+
+                <button
+                    id="completionClose"
+                    type="button"
+                >
+                    ❤️ Continue
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="footer-logo">
+                🎂 BUJJI
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#gallery">
+                    Gallery
+                </a>
+
+                <a href="#message">
+                    Message
+                </a>
+
+                <a href="#game">
+                    Game
+                </a>
+
+                <a href="#journal">
+                    Journal
+                </a>
+
+            </div>
+
+            <div class="copyright">
+                Made with ❤️ specially for BUJJI
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
