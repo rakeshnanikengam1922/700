@@ -2,8 +2,6 @@
    BIRTHDAY WEBSITE - COMPLETE SCRIPT
 ===================================================== */
 
-alert("SCRIPT STARTED ✅");
-
 document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Birthday website script loaded successfully");
