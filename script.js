@@ -1,12 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     initializeNavigation();
+
     initializeCelebration();
+
     initializeGallery();
+
     initializePuzzle();
-    initializeCountdown();
+
     initializeFullscreenGallery();
+
     initializeSurprise();
+
+    initializeJournal();
 
 });
 
@@ -17,20 +23,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initializeNavigation() {
 
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
+    const menuToggle =
+        document.getElementById("menuToggle");
+
+    const navLinks =
+        document.getElementById("navLinks");
 
     if (!menuToggle || !navLinks) return;
 
+
     menuToggle.addEventListener("click", () => {
+
         navLinks.classList.toggle("active");
+
     });
 
 
     navLinks.querySelectorAll("a").forEach(link => {
 
         link.addEventListener("click", () => {
+
             navLinks.classList.remove("active");
+
         });
 
     });
@@ -44,15 +58,20 @@ function initializeNavigation() {
 
 function initializeCelebration() {
 
-    const celebrateBtn = document.getElementById("celebrateBtn");
+    const celebrateBtn =
+        document.getElementById("celebrateBtn");
 
     if (!celebrateBtn) return;
+
 
     celebrateBtn.addEventListener("click", () => {
 
         createConfetti(80);
 
-        const cake = document.getElementById("cakeEmoji");
+
+        const cake =
+            document.getElementById("cakeEmoji");
+
 
         if (cake) {
 
@@ -61,12 +80,17 @@ function initializeCelebration() {
                     {
                         transform: "scale(1)"
                     },
+
                     {
-                        transform: "scale(1.3) rotate(-8deg)"
+                        transform:
+                            "scale(1.3) rotate(-8deg)"
                     },
+
                     {
-                        transform: "scale(1.15) rotate(8deg)"
+                        transform:
+                            "scale(1.15) rotate(8deg)"
                     },
+
                     {
                         transform: "scale(1)"
                     }
@@ -100,28 +124,47 @@ function createConfetti(amount = 60) {
         "🥳"
     ];
 
+
     for (let i = 0; i < amount; i++) {
 
-        const item = document.createElement("div");
+        const item =
+            document.createElement("div");
 
-        item.className = "confetti-piece";
+
+        item.className =
+            "confetti-piece";
+
 
         item.textContent =
-            emojis[Math.floor(Math.random() * emojis.length)];
+            emojis[
+                Math.floor(
+                    Math.random() *
+                    emojis.length
+                )
+            ];
+
 
         item.style.left =
             Math.random() * 100 + "vw";
 
+
         item.style.animationDelay =
             Math.random() * 1.5 + "s";
 
+
         item.style.fontSize =
-            14 + Math.random() * 16 + "px";
+            14 +
+            Math.random() * 16 +
+            "px";
+
 
         document.body.appendChild(item);
 
+
         setTimeout(() => {
+
             item.remove();
+
         }, 4500);
 
     }
@@ -134,43 +177,76 @@ function createConfetti(amount = 60) {
 ===================================================== */
 
 const galleryImages = [
+
     "IMG-20240822-WA0003.jpg",
+
     "IMG-20240904-WA0003.jpg",
+
     "IMG_2647.jpg",
+
     "NPTL3186.JPG",
+
     "OLSB4991.JPG",
+
     "Snapchat-1779683539.jpg",
+
     "Snapchat-2018150645.jpg"
+
 ];
 
+
 const galleryCaptions = [
+
     "A beautiful birthday memory ✨",
+
     "A special moment to remember 💖",
+
     "Sweet memories 🥰",
+
     "A precious moment 🌸",
+
     "An amazing memory 💫",
+
     "A fun memory 📸",
+
     "A memory to keep forever ❤️"
+
 ];
 
 
 function initializeGallery() {
 
-    const gridBtn = document.getElementById("gridViewBtn");
-    const slideshowBtn = document.getElementById("slideshowViewBtn");
+    const gridBtn =
+        document.getElementById("gridViewBtn");
 
-    const grid = document.getElementById("galleryGrid");
-    const slideshow = document.getElementById("gallerySlideshow");
+    const slideshowBtn =
+        document.getElementById("slideshowViewBtn");
 
-    if (!gridBtn || !slideshowBtn || !grid || !slideshow) return;
+    const grid =
+        document.getElementById("galleryGrid");
+
+    const slideshow =
+        document.getElementById("gallerySlideshow");
+
+
+    if (
+        !gridBtn ||
+        !slideshowBtn ||
+        !grid ||
+        !slideshow
+    ) {
+        return;
+    }
 
 
     gridBtn.addEventListener("click", () => {
 
         grid.style.display = "grid";
+
         slideshow.style.display = "none";
 
         gridBtn.classList.add("active");
+
         slideshowBtn.classList.remove("active");
 
     });
@@ -179,9 +255,11 @@ function initializeGallery() {
     slideshowBtn.addEventListener("click", () => {
 
         grid.style.display = "none";
+
         slideshow.style.display = "block";
 
         slideshowBtn.classList.add("active");
+
         gridBtn.classList.remove("active");
 
     });
@@ -209,13 +287,15 @@ function initializeSlideshow() {
     const next =
         document.getElementById("nextSlide");
 
+
     if (!slides.length) return;
 
 
     function showSlide(index) {
 
         currentSlide =
-            (index + slides.length) % slides.length;
+            (index + slides.length) %
+            slides.length;
 
 
         slides.forEach((slide, i) => {
@@ -243,7 +323,9 @@ function initializeSlideshow() {
     if (prev) {
 
         prev.addEventListener("click", () => {
+
             showSlide(currentSlide - 1);
+
         });
 
     }
@@ -252,7 +334,9 @@ function initializeSlideshow() {
     if (next) {
 
         next.addEventListener("click", () => {
+
             showSlide(currentSlide + 1);
+
         });
 
     }
@@ -261,7 +345,9 @@ function initializeSlideshow() {
     indicators.forEach((indicator, index) => {
 
         indicator.addEventListener("click", () => {
+
             showSlide(index);
+
         });
 
     });
@@ -294,9 +380,10 @@ function initializeFullscreenGallery() {
     if (!lightbox) return;
 
 
-    const images = document.querySelectorAll(
-        ".gallery-item img, .slide img"
-    );
+    const images =
+        document.querySelectorAll(
+            ".gallery-item img, .slide img"
+        );
 
 
     images.forEach((image, index) => {
@@ -308,9 +395,15 @@ function initializeFullscreenGallery() {
                     image.getAttribute("src")
                 );
 
+
             if (realIndex === -1) {
-                realIndex = index % galleryImages.length;
+
+                realIndex =
+                    index %
+                    galleryImages.length;
+
             }
+
 
             openLightbox(realIndex);
 
@@ -332,7 +425,9 @@ function initializeFullscreenGallery() {
     if (lightboxNext) {
 
         lightboxNext.addEventListener("click", () => {
+
             changeLightboxImage(1);
+
         });
 
     }
@@ -341,7 +436,9 @@ function initializeFullscreenGallery() {
     if (lightboxPrev) {
 
         lightboxPrev.addEventListener("click", () => {
+
             changeLightboxImage(-1);
+
         });
 
     }
@@ -350,7 +447,9 @@ function initializeFullscreenGallery() {
     lightbox.addEventListener("click", event => {
 
         if (event.target === lightbox) {
+
             closeLightbox();
+
         }
 
     });
@@ -358,20 +457,31 @@ function initializeFullscreenGallery() {
 
     document.addEventListener("keydown", event => {
 
-        if (!lightbox.classList.contains("active")) {
+        if (
+            !lightbox.classList.contains("active")
+        ) {
             return;
         }
 
+
         if (event.key === "Escape") {
+
             closeLightbox();
+
         }
+
 
         if (event.key === "ArrowRight") {
+
             changeLightboxImage(1);
+
         }
 
+
         if (event.key === "ArrowLeft") {
+
             changeLightboxImage(-1);
+
         }
 
     });
@@ -384,15 +494,23 @@ function openLightbox(index) {
     const lightbox =
         document.getElementById("galleryLightbox");
 
+
+    if (!lightbox) return;
+
+
     lightboxIndex = index;
 
     updateLightbox();
 
     lightbox.classList.add("active");
 
-    lightbox.setAttribute("aria-hidden", "false");
+    lightbox.setAttribute(
+        "aria-hidden",
+        "false"
+    );
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow =
+        "hidden";
 
 }
 
@@ -412,10 +530,13 @@ function updateLightbox() {
     if (!image) return;
 
 
-    image.src = galleryImages[lightboxIndex];
+    image.src =
+        galleryImages[lightboxIndex];
+
 
     caption.textContent =
         galleryCaptions[lightboxIndex];
+
 
     counter.textContent =
         `${lightboxIndex + 1} / ${galleryImages.length}`;
@@ -426,8 +547,13 @@ function updateLightbox() {
 function changeLightboxImage(direction) {
 
     lightboxIndex =
-        (lightboxIndex + direction + galleryImages.length)
-        % galleryImages.length;
+        (
+            lightboxIndex +
+            direction +
+            galleryImages.length
+        ) %
+        galleryImages.length;
+
 
     updateLightbox();
 
@@ -439,11 +565,16 @@ function closeLightbox() {
     const lightbox =
         document.getElementById("galleryLightbox");
 
+
     if (!lightbox) return;
+
 
     lightbox.classList.remove("active");
 
-    lightbox.setAttribute("aria-hidden", "true");
+    lightbox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
 
     document.body.style.overflow = "";
 
@@ -469,7 +600,9 @@ function initializeSurprise() {
         document.getElementById("surpriseCelebrate");
 
 
-    if (!surpriseBtn || !surpriseModal) return;
+    if (!surpriseBtn || !surpriseModal) {
+        return;
+    }
 
 
     surpriseBtn.addEventListener("click", () => {
@@ -481,7 +614,8 @@ function initializeSurprise() {
             "false"
         );
 
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow =
+            "hidden";
 
         createConfetti(45);
 
@@ -500,26 +634,39 @@ function initializeSurprise() {
 
     if (surpriseCelebrate) {
 
-        surpriseCelebrate.addEventListener("click", () => {
+        surpriseCelebrate.addEventListener(
+            "click",
+            () => {
 
-            createConfetti(100);
+                createConfetti(100);
 
-            setTimeout(() => {
-                closeSurprise();
-            }, 500);
+                setTimeout(() => {
 
-        });
+                    closeSurprise();
+
+                }, 500);
+
+            }
+        );
 
     }
 
 
-    surpriseModal.addEventListener("click", event => {
+    surpriseModal.addEventListener(
+        "click",
+        event => {
 
-        if (event.target === surpriseModal) {
-            closeSurprise();
+            if (
+                event.target ===
+                surpriseModal
+            ) {
+
+                closeSurprise();
+
+            }
+
         }
-
-    });
+    );
 
 
     document.addEventListener("keydown", event => {
@@ -528,7 +675,9 @@ function initializeSurprise() {
             event.key === "Escape" &&
             surpriseModal.classList.contains("active")
         ) {
+
             closeSurprise();
+
         }
 
     });
@@ -541,7 +690,9 @@ function closeSurprise() {
     const surpriseModal =
         document.getElementById("surpriseModal");
 
+
     if (!surpriseModal) return;
+
 
     surpriseModal.classList.remove("active");
 
@@ -560,17 +711,26 @@ function closeSurprise() {
 ===================================================== */
 
 const puzzleImages = [
+
     "IMG-20240822-WA0003.jpg",
+
     "IMG-20240904-WA0003.jpg",
+
     "IMG_2647.jpg",
+
     "NPTL3186.JPG",
+
     "OLSB4991.JPG",
+
     "Snapchat-1779683539.jpg",
+
     "Snapchat-2018150645.jpg"
+
 ];
 
 
-let puzzleImage = puzzleImages[0];
+let puzzleImage =
+    puzzleImages[0];
 
 let puzzleSize = 4;
 
@@ -611,7 +771,9 @@ function initializePuzzle() {
     difficulty.addEventListener("change", () => {
 
         puzzleSize =
-            parseInt(difficulty.value);
+            parseInt(
+                difficulty.value
+            );
 
         startNewGame();
 
@@ -667,14 +829,16 @@ function selectNewPuzzleImage() {
 
     if (puzzleImages.length <= 1) {
 
-        puzzleImage = puzzleImages[0];
+        puzzleImage =
+            puzzleImages[0];
 
         return;
 
     }
 
 
-    const oldImage = puzzleImage;
+    const oldImage =
+        puzzleImage;
 
     let newImage;
 
@@ -689,10 +853,13 @@ function selectNewPuzzleImage() {
                 )
             ];
 
-    } while (newImage === oldImage);
+    } while (
+        newImage === oldImage
+    );
 
 
-    puzzleImage = newImage;
+    puzzleImage =
+        newImage;
 
 }
 
@@ -717,12 +884,20 @@ function startNewGame() {
 
     closeCompletionModal();
 
+
     const solutionImage =
-        document.getElementById("solutionImage");
+        document.getElementById(
+            "solutionImage"
+        );
+
 
     if (solutionImage) {
-        solutionImage.src = puzzleImage;
+
+        solutionImage.src =
+            puzzleImage;
+
     }
+
 
     createPuzzle();
 
@@ -732,7 +907,10 @@ function startNewGame() {
 function createPuzzle() {
 
     const container =
-        document.getElementById("puzzleContainer");
+        document.getElementById(
+            "puzzleContainer"
+        );
+
 
     if (!container) return;
 
@@ -747,21 +925,26 @@ function createPuzzle() {
 
 
     const totalTiles =
-        puzzleSize * puzzleSize;
+        puzzleSize *
+        puzzleSize;
 
 
-    for (let i = 0; i < totalTiles; i++) {
+    for (
+        let i = 0;
+        i < totalTiles;
+        i++
+    ) {
 
         puzzleTiles.push(i);
 
     }
 
 
-    emptyIndex = totalTiles - 1;
+    emptyIndex =
+        totalTiles - 1;
 
 
     shufflePuzzle();
-
 
     renderPuzzle();
 
@@ -774,6 +957,7 @@ function shufflePuzzle() {
 
         const neighbors =
             getNeighbors(emptyIndex);
+
 
         const randomNeighbor =
             neighbors[
@@ -793,7 +977,8 @@ function shufflePuzzle() {
         ];
 
 
-        emptyIndex = randomNeighbor;
+        emptyIndex =
+            randomNeighbor;
 
     }
 
@@ -811,27 +996,57 @@ function getNeighbors(index) {
 
     const neighbors = [];
 
+
     const row =
-        Math.floor(index / puzzleSize);
+        Math.floor(
+            index / puzzleSize
+        );
+
 
     const col =
-        index % puzzleSize;
+        index %
+        puzzleSize;
 
 
     if (row > 0) {
-        neighbors.push(index - puzzleSize);
+
+        neighbors.push(
+            index - puzzleSize
+        );
+
     }
 
-    if (row < puzzleSize - 1) {
-        neighbors.push(index + puzzleSize);
+
+    if (
+        row <
+        puzzleSize - 1
+    ) {
+
+        neighbors.push(
+            index + puzzleSize
+        );
+
     }
+
 
     if (col > 0) {
-        neighbors.push(index - 1);
+
+        neighbors.push(
+            index - 1
+        );
+
     }
 
-    if (col < puzzleSize - 1) {
-        neighbors.push(index + 1);
+
+    if (
+        col <
+        puzzleSize - 1
+    ) {
+
+        neighbors.push(
+            index + 1
+        );
+
     }
 
 
@@ -843,7 +1058,10 @@ function getNeighbors(index) {
 function renderPuzzle() {
 
     const container =
-        document.getElementById("puzzleContainer");
+        document.getElementById(
+            "puzzleContainer"
+        );
+
 
     if (!container) return;
 
@@ -851,63 +1069,85 @@ function renderPuzzle() {
     container.innerHTML = "";
 
 
-    puzzleTiles.forEach((tileValue, index) => {
+    puzzleTiles.forEach(
+        (tileValue, index) => {
 
-        const tile =
-            document.createElement("div");
-
-
-        tile.className = "puzzle-tile";
-
-
-        if (tileValue === puzzleSize * puzzleSize - 1) {
-
-            tile.style.visibility = "hidden";
-
-        } else {
-
-            const row =
-                Math.floor(
-                    tileValue / puzzleSize
+            const tile =
+                document.createElement(
+                    "div"
                 );
 
-            const col =
-                tileValue % puzzleSize;
+
+            tile.className =
+                "puzzle-tile";
 
 
-            tile.style.backgroundImage =
-                `url("${puzzleImage}")`;
+            if (
+                tileValue ===
+                puzzleSize *
+                puzzleSize -
+                1
+            ) {
+
+                tile.style.visibility =
+                    "hidden";
+
+            } else {
+
+                const row =
+                    Math.floor(
+                        tileValue /
+                        puzzleSize
+                    );
 
 
-            tile.style.backgroundSize =
-                `${puzzleSize * 100}% ${puzzleSize * 100}%`;
+                const col =
+                    tileValue %
+                    puzzleSize;
 
 
-            tile.style.backgroundPosition =
-                `${(col * 100) / (puzzleSize - 1)}% ` +
-                `${(row * 100) / (puzzleSize - 1)}%`;
+                tile.style.backgroundImage =
+                    `url("${puzzleImage}")`;
 
 
-            tile.addEventListener("click", () => {
+                tile.style.backgroundSize =
+                    `${puzzleSize * 100}% ${puzzleSize * 100}%`;
 
-                moveTile(index);
 
-            });
+                tile.style.backgroundPosition =
+                    `${(col * 100) / (puzzleSize - 1)}% ` +
+                    `${(row * 100) / (puzzleSize - 1)}%`;
+
+
+                tile.addEventListener(
+                    "click",
+                    () => {
+
+                        moveTile(index);
+
+                    }
+                );
+
+            }
+
+
+            container.appendChild(tile);
 
         }
-
-
-        container.appendChild(tile);
-
-    });
+    );
 
 }
 
 
 function moveTile(index) {
 
-    if (!getNeighbors(emptyIndex).includes(index)) {
+    if (
+        !getNeighbors(emptyIndex)
+            .includes(index)
+    ) {
+
         return;
+
     }
 
 
@@ -929,9 +1169,12 @@ function moveTile(index) {
     ];
 
 
-    emptyIndex = index;
+    emptyIndex =
+        index;
+
 
     moves++;
+
 
     updateMoves();
 
@@ -941,6 +1184,7 @@ function moveTile(index) {
     if (isSolved()) {
 
         stopTimer();
+
 
         setTimeout(() => {
 
@@ -957,13 +1201,22 @@ function moveTile(index) {
 
 function isSolved() {
 
-    for (let i = 0; i < puzzleTiles.length; i++) {
+    for (
+        let i = 0;
+        i < puzzleTiles.length;
+        i++
+    ) {
 
-        if (puzzleTiles[i] !== i) {
+        if (
+            puzzleTiles[i] !== i
+        ) {
+
             return false;
+
         }
 
     }
+
 
     return true;
 
@@ -973,6 +1226,7 @@ function isSolved() {
 function startTimer() {
 
     stopTimer();
+
 
     timerInterval =
         setInterval(() => {
@@ -990,9 +1244,12 @@ function stopTimer() {
 
     if (timerInterval) {
 
-        clearInterval(timerInterval);
+        clearInterval(
+            timerInterval
+        );
 
-        timerInterval = null;
+        timerInterval =
+            null;
 
     }
 
@@ -1002,16 +1259,23 @@ function stopTimer() {
 function updateTimer() {
 
     const timer =
-        document.getElementById("timer");
+        document.getElementById(
+            "timer"
+        );
+
 
     if (!timer) return;
 
 
     const minutes =
-        Math.floor(timerSeconds / 60);
+        Math.floor(
+            timerSeconds / 60
+        );
+
 
     const seconds =
-        timerSeconds % 60;
+        timerSeconds %
+        60;
 
 
     timer.textContent =
@@ -1024,10 +1288,16 @@ function updateTimer() {
 function updateMoves() {
 
     const movesElement =
-        document.getElementById("moves");
+        document.getElementById(
+            "moves"
+        );
+
 
     if (movesElement) {
-        movesElement.textContent = moves;
+
+        movesElement.textContent =
+            moves;
+
     }
 
 }
@@ -1036,11 +1306,16 @@ function updateMoves() {
 function showSolution() {
 
     const preview =
-        document.getElementById("solutionPreview");
+        document.getElementById(
+            "solutionPreview"
+        );
+
 
     if (!preview) return;
 
-    preview.style.display = "block";
+
+    preview.style.display =
+        "block";
 
 }
 
@@ -1048,11 +1323,16 @@ function showSolution() {
 function hideSolution() {
 
     const preview =
-        document.getElementById("solutionPreview");
+        document.getElementById(
+            "solutionPreview"
+        );
+
 
     if (!preview) return;
 
-    preview.style.display = "none";
+
+    preview.style.display =
+        "none";
 
 }
 
@@ -1060,9 +1340,13 @@ function hideSolution() {
 function showCompletionModal() {
 
     const modal =
-        document.getElementById("completionModal");
+        document.getElementById(
+            "completionModal"
+        );
+
 
     if (!modal) return;
+
 
     modal.classList.add("active");
 
@@ -1077,11 +1361,17 @@ function showCompletionModal() {
 function closeCompletionModal() {
 
     const modal =
-        document.getElementById("completionModal");
+        document.getElementById(
+            "completionModal"
+        );
+
 
     if (!modal) return;
 
-    modal.classList.remove("active");
+
+    modal.classList.remove(
+        "active"
+    );
 
     modal.setAttribute(
         "aria-hidden",
@@ -1092,218 +1382,611 @@ function closeCompletionModal() {
 
 
 /* =====================================================
-   COUNTDOWN
+   BIRTHDAY JOURNAL
 ===================================================== */
 
-let countdownInterval = null;
+const journalQuestions = [
+
+    "What is one memory you never want to forget? 💭",
+
+    "What is one thing that always makes you smile? 😊",
+
+    "What is one place you would love to visit someday? ✈️",
+
+    "What is one thing you want to achieve this year? 🎯",
+
+    "What would make this birthday really special for you? 🎂",
+
+    "What is something you are looking forward to? ✨",
+
+    "If you could make one wish for the coming year, what would it be? 🌟",
+
+    "What is one thing you are grateful for today? 🌸",
+
+    "Write a small message to your future self. 💌",
+
+    "What is one moment from this year that made you really happy? 🥰",
+
+    "What is something new you would like to try? 🎉",
+
+    "Describe your perfect happy day. ☀️"
+
+];
 
 
-function initializeCountdown() {
+let currentQuestionIndex = 0;
 
-    const input =
-        document.getElementById("birthdayDate");
-
-    if (!input) return;
+let journalAnswers = [];
 
 
-    const savedDate =
-        localStorage.getItem("birthdayCountdownDate");
+function initializeJournal() {
+
+    const nextQuestionBtn =
+        document.getElementById(
+            "nextQuestionBtn"
+        );
+
+    const addAnswerBtn =
+        document.getElementById(
+            "addAnswerBtn"
+        );
+
+    const sendJournalBtn =
+        document.getElementById(
+            "sendJournalBtn"
+        );
 
 
-    if (savedDate) {
+    if (
+        !nextQuestionBtn ||
+        !addAnswerBtn ||
+        !sendJournalBtn
+    ) {
 
-        input.value = savedDate;
+        return;
+
+    }
+
+
+    showRandomQuestion();
+
+
+    nextQuestionBtn.addEventListener(
+        "click",
+        () => {
+
+            showRandomQuestion();
+
+        }
+    );
+
+
+    addAnswerBtn.addEventListener(
+        "click",
+        addCurrentAnswer
+    );
+
+
+    sendJournalBtn.addEventListener(
+        "click",
+        sendJournalAnswers
+    );
+
+}
+
+
+function showRandomQuestion() {
+
+    if (
+        journalQuestions.length <= 1
+    ) {
+
+        currentQuestionIndex = 0;
 
     } else {
 
-        const future =
-            new Date();
+        let newIndex;
 
-        future.setDate(
-            future.getDate() + 1
+
+        do {
+
+            newIndex =
+                Math.floor(
+                    Math.random() *
+                    journalQuestions.length
+                );
+
+        } while (
+            newIndex ===
+            currentQuestionIndex
         );
 
-        future.setHours(
-            0,
-            0,
-            0,
-            0
-        );
 
-
-        input.value =
-            formatDateForInput(future);
+        currentQuestionIndex =
+            newIndex;
 
     }
 
 
-    input.addEventListener("change", () => {
-
-        localStorage.setItem(
-            "birthdayCountdownDate",
-            input.value
+    const questionText =
+        document.getElementById(
+            "questionText"
         );
 
-        startCountdown();
+    const questionNumber =
+        document.getElementById(
+            "questionNumber"
+        );
 
+
+    if (questionText) {
+
+        questionText.textContent =
+            journalQuestions[
+                currentQuestionIndex
+            ];
+
+    }
+
+
+    if (questionNumber) {
+
+        questionNumber.textContent =
+            `Question ${currentQuestionIndex + 1}`;
+
+    }
+
+
+    const answerBox =
+        document.getElementById(
+            "questionAnswer"
+        );
+
+
+    if (answerBox) {
+
+        answerBox.value = "";
+
+        answerBox.focus();
+
+    }
+
+}
+
+
+function addCurrentAnswer() {
+
+    const answerBox =
+        document.getElementById(
+            "questionAnswer"
+        );
+
+
+    if (!answerBox) return;
+
+
+    const answer =
+        answerBox.value.trim();
+
+
+    if (!answer) {
+
+        showJournalStatus(
+            "Please write an answer first ✍️",
+            "error"
+        );
+
+        answerBox.focus();
+
+        return;
+
+    }
+
+
+    const question =
+        journalQuestions[
+            currentQuestionIndex
+        ];
+
+
+    journalAnswers.push({
+        question: question,
+        answer: answer
     });
 
 
-    startCountdown();
+    renderJournalAnswers();
+
+
+    answerBox.value = "";
+
+
+    showJournalStatus(
+        "Answer added to your journal 💖",
+        "success"
+    );
+
+
+    createConfetti(20);
+
+
+    showRandomQuestion();
 
 }
 
 
-function formatDateForInput(date) {
+function renderJournalAnswers() {
 
-    const year =
-        date.getFullYear();
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-    const hours =
-        String(
-            date.getHours()
-        ).padStart(2, "0");
-
-    const minutes =
-        String(
-            date.getMinutes()
-        ).padStart(2, "0");
+    const answerList =
+        document.getElementById(
+            "answerList"
+        );
 
 
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-
-}
+    if (!answerList) return;
 
 
-function startCountdown() {
+    if (!journalAnswers.length) {
 
-    if (countdownInterval) {
+        answerList.innerHTML =
+            `
+            <p class="empty-answer">
+                Your answers will appear here...
+            </p>
+            `;
 
-        clearInterval(countdownInterval);
+        return;
 
     }
 
 
-    updateCountdown();
+    answerList.innerHTML = "";
 
 
-    countdownInterval =
-        setInterval(
-            updateCountdown,
-            1000
-        );
+    journalAnswers.forEach(
+        (entry, index) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "answer-card";
+
+
+            const question =
+                document.createElement(
+                    "div"
+                );
+
+
+            question.className =
+                "answer-question";
+
+
+            question.textContent =
+                entry.question;
+
+
+            const answer =
+                document.createElement(
+                    "div"
+                );
+
+
+            answer.className =
+                "answer-value";
+
+
+            answer.textContent =
+                entry.answer;
+
+
+            const remove =
+                document.createElement(
+                    "button"
+                );
+
+
+            remove.className =
+                "remove-answer";
+
+
+            remove.type =
+                "button";
+
+
+            remove.textContent =
+                "✕";
+
+
+            remove.setAttribute(
+                "aria-label",
+                "Remove answer"
+            );
+
+
+            remove.addEventListener(
+                "click",
+                () => {
+
+                    journalAnswers.splice(
+                        index,
+                        1
+                    );
+
+                    renderJournalAnswers();
+
+                }
+            );
+
+
+            card.appendChild(question);
+
+            card.appendChild(answer);
+
+            card.appendChild(remove);
+
+
+            answerList.appendChild(card);
+
+        }
+    );
 
 }
 
 
-function updateCountdown() {
+/* =====================================================
+   SEND JOURNAL
+===================================================== */
 
-    const input =
-        document.getElementById("birthdayDate");
+async function sendJournalAnswers() {
 
-    if (!input || !input.value) return;
-
-
-    const target =
-        new Date(input.value).getTime();
-
-    const now =
-        Date.now();
+    const sendButton =
+        document.getElementById(
+            "sendJournalBtn"
+        );
 
 
-    let difference =
-        target - now;
+    const journalMessage =
+        document.getElementById(
+            "journalMessage"
+        );
 
 
-    if (difference < 0) {
-        difference = 0;
+    if (!sendButton || !journalMessage) {
+        return;
     }
 
 
-    const second =
-        1000;
-
-    const minute =
-        second * 60;
-
-    const hour =
-        minute * 60;
-
-    const day =
-        hour * 24;
+    const freeJournal =
+        journalMessage.value.trim();
 
 
-    const days =
-        Math.floor(
-            difference / day
+    if (
+        journalAnswers.length === 0 &&
+        !freeJournal
+    ) {
+
+        showJournalStatus(
+            "Please answer at least one question or write something in your journal 💌",
+            "error"
         );
 
-    difference %= day;
+        return;
+
+    }
 
 
-    const hours =
-        Math.floor(
-            difference / hour
+    /*
+       IMPORTANT:
+
+       Replace this email with YOUR email address.
+
+       Example:
+       const receiverEmail = "yourname@gmail.com";
+    */
+
+    const receiverEmail =
+        "YOUR_EMAIL@example.com";
+
+
+    if (
+        receiverEmail ===
+        "YOUR_EMAIL@example.com"
+    ) {
+
+        showJournalStatus(
+            "First replace YOUR_EMAIL@example.com in script.js with your email address 📩",
+            "error"
         );
 
-    difference %= hour;
+        return;
+
+    }
 
 
-    const minutes =
-        Math.floor(
-            difference / minute
+    let answersText = "";
+
+
+    journalAnswers.forEach(
+        (entry, index) => {
+
+            answersText +=
+                `Question ${index + 1}: ${entry.question}\n`;
+
+            answersText +=
+                `Answer: ${entry.answer}\n\n`;
+
+        }
+    );
+
+
+    if (!answersText) {
+
+        answersText =
+            "No random question answers were added.\n\n";
+
+    }
+
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "_subject",
+        "🎂 BUJJI Birthday Journal Answers"
+    );
+
+
+    formData.append(
+        "_captcha",
+        "false"
+    );
+
+
+    formData.append(
+        "_template",
+        "table"
+    );
+
+
+    formData.append(
+        "Birthday Journal Answers",
+        answersText
+    );
+
+
+    formData.append(
+        "Free Journal Message",
+        freeJournal ||
+        "No additional journal message."
+    );
+
+
+    sendButton.disabled =
+        true;
+
+
+    sendButton.textContent =
+        "📩 Sending...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `https://formsubmit.co/ajax/${receiverEmail}`,
+                {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to send"
+            );
+
+        }
+
+
+        showJournalStatus(
+            "💖 Your answers were sent successfully! Thank you for sharing your thoughts ✨",
+            "success"
         );
 
-    difference %= minute;
+
+        createConfetti(100);
 
 
-    const seconds =
-        Math.floor(
-            difference / second
+        journalAnswers = [];
+
+
+        renderJournalAnswers();
+
+
+        journalMessage.value = "";
+
+
+        const answerBox =
+            document.getElementById(
+                "questionAnswer"
+            );
+
+
+        if (answerBox) {
+
+            answerBox.value = "";
+
+        }
+
+
+    } catch (error) {
+
+        showJournalStatus(
+            "Something went wrong while sending. Please try again.",
+            "error"
         );
 
+    } finally {
 
-    setCountdownValue(
-        "days",
-        days
-    );
+        sendButton.disabled =
+            false;
 
-    setCountdownValue(
-        "hours",
-        hours
-    );
+        sendButton.textContent =
+            "💌 Send My Answers";
 
-    setCountdownValue(
-        "minutes",
-        minutes
-    );
-
-    setCountdownValue(
-        "seconds",
-        seconds
-    );
+    }
 
 }
 
 
-function setCountdownValue(id, value) {
+function showJournalStatus(
+    message,
+    type
+) {
 
-    const element =
-        document.getElementById(id);
+    const status =
+        document.getElementById(
+            "journalStatus"
+        );
 
-    if (!element) return;
 
-    element.textContent =
-        String(value).padStart(2, "0");
+    if (!status) return;
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        `journal-status ${type}`;
+
+
+    clearTimeout(
+        showJournalStatus.timer
+    );
+
+
+    showJournalStatus.timer =
+        setTimeout(() => {
+
+            status.className =
+                "journal-status";
+
+            status.textContent =
+                "";
+
+        }, 5000);
 
 }
