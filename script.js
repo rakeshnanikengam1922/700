@@ -1,3 +1,5 @@
+alert("SCRIPT STARTED ✅");
+
 document.addEventListener("DOMContentLoaded", () => {
 
     initializeNavigation();
