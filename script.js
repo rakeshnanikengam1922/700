@@ -1,7 +1,3 @@
-/* =====================================================
-   BIRTHDAY WEBSITE - SCRIPT.JS
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     initializeNavigation();
